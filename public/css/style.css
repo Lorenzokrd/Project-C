@@ -26,6 +26,24 @@ p {
     }
 }
 
+.btn-primary {
+    color: #ffffff;
+    background-color: #008100 !important;
+    border-color: #008100 !important;
+}
+
+.btn-primary.focus, .btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem #09a009 !important;
+}
+
+.btn-primary.focus, .btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem #09a009 !important;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem #008100;
+}
+
 /****** NAVBAR ******/
 
 .navbar {
@@ -54,6 +72,16 @@ p {
     z-index: 100;
 }
 
+/****** CAROUSEL ******/
+
+.carousel-item{
+    height: 500px;
+}
+
+.carousel-item img{
+    height: 500px;
+}
+
 /****** RESTAURANT GRID ******/
 
 .restaurant-grid {
@@ -62,6 +90,18 @@ p {
 
 .restaurant-grid-item {
     margin-bottom: 35px;
+}
+
+.filters-top {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    position: relative;
+    width: 100%;
+    padding: 0 16px;
+}
+
+.filter-btn {
+    margin-left:10px;
 }
 
 /****** RESTAURANT CARD ******/
@@ -172,11 +212,11 @@ p {
 }
 
 .restaurant-status-closed {
-    background: #DC3545;
+    background: #dc3b4b;
 }
 
 .restaurant-status-recommended {
-    background: #28A745;
+    background: #4fab64;
 }
 
 /****** RESTAURANT FILTER ******/

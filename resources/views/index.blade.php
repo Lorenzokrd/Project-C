@@ -90,13 +90,50 @@
                 <input type="checkbox" class="custom-control-input" id="diet7">
                 <label class="custom-control-label" for="diet7">Zonder koriander</label>
             </div>
+            <br><br>
+            <p style="font-weight:700">Min. Bestelbedrag</p>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="price1">
+                <label class="custom-control-label" for="price1">Vanaf €5,00</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="price2">
+                <label class="custom-control-label" for="price2">Vanaf €10,00</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="price3">
+                <label class="custom-control-label" for="price3">Vanaf €15,00</label>
+            </div>
         </div>
         <div class="col-lg-10">
+            <div class="row">
+                <div class="filters-top">
+                    <div class="filter-btn dropdown float-right">
+                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Prijs
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Hoog - laag</a>
+                        <a class="dropdown-item" href="#">Laag - hoog</a>
+                      </div>
+                    </div>
+                    <div class="filter-btn dropdown float-right">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                          Soorteer op
+                        </button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="#">Favoriet</a>
+                          <a class="dropdown-item" href="#">Rating</a>
+                          <a class="dropdown-item" href="#">Bezorgtijd</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col col-12 col-sm-6 col-lg-4 restaurant-grid-item" onclick="document.location='/#';return false;">
                     <div class="restaurant-card" style="background-image:url('https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');">
                         <div class="restaurant-name">
-                            <p><i class="far fa-star" aria-hidden="true"></i> Burger me</p>
+                            <p><i class="far fa-star" aria-hidden="true"></i> Burger Restaurant Rotterdam</p>
                         </div>
                         <div class="status restaurant-status-recommended">
                             <p>Aanbevolen voor jou</p>
