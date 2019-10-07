@@ -3,6 +3,8 @@
 body {
     padding-top: 56px;
 }
+.achtergrond{
+    background-image: images/"pizza.png"}
 
 a {
     color: #000000 !important;
