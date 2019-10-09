@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html>
 @include('include.navbar')
 
 <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="false">
