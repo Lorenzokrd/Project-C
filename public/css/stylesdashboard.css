@@ -1,0 +1,232 @@
+/****** HTML *******/
+
+body {
+    padding-top: 56px;
+}
+.achtergrond{
+    background-image: images/"pizza.png"}
+
+a {
+    color: #000000 !important;
+    text-decoration: none !important;
+}
+
+a:hover {
+    color: #000000 !important;
+    text-decoration: none !important;
+}
+
+p {
+    margin-bottom: 0 !important;
+}
+
+/****** BOOTSTRAP ******/
+
+@media (min-width: 1200px) {
+.container {
+    max-width: 1500px !important;
+    }
+}
+
+.btn-primary {
+    color: #ffffff;
+    background-color: #008100 !important;
+    border-color: #008100 !important;
+}
+
+.btn-primary.focus, .btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem #09a009 !important;
+}
+
+.btn-primary.focus, .btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem #09a009 !important;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem #008100;
+}
+
+/****** NAVBAR ******/
+
+.navbar {
+    background-color:#008100;
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.2);
+}
+
+.nav-icon-right {
+    font-size:30px;
+    margin-right:20px;
+    color:#faf6d5;
+}
+
+.nav-logo {
+    width: 110px;
+    margin-left: 10px;
+}
+
+.fixed-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 100;
+}
+
+/****** CAROUSEL ******/
+
+.carousel-item{
+    height: 500px;
+}
+
+.carousel-item img{
+    height: 500px;
+}
+
+/****** RESTAURANT GRID ******/
+
+.restaurant-grid {
+    margin-top:70px;
+}
+
+.restaurant-grid-item {
+    margin-bottom: 35px;
+}
+
+.filters-top {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    position: relative;
+    width: 100%;
+    padding: 0 16px;
+}
+
+.filter-btn {
+    margin-left:10px;
+}
+
+/****** RESTAURANT CARD ******/
+
+.restaurant-card {
+    height:250px;
+    position: relative;
+    transition: .3s ease;
+    cursor: pointer;
+    border: 1px #e9ecff solid;
+}
+
+.restaurant-card:hover {
+    -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.2);
+    box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.2);
+    transition: .3s ease;
+}
+
+.restaurant-card:hover .restaurant-info {
+    clip-path: polygon(0 20%, 100% 20%, 100% 100%, 0 100%);
+    transition: .3s ease;
+}
+
+.restaurant-info {
+    clip-path: polygon(0 100%, 100% 0, 100% 100%, 0% 100%);
+    height: 34%;
+    width: 100%;
+    background: #ffffff;
+    bottom: 0;
+    position:absolute;
+    transition: .3s ease;
+}
+
+.restaurant-name {
+    background: #ffffff;
+    padding: 6px;
+    width: fit-content;
+    max-width: 90%;
+    border-radius: 3px;
+    margin-left: 10px;
+    margin-top: 10px;
+    -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
+    font-weight: 500;
+}
+
+.restaurant-name > p {
+    margin-bottom: 0;
+}
+
+.restaurant-name > p > i {
+    color: #008100;
+}
+
+.restaurant-score {
+    position: absolute;
+    top: 24px;
+    right: 2px;
+}
+
+.price {
+    position: absolute;
+    width: 100px;
+    top: 54px;
+    right: 10px;
+    font-size: 15px;
+}
+
+.time {
+    position: absolute;
+    width: 100px;
+    top: 54px;
+    font-size: 15px;
+    right: 90px;
+}
+
+.tags {
+    position: absolute;
+    top: 26px;
+    line-height: 25px;
+    left: 10px;
+    color: #008100;
+    visibility: hidden;
+    font-weight: 600;
+    font-size: 15px;
+    max-width: 175px;
+    word-break: normal;
+}
+
+.restaurant-card:hover .restaurant-info .tags {
+    visibility: visible;
+}
+
+.restaurant-status {
+    max-width: 95%;
+}
+
+.status {
+    color: #ffffff;
+    width: fit-content;
+    padding: 0 4px;
+    border-radius: 5px;
+    margin: 10px -7px 0 10px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.restaurant-status-closed {
+    background: #dc3b4b;
+}
+
+.restaurant-status-recommended {
+    background: #4fab64;
+}
+
+/****** RESTAURANT FILTER ******/
+
+.custom-control.custom-checkbox {
+    margin-top: 10px;
+}
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+    background-color: #008100 !important;
+}
