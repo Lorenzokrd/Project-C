@@ -289,8 +289,7 @@ p {
     height: 100px;
 }
 
-.success-popup {
-    background: #28a745;
+.popup {
     padding: 10px;
     border-radius: 5px;
     color: #ffffff;
@@ -299,4 +298,12 @@ p {
     float: right;
     z-index: 10;
     position: fixed;
+}
+
+.success {
+    background: #28a745;
+}
+
+.exception {
+    background: #dc3545;
 }

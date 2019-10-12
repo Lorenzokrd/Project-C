@@ -3,14 +3,16 @@
 <script>
 jQuery(function($) {
     setTimeout(function() {
-        $('#success-popup').fadeOut('slow');
+        $('#popup').fadeOut('slow');
     }, 3000);
 });
 </script>
 
 <div class="product-form" style="margin-bottom:100px;">
-    @if(session('message'))
-  <div class="success-popup" id="success-popup"><i class="far fa-check-circle"></i> {{session('message')}}</div>
+    @if(session('success'))
+        <div class="success popup" id="popup"><i class="far fa-check-circle"></i> {{session('success')}}</div>
+    @elseif(session('exception'))
+        <div class="exception popup" id="popup"><i class="far fa-check-circle"></i> {{session('exception')}}</div>
     @endif
     <h1>Product toevoegen</h1>
     <div class="row">
@@ -32,7 +34,7 @@ jQuery(function($) {
         </div>
         <div class="col-6">
             <div class="form-group">
-                <label for="productImage">Product foto</label>
+                <label for="productImage">Product foto (optioneel)</label>
                 <input type="file" class="form-control" name="productImage">
             </div>
             <div class="form-group">
@@ -68,7 +70,11 @@ jQuery(function($) {
           <td>{{$product->name}}</td>
           <td>{{$product->description}}</td>
           <td>{{$product->price}}</td>
-          <td><img class="table-image" src="{{ asset('storage/'.str_replace('public/', '', $product->image)) }}" /></td>
+          <td>
+              @if(!$product->image == null)
+              <img class="table-image" src="{{ asset('storage/'.str_replace('public/', '', $product->image)) }}" />
+              @endif
+          </td>
           <td>{{$product->toggle_rating}}</td>
           <td style="width:100px;"><button type="button" class="btn btn-primary">Aanpassen</button></td>
           <form action="deleteProduct" method="POST">
@@ -76,6 +82,7 @@ jQuery(function($) {
               <input type="hidden" name="productId" value="{{$product->id}}">
               <input type="hidden" name="productImage" value="{{$product->image}}">
               <td style="width:100px;"><button type="submit" class="btn btn-danger">Verwijderen</button></td>
+          </form>
         </tr>
         @endforeach
       </tbody>

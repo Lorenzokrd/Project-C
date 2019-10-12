@@ -18,7 +18,7 @@ class Product extends Migration
             $table->integer('restaurant_id');
             $table->string('name');
             $table->string('description');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->decimal('price',5,2);
             $table->boolean('toggle_rating');
         });
