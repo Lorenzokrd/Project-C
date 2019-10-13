@@ -27,6 +27,10 @@ Route::get('dashboard/products', function () {
     return view('dashboard/products');
 });
 
+Route::get('dashboard/add-product', function () {
+    return view('dashboard/add-product');
+});
+
 Route::post('dashboard/sumbitProduct','Products@save');
 Route::get('dashboard/products','Products@read');
 Route::post('dashboard/deleteProduct','Products@delete');
@@ -34,3 +38,5 @@ Route::post('dashboard/deleteProduct','Products@delete');
 Route::get('dashboard/settings', function () {
     return view('dashboard/settings');
 });
+Route::get('dashboard/findProduct', 'Products@find');
+Route::post('dashboard/editProduct','Products@update');
