@@ -15,6 +15,11 @@ Route::get('/', function () {
     return view('index');
 });
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
+
 Route::get('/dashboard', function () {
     return view('dashboard/dashboard');
 });
@@ -40,3 +45,4 @@ Route::get('dashboard/settings', function () {
 });
 Route::get('dashboard/findProduct', 'Products@find');
 Route::post('dashboard/editProduct','Products@update');
+
