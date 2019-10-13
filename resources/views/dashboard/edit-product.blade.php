@@ -1,15 +1,6 @@
 
 @include('include.dashboard.header')
 
-<script>
-jQuery(function($) {
-    setTimeout(function() {
-        $('#success-popup').fadeOut('slow');
-    }, 3000);
-});
-}
-</script>
-
 <h1>Product Aanpassen</h1>
 <div class="row">
     <div class="col-lg-5">
@@ -45,7 +36,7 @@ jQuery(function($) {
         <div class="col-lg-5">
             @csrf
             <div class="form-group">
-                <label for="productImage">Product foto</label>
+                <label for="productImage">Product foto (optioneel)</label>
                 <br>
             <input type="file" name="productImage">
             </div>

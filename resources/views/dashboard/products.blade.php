@@ -8,7 +8,7 @@ jQuery(function($) {
 });
 </script>
 
-<div class="product-form" style="margin-bottom:100px;">
+<div class="product-form" style="margin-bottom:100px;position:relative">
     @if(session('success'))
         <div class="success popup" id="popup"><i class="far fa-check-circle"></i> {{session('success')}}</div>
     @elseif(session('exception'))
@@ -54,7 +54,9 @@ jQuery(function($) {
           <form action="deleteProduct" method="POST">
               @csrf
               <input type="hidden" name="productId" value="{{$product->id}}">
-              <input type="hidden" name="productImage" value="{{$product->image}}">
+              <div class="form-group">
+                  <input type="hidden" name="productImage" class="form-control-file" value="{{$product->image}}">
+              </div>
               <td style="width:100px;"><button type="submit" class="btn btn-danger">Verwijderen</button></td>
           </form>
         </tr>
