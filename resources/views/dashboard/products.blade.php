@@ -14,38 +14,8 @@ jQuery(function($) {
     @elseif(session('exception'))
         <div class="exception popup" id="popup"><i class="far fa-check-circle"></i> {{session('exception')}}</div>
     @endif
-    <h1>Product toevoegen</h1>
-    <div class="row">
-        <div class="col-6">
-            <form action="sumbitProduct" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group">
-                <label for="productName">Product naam</label>
-                <input type="input" class="form-control" name="productName" aria-describedby="emailHelp" placeholder="Product naam">
-            </div>
-            <div class="form-group">
-                <label for="productDesc">Product beschrijving</label>
-                <input type="input" class="form-control" name="productDesc" placeholder="Product Beschrijving">
-            </div>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" name="productRating">
-                <label class="form-check-label" for="productRating">Product beoordeling</label>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="form-group">
-                <label for="productImage">Product foto (optioneel)</label>
-                <input type="file" class="form-control" name="productImage">
-            </div>
-            <div class="form-group">
-                <label for="productPrice">Product prijs</label>
-                <input type="input" class="form-control" name="productPrice" placeholder="Product Prijs">
-            </div>
-            <input type="hidden" name="restaurantId" value="1">
-        </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Product aanmaken</button>
-    </form>
+
+<button onclick="window.location='http://localhost:8000/dashboard/add-product';" class="btn btn-primary" style="float:right;">Product aanmaken</button>
 </div>
 
 <div class="products">
@@ -76,7 +46,11 @@ jQuery(function($) {
               @endif
           </td>
           <td>{{$product->toggle_rating}}</td>
-          <td style="width:100px;"><button type="button" class="btn btn-primary">Aanpassen</button></td>
+          <form action="findProduct" method="GET">
+              @csrf
+              <input type="hidden" name="productId" value="{{$product->id}}">
+              <td style="width:100px;"><button type="submit" class="btn btn-primary" >Aanpassen</button></td>
+          </form>
           <form action="deleteProduct" method="POST">
               @csrf
               <input type="hidden" name="productId" value="{{$product->id}}">

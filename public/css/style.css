@@ -307,3 +307,13 @@ p {
 .exception {
     background: #dc3545;
 }
+.productDescription{
+    height: 290px;
+}
+.listCustom{
+    color:black !important;
+    float: left !important;
+}
+.list-group .listCustom:nth-child(odd){
+    background: rgba(21, 161, 28, 0.5) !important;
+}
