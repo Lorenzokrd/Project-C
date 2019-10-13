@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-@include('include.navbar')
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,12 +18,15 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @include('include.navbar')
 </head>
-<body>
+<body style="background: url('https://www.nerdwallet.com/assets/blog/wp-content/uploads/2017/10/ThanksgivingDinner-1920x1280.jpg')">
     <div id="app">
-       
+
 
         <main class="py-4">
+            <div class="space-200">
+            </div>
             @yield('content')
         </main>
     </div>
