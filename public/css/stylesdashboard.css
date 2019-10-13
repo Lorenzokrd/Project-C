@@ -1,5 +1,8 @@
 /****** HTML *******/
 
+body {
+    padding-top: 56px;
+}
 .achtergrond{
     background-image: images/"pizza.png"}
 
@@ -44,11 +47,6 @@ p {
 }
 
 /****** NAVBAR ******/
-
-
-.body-padding-top {
-    padding-top: 56px;
-}
 
 .navbar {
     background-color:#008100;
@@ -231,86 +229,4 @@ p {
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
     background-color: #008100 !important;
-}
-
-/****** DASHBOARD SIDEBAR ******/
-
-.sidebar {
-    height: 100%;
-    display: inline-block;
-	width: 17%;
-    float: left;
-    -webkit-box-shadow: 1px 0px 5px 1px rgba(0,0,0,0.27);
-    -moz-box-shadow: 1px 0px 5px 1px rgba(0,0,0,0.27);
-    box-shadow: 1px 0px 5px 1px rgba(0,0,0,0.27);
-    padding: 0 !important;
-    background: -webkit-linear-gradient(45deg,  #008100 0%,#008100 23%,#008100 51%,#00a846 100%);
-}
-
-.content {
-    width: 83%;
-    height: 100%;
-	overflow: auto;
-    padding: 50px 100px;
-	display: inline-block;
-	float: left;
-}
-
-.sidebar-logo {
-    width: 80%;
-    display: block;
-    margin-top: 64px;
-    margin-left: 12px;
-    margin-bottom: 41px;
-}
-
-.list-group-item {
-    background: none !important;
-    border: none !important;
-    font-size: 19px;
-    color: #ffffff;
-    cursor: pointer;
-}
-
-.list-group-item i {
-    padding-right: 3px;
-}
-
-.list-group-item.active {
-    background: #057105 !important
-}
-
-/****** DASHBOARD TABLE ******/
-
-.table .thead-black th {
-    color: #ffffff;
-    background-color: #464646;
-}
-
-.table-image {
-    width: 100px;
-    height: 100px;
-}
-
-.success-popup {
-    background: #28a745;
-    padding: 10px;
-    border-radius: 5px;
-    color: #ffffff;
-    width: fit-content;
-    right: 115px;
-    float: right;
-    z-index: 10;
-    position: fixed;
-}
-
-.productDescription{
-    height: 290px;
-}
-.listCustom{
-    color:black !important;
-    float: left !important;
-}
-.list-group .listCustom:nth-child(odd){
-    background: rgba(21, 161, 28, 0.5) !important;
 }
