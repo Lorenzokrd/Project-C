@@ -3,15 +3,18 @@
 <script>
 jQuery(function($) {
     setTimeout(function() {
-        $('#success-popup').fadeOut('slow');
+        $('#popup').fadeOut('slow');
     }, 3000);
 });
 </script>
 
-<div class="product-form" style="margin-bottom:100px;">
-    @if(session('message'))
-        <div class="success-popup" id="success-popup"><i class="far fa-check-circle"></i> {{session('message')}}</div>
+<div class="product-form" style="margin-bottom:100px;position:relative">
+    @if(session('success'))
+        <div class="success popup" id="popup"><i class="far fa-check-circle"></i> {{session('success')}}</div>
+    @elseif(session('exception'))
+        <div class="exception popup" id="popup"><i class="far fa-check-circle"></i> {{session('exception')}}</div>
     @endif
+
 <button onclick="window.location='http://localhost:8000/dashboard/add-product';" class="btn btn-primary" style="float:right;">Product aanmaken</button>
 </div>
 
@@ -37,7 +40,11 @@ jQuery(function($) {
           <td>{{$product->name}}</td>
           <td>{{$product->description}}</td>
           <td>{{$product->price}}</td>
-          <td><img class="table-image" src="{{ asset('storage/'.str_replace('public/', '', $product->image)) }}" /></td>
+          <td>
+              @if(!$product->image == null)
+              <img class="table-image" src="{{ asset('storage/'.str_replace('public/', '', $product->image)) }}" />
+              @endif
+          </td>
           <td>{{$product->toggle_rating}}</td>
           <form action="findProduct" method="GET">
               @csrf
@@ -47,7 +54,9 @@ jQuery(function($) {
           <form action="deleteProduct" method="POST">
               @csrf
               <input type="hidden" name="productId" value="{{$product->id}}">
-              <input type="hidden" name="productImage" value="{{$product->image}}">
+              <div class="form-group">
+                  <input type="hidden" name="productImage" class="form-control-file" value="{{$product->image}}">
+              </div>
               <td style="width:100px;"><button type="submit" class="btn btn-danger">Verwijderen</button></td>
           </form>
         </tr>

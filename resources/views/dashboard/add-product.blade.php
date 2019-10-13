@@ -1,20 +1,9 @@
 
 @include('include.dashboard.header')
 
-<script>
-jQuery(function($) {
-    setTimeout(function() {
-        $('#success-popup').fadeOut('slow');
-    }, 3000);
-});
-}
-</script>
-@if(session('message'))
-    <div class="success-popup" id="success-popup"><i class="far fa-check-circle"></i> {{session('message')}}</div>
-@endif
 <h1>Product Aanmaken</h1>
 <div class="row">
-    <div class="col-lg-5">
+    <div class="col-lg-6">
         <form action="sumbitProduct" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
@@ -36,22 +25,22 @@ jQuery(function($) {
             <input type="hidden" name="restaurantId" value="1">
             <button type="submit" class="btn btn-primary">Product aanmaken</button>
         </div>
-        <div class="col-lg-1"></div>
-        <div class="col-lg-5">
+        <div class="col-lg-6">
             @csrf
             <div class="form-group">
-                <label for="productImage">Product foto</label>
+                <label for="productImage">Product foto (optioneel)</label>
                 <br>
             <input type="file" name="productImage">
             </div>
             <div class="panel panel-primary ">
                 <div class="panel-heading">
+                    <label for="productImage" style="margin-top:8px;">Allergieën</label>
                     <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search for...">
                     <span class="input-group-btn">
                         <button class="btn btn-success" type="button">Allergie toevoegen</button>
                     </span>
-                    </div><!-- /input-group -->
+                    </div>
                 </div>
                 <div class="panel-body">
                     <ul class="list-group" style="margin-top:5px;">

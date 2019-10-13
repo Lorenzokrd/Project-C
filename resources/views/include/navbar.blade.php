@@ -24,25 +24,25 @@
     </div>
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
+            <li class="nav-item mt-1">
                 <i class="fas fa-sign-in-alt nav-icon-right"></i>
             </li>
-            <li class="nav-item">
+            <li class="nav-item mt-1">
                 <i class="fas fa-bars nav-icon-right"></i>
             </li>
 
             @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" style="font-weight:600;color:#FAF6D5 !important" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" style="font-weight:600;color:#FAF6D5 !important" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" style="font-weight:600;color:#FAF6D5 !important" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
@@ -60,7 +60,7 @@
                             </li>
                         @endguest
 
-            
+
         </ul>
     </div>
 </nav>
