@@ -1,9 +1,5 @@
 /****** HTML *******/
 
-body {
-    padding-top: 56px;
-}
-
 a {
     color: #000000 !important;
     text-decoration: none !important;
@@ -44,7 +40,17 @@ p {
     box-shadow: 0 0 0 0.2rem #008100;
 }
 
+.form-control:focus {
+    border-color: #008100 !important;
+    box-shadow: 0 0 0 0.2rem #168e1678 !important;
+}
+
 /****** NAVBAR ******/
+
+
+.body-padding-top {
+    padding-top: 56px;
+}
 
 .navbar {
     background-color:#008100;
@@ -226,5 +232,110 @@ p {
 }
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+    background-color: #008100 !important;
+}
+
+/****** DASHBOARD SIDEBAR ******/
+
+.sidebar {
+    height: 100%;
+    display: inline-block;
+	width: 17%;
+    float: left;
+    -webkit-box-shadow: 1px 0px 5px 1px rgba(0,0,0,0.27);
+    -moz-box-shadow: 1px 0px 5px 1px rgba(0,0,0,0.27);
+    box-shadow: 1px 0px 5px 1px rgba(0,0,0,0.27);
+    padding: 0 !important;
+    background: -webkit-linear-gradient(45deg,  #008100 0%,#008100 23%,#008100 51%,#00a846 100%);
+}
+
+.content {
+    width: 83%;
+    height: 100%;
+	overflow: auto;
+    padding: 50px 100px;
+	display: inline-block;
+	float: left;
+}
+
+.sidebar-logo {
+    width: 80%;
+    display: block;
+    margin-top: 64px;
+    margin-left: 12px;
+    margin-bottom: 41px;
+}
+
+.list-group-item {
+    background: none !important;
+    border: none !important;
+    font-size: 19px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.list-group-item i {
+    padding-right: 3px;
+}
+
+.list-group-item.active {
+    background: #057105 !important
+}
+
+/****** DASHBOARD TABLE ******/
+
+.table .thead-black th {
+    color: #ffffff;
+    background-color: #464646;
+}
+
+.table-image {
+    width: 100px;
+    height: 100px;
+}
+
+.popup {
+    padding: 10px;
+    border-radius: 5px;
+    color: #ffffff;
+    width: fit-content;
+    z-index: 10;
+    position:fixed;
+    left:22%;
+}
+
+.success {
+    background: #28a745;
+}
+
+.exception {
+    background: #dc3545;
+}
+.productDescription{
+    height: 290px;
+}
+.listCustom{
+    color:black !important;
+    float: left !important;
+}
+.list-group .listCustom:nth-child(odd){
+    background: rgba(21, 161, 28, 0.5) !important;
+}
+
+/****** AUTHENTICATION PAGE ******/
+
+.space-200 {
+    height: 200px;
+}
+
+.card {
+    -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.37);
+    -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.37);
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.37);
+}
+
+.card-header {
+    font-weight: 600;
+    color: #ffffff;
     background-color: #008100 !important;
 }
