@@ -15,7 +15,8 @@ class Product extends Migration
     {
         Schema::create('product', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('restaurant_id');
+            $table->integer('restaurant_id')->unsigned();
+            $table->foreign('restaurant_id')->references('id')->on('restaurant')->onDelete('cascade');
             $table->string('name');
             $table->string('description');
             $table->string('image')->nullable();

@@ -15,7 +15,8 @@ class RestaurantRating extends Migration
     {
         Schema::create('restaurant_rating', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('restaurant_id');
+            $table->integer('restaurant_id')->unsigned();
+            $table->foreign('restaurant_id')->references('id')->on('restaurant')->onDelete('cascade');
             $table->decimal('food_score');
             $table->decimal('delivery_score');
             $table->text('comment');

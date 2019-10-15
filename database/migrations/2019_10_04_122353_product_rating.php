@@ -14,8 +14,9 @@ class ProductRating extends Migration
     public function up()
     {
         Schema::create('product_rating', function (Blueprint $table) {
-            $table->integer('id');
-            $table->integer('product_id');
+            $table->Increments('id');
+            $table->integer('product_id')->unsigned();
+            $table->foreign('product_id')->references('id')->on('product')->onDelete('cascade');
             $table->decimal('score',5,1);
             $table->text('comment');
             $table->date('date');

@@ -15,7 +15,8 @@ class Option extends Migration
     {
         Schema::create('option', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('option_choice_id');
+            $table->integer('option_choice_id')->unsigned();
+            $table->foreign('option_choice_id')->references('id')->on('option_choice')->onDelete('cascade');
             $table->string('name');
             $table->string('type');
         });
