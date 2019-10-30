@@ -71,7 +71,7 @@ class Products extends Controller
             $product->price = $req->productPrice;
             $product->toggle_rating = ($req->productRating == null) ? 0 : 1;
             $product->save();
-            return redirect('dashboard/products')->with('success', 'product is succesvol bijgewerkt!');
+            return redirect('dashboard/products')->with('success', 'Product is succesvol bijgewerkt!');
         } catch(\Exception $e){
             return redirect('dashboard/products')->with('exception', 'Product is unsuccesvol aangemaakt!');
         }
