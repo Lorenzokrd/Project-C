@@ -8,22 +8,18 @@ jQuery(function($) {
 });
 </script>
 
-<div class="product-form" style="margin-bottom:100px;position:relative">
-    @if(session('success'))
-        <div class="success popup" id="popup"><i class="far fa-check-circle"></i> {{session('success')}}</div>
-    @elseif(session('exception'))
-        <div class="exception popup" id="popup"><i class="far fa-check-circle"></i> {{session('exception')}}</div>
-    @endif
-
-<button onclick="window.location='http://localhost:8000/dashboard/add-product';" class="btn btn-primary" style="float:right;">Product aanmaken</button>
-</div>
+@if(session('success'))
+    <div class="success popup" id="popup"><i class="far fa-check-circle"></i> {{session('success')}}</div>
+@elseif(session('exception'))
+    <div class="exception popup" id="popup"><i class="far fa-check-circle"></i> {{session('exception')}}</div>
+@endif
 
 <div class="products">
+    <button onclick="window.location='http://localhost:8000/dashboard/products/add-product';" class="btn btn-primary" style="float:right;margin-top:4px;">Product aanmaken</button>
     <h1>Producten</h1>
     <table class="table table-striped">
       <thead class="thead-black">
         <tr>
-          <th scope="col">ID</th>
           <th scope="col">Naam</th>
           <th scope="col">Beschrijving</th>
           <th scope="col">Prijs</th>
@@ -36,7 +32,6 @@ jQuery(function($) {
       <tbody>
         @foreach($products as $product)
         <tr>
-          <th scope="row">{{$product->id}}</th>
           <td>{{$product->name}}</td>
           <td>{{$product->description}}</td>
           <td>{{$product->price}}</td>
@@ -46,7 +41,7 @@ jQuery(function($) {
               @endif
           </td>
           <td>{{$product->toggle_rating}}</td>
-          <form action="findProduct" method="GET">
+          <form action="products/edit-product" method="GET">
               @csrf
               <input type="hidden" name="productId" value="{{$product->id}}">
               <td style="width:100px;"><button type="submit" class="btn btn-primary" >Aanpassen</button></td>

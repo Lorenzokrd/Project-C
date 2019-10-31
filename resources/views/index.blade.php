@@ -10,7 +10,6 @@
         <div class="carousel-item active">
             <img class="d-block w-100" src="{{URL('/images/pizza.png')}}" alt="First slide">
             <div class="carousel-caption d-none d-md-block">
-
             </div>
         </div>
         <div class="carousel-item">
