@@ -13,10 +13,6 @@ jQuery(function($) {
     @elseif(session('exception'))
         <div class="exception popup" id="popup"><i class="far fa-check-circle"></i> {{session('exception')}}</div>
     @endif
-
-<button onclick="window.location='http://localhost:8000/dashboard/gebruiksgegevens';" class="btn btn-primary" style="float:right;">Gebruikgegevens aanmaken</button>
-</div class="Gebruiksgegevens">
-
 <div class="gebruiksgegevens">
     <h1>Gebruiksgegevens</h1>
     <table class="table table-striped">
@@ -52,5 +48,6 @@ jQuery(function($) {
         @endforeach
       </tbody>
     </table>
+    <button onclick="window.location='http://localhost:8000/dashboard/gebruiksgegevensadd';" class="btn btn-primary" style="float:right;">Gebruikgegevens aanmaken</button>
 </div>
 @include('include.dashboard.footer')

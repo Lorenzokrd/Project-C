@@ -3,26 +3,26 @@
 <h1>Gebruiksgegevens Aanpassen</h1>
 <div class="row">
     <div class="col-lg-5">
-        <form action="editGebruiksgegeven" method="POST" enctype="multipart/form-data">
+        <form action="editGebruiksgegevens" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label for="gebruiksadress">Gebruiksgegevens adress</label>
-                <input type="input" class="form-control" name="gebruiksadress" placeholder="gebruiksgegevens adress" value="{{$gebruiksgegevens ?? ''->adress}}">
+                <label for="adress">Gebruiksgegevens adress</label>
+                <input type="input" class="form-control" name="adress" placeholder="gebruiksgegevens adress" value="{{$gebruiksgegevens->adress}}">
             </div>
             <div class="form-group">
-                <label for="gebruikswoonplaats">Gebruiksgegevens woonplaats</label>
-                <input type="number" class="form-control" name="gebruikswoonplaats" placeholder="gebruiksgegevens woonplaats" value="{{$gebruiksgegevens ?? ''->woonplaats}}">
+                <label for="woonplaats">Gebruiksgegevens woonplaats</label>
+                <input type="number" class="form-control" name="woonplaats" placeholder="gebruiksgegevens woonplaats" value="{{$gebruiksgegevens->woonplaats}}">
             </div>
             <div class="form-group">
-                <label for="gebruikspostcode">Gebruiksgegevens postcode</label>
-                <input type="input" class="form-control" name="gebruikspostcode" placeholder="gebruiksgegevens postcode" value="{{$gebruiksgegevens ?? ''->postcode}}">
+                <label for="postcode">Gebruiksgegevens postcode</label>
+                <input type="input" class="form-control" name="postcode" placeholder="gebruiksgegevens postcode" value="{{$gebruiksgegevens->postcode}}">
             </div>
             <div class="form-group">
-                <label for="gebruiksnummer">Gebruiksgegevens adress</label>
-                <input type="input" class="form-control" name="gebruiksnummer" placeholder="gebruiksgegevens telefoonnummer" value="{{$gebruiksgegevens ?? ''->telefoonnummer}}">
+                <label for="nummer">Gebruiksgegevens telefoonnummer</label>
+                <input type="input" class="form-control" name="nummer" placeholder="gebruiksgegevens telefoonnummer" value="{{$gebruiksgegevens->telefoonnummer}}">
             </div>
             
-            <input type="hidden" name="gebruiksgegevensId" value="{{$gebruiksgegevens ?? ''->id}}">
+            <input type="hidden" name="gebruiksgegevensId" value="{{$gebruiksgegevens->id}}">
             <button type="submit" class="btn btn-primary">Gebruiksgegevens aanpassen</button>
         </div>
         <div class="col-lg-1"></div>

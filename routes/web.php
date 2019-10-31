@@ -51,10 +51,16 @@ Route::post('dashboard/products/sumbitProduct','Products@save');
 Route::get('dashboard/products','Products@read');
 Route::post('dashboard/deleteProduct','Products@delete');
 
+Route::get('dashboard/gebruiksgegevensadd', function () {
+    return view('dashboard/gebruiksgegevensadd');
+});
 
-Route::post('dashboard/dashboard1/gebruiksgegevens/sumbitGebruiksgegevens','Gebruiksgegevens@save');
-Route::get('dashboard/dashboard1/gebruiksgegevens','Gebruiksgegevens@read');
-Route::post('dashboard/dashboard1/gebruiksgegevens/deleteGebruiksgegevens','Gebruiksgegevens@delete');
+Route::post('dashboard/submitGebruiksgegevens','Gebruiksgegevens@save');
+Route::get('dashboard/dashboard1','Gebruiksgegevens@read');
+Route::post('dashboard/deleteGebruiksgegevens','Gebruiksgegevens@delete');
+
+Route::get('dashboard/gebruiksgegevens', 'Gebruiksgegevens@find');
+Route::post('dashboard/gebruiksgegevens/editGebruiksgegevens','Gebruiksgegevens@update');
 
 Route::get('dashboard/dashboard1', function () {
     return view('dashboard/dashboard1');
