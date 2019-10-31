@@ -32,7 +32,7 @@ class Products extends Controller
             $product->toggle_rating = ($req->productRating == null) ? 0 : 1;
             $product->save();
             return redirect('dashboard/products')->with('success', 'Nieuw product is succesvol aangemaakt!');
-        } catch(\Exception $e){
+        } catch(Exception $e){
             return redirect('dashboard/products')->with('exception', 'Product is unsuccesvol aangemaakt!');
         }
     }

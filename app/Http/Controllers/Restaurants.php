@@ -30,6 +30,9 @@ class Restaurants extends Controller
             $restaurant->city = $req->city;
             $restaurant->street = $req->street;
             $restaurant->zip_code = $req->zipCode;
+            if(!$req->restaurantImage == null) {
+                $restaurant->image = $req->file('restaurantImage')->store('public');
+            }
             $restaurant->save();
             return redirect('register-restaurant/success');
         } catch(\Exception $e){
@@ -55,5 +58,9 @@ class Restaurants extends Controller
             return redirect('dashboard')->with('exception', 'Goedkeuren restaurant mislukt!');
         }
 
+    }
+    function fetch(){
+        $restaurants = Restaurant::all();
+        return view('/index',['restaurants'=>$restaurants]);
     }
 }

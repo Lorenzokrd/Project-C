@@ -19,7 +19,7 @@ die();
                 <div class="card-header">Restaurant aanmelden</div>
 
                 <div class="card-body">
-                    <form method="POST" action="submitRestaurant">
+                    <form method="POST" action="submitRestaurant" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group row">
@@ -29,6 +29,13 @@ die();
                                 <input id="name" type="text" class="form-control" name="name" required>
                             </div>
                         </div>
+                        <div class="form-group row">
+                                <label for="restaurantImage" class="col-md-4 col-form-label text-md-right">Foto</label>
+    
+                                <div class="col-md-6">
+                                    <input  type="file" class="form-control" name="restaurantImage" required>
+                                </div>
+                            </div>
 
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">E-mailadres</label>

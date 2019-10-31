@@ -15,7 +15,8 @@ class ProductAllergies extends Migration
     {
         Schema::create('product_allergies', function (Blueprint $table) {
             $table->Increments('id');
-            $table->integer('product_id');
+            $table->integer('product_id')->unsigned();
+            $table->foreign('product_id')->references('id')->on('product')->onDelete('cascade');
             $table->integer('allergy_id');
         });
     }
