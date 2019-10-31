@@ -20,7 +20,6 @@ jQuery(function($) {
     <table class="table table-striped">
       <thead class="thead-black">
         <tr>
-          <th scope="col">ID</th>
           <th scope="col">Naam</th>
           <th scope="col">Beschrijving</th>
           <th scope="col">Prijs</th>
@@ -33,7 +32,6 @@ jQuery(function($) {
       <tbody>
         @foreach($products as $product)
         <tr>
-          <th scope="row">{{$product->id}}</th>
           <td>{{$product->name}}</td>
           <td>{{$product->description}}</td>
           <td>{{$product->price}}</td>

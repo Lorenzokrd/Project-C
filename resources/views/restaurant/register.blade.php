@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+
+<?php
+if(Auth::user() == null){
+header("Location: /login");
+die();
+} elseif (Auth::user()->role < 3) {
+header("Location: /");
+die();
+}
+ ?>
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">

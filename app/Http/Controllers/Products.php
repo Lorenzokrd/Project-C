@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Restaurant;
 use Illuminate\Support\Facades\Storage;
 
 class Products extends Controller
@@ -20,7 +21,8 @@ class Products extends Controller
         }
 
         try {
-            $product->restaurant_id = 1;
+            $restaurant=Restaurant::where('user_id', $req->userId)->first();
+            $product->restaurant_id = $restaurant->id;
             $product->name = $req->productName;
             $product->description = $req->productDesc;
             if(!$req->productImage == null) {
@@ -36,7 +38,9 @@ class Products extends Controller
     }
 
     function read(){
-        $products = Product::all();
+        $userId = \Auth::user()->id;
+        $restaurant = Restaurant::where('user_id', $userId)->first();
+        $products = Product::where('restaurant_id', $restaurant->id)->get();
         return view('dashboard/products',['products'=>$products]);
     }
 

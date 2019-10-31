@@ -1,3 +1,12 @@
+<?php
+if(Auth::user() == null){
+header("Location: /login");
+die();
+} elseif (Auth::user()->role > 2) {
+header("Location: /");
+die();
+}
+ ?>
 <!DOCTYPE html>
 <html style="height:100%">
 <head>

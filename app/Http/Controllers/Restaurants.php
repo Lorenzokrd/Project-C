@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Restaurant;
+use App\User;
 use Illuminate\Support\Facades\Storage;
 
 class Restaurants extends Controller
@@ -43,9 +44,12 @@ class Restaurants extends Controller
 
     function approve(Request $req){
         try {
-            $restaurant=Restaurant::find($req->id);
+            $restaurant=Restaurant::find($req->restaurantId);
             $restaurant->approved = 1;
             $restaurant->save();
+            $user=User::find($req->userId);
+            $user->role = 2;
+            $user->save();
             return redirect('dashboard')->with('success', 'Restaurant goedgekeurd!');
         } catch(\Exception $e){
             return redirect('dashboard')->with('exception', 'Goedkeuren restaurant mislukt!');

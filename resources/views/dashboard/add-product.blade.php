@@ -18,7 +18,7 @@
                 <input type="checkbox" class="form-check-input" name="productRating" >
                 <label class="form-check-label" for="productRating">Product beoordeling</label>
             </div>
-            <input type="hidden" name="restaurantId" value="1">
+            <input type="hidden" name="userId" value="<?php echo Auth::user()->id ?>">
             <button type="submit" class="btn btn-primary">Product aanmaken</button>
         </div>
         <div class="col-lg-6">
