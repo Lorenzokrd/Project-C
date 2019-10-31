@@ -39,9 +39,9 @@ Route::get('dashboard/orders', function () {
     return view('dashboard/orders');
 });
 
-// Route::get('dashboard/products', function () {
-//     return view('dashboard/products');
-// });
+ Route::get('dashboard/products', function () {
+    return view('dashboard/products');
+ });
 
 Route::get('dashboard/products/add-product', function () {
     return view('dashboard/add-product');
@@ -50,6 +50,14 @@ Route::get('dashboard/products/add-product', function () {
 Route::post('dashboard/products/sumbitProduct','Products@save');
 Route::get('dashboard/products','Products@read');
 Route::post('dashboard/deleteProduct','Products@delete');
+
+Route::get('dashboard/dashboard1', function () {
+    return view('dashboard/dashboard1');
+});
+
+Route::get('dashboard/gebruiksgegevens', function () {
+    return view('dashboard/gebruiksgegevens');
+});
 
 Route::get('dashboard/settings', function () {
     return view('dashboard/settings');

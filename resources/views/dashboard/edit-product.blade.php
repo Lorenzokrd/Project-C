@@ -15,7 +15,7 @@
                 <input type="input" class="form-control" name="productPrice" placeholder="Product prijs" value="{{$product->price}}">
             </div>
             <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" name="productRating" <?php if($product->toggle_rating == 1){ echo "checked"; } ?>
+                <input type="checkbox" class="form-check-input" name="productRating" <?php if($product->toggle_rating == 1){ echo "checked"; } ?>>
                 <label class="form-check-label" for="productRating">Product beoordeling</label>
 
             </div>
