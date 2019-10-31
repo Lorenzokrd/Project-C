@@ -14,10 +14,9 @@
 Route::get('/', function () {
     return view('index');
 });
+Route::get('/','Restaurants@fetch');
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard/dashboard');

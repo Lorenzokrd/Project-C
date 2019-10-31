@@ -25,6 +25,7 @@ class Restaurant extends Migration
             $table->string('city');
             $table->string('street');
             $table->string('zip_code');
+            $table->string('image');
             $table->boolean('approved')->default(0);
         });
     }
