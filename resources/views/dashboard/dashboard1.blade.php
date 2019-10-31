@@ -17,7 +17,7 @@ jQuery(function($) {
 <button onclick="window.location='http://localhost:8000/dashboard/gebruiksgegevens';" class="btn btn-primary" style="float:right;">Gebruikgegevens aanmaken</button>
 </div class="Gebruiksgegevens">
 
-<div class="products">
+<div class="gebruiksgegevens">
     <h1>Gebruiksgegevens</h1>
     <table class="table table-striped">
       <thead class="thead-black">
@@ -43,7 +43,7 @@ jQuery(function($) {
               <input type="hidden" name="gebruiksgegevensId" value="{{$gebruiksgegevens->id}}">
               <td style="width:100px;"><button type="submit" class="btn btn-primary" >Aanpassen</button></td>
           </form>
-          <form action="deletegebruiksgegevens" method="POST">
+          <form action="deleteGebruiksgegevens" method="POST">
               @csrf
               <input type="hidden" name="gebruiksgegevensId" value="{{$gebruiksgegevens->id}}">
               <td style="width:100px;"><button type="submit" class="btn btn-danger">Verwijderen</button></td>
