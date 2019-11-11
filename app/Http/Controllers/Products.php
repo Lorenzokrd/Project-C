@@ -42,6 +42,7 @@ class Products extends Controller
         $restaurant = Restaurant::where('user_id', $userId)->first();
         $products = Product::where('restaurant_id', $restaurant->id)->get();
         return view('dashboard/products',['products'=>$products]);
+
     }
 
     function delete(Request $req){
@@ -84,6 +85,11 @@ class Products extends Controller
     function find(Request $req){
         $product=Product::find($req->productId);
         return view('dashboard/edit-product',['product'=>$product]);
+    }
+    
+    function getProducts($restaurantName,$restaurantId){
+        $product = Product::where('restaurant_id', $restaurantId)->get();
+        return $product;
     }
 
 }
