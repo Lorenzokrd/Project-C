@@ -129,7 +129,7 @@
             <div class="row">
                 @foreach ($restaurants as $restaurant)
                 @if($restaurant->approved == 1)
-                <div class="col col-12 col-sm-6 col-lg-4 restaurant-grid-item" onclick="document.location='/#';return false;">
+            <div class="col col-12 col-sm-6 col-lg-4 restaurant-grid-item" onclick="document.location='/{{$restaurant->name}}';">
                     <div class="restaurant-card" style="background-image:url({{ asset('storage/'.str_replace('public/', '', $restaurant->image)) }});">
                         <div class="restaurant-name">
                             <p><i class="far fa-star" aria-hidden="true"></i> {{$restaurant->name}}</p>
