@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Restaurant;
 use Illuminate\Support\Facades\Storage;
-
+use Session;
+use App\Cart;
 class Products extends Controller
 {
     function save(Request $req){
@@ -42,7 +43,6 @@ class Products extends Controller
         $restaurant = Restaurant::where('user_id', $userId)->first();
         $products = Product::where('restaurant_id', $restaurant->id)->get();
         return view('dashboard/products',['products'=>$products]);
-
     }
 
     function delete(Request $req){
@@ -87,9 +87,17 @@ class Products extends Controller
         return view('dashboard/edit-product',['product'=>$product]);
     }
     
-    function getProducts($restaurantName,$restaurantId){
-        $product = Product::where('restaurant_id', $restaurantId)->get();
+    function getProducts($restaurantName){
+        $restaurant = Restaurant::where('name',$restaurantName)->first();
+        $product = Product::where('restaurant_id', $restaurant->id)->get();
         return $product;
     }
-
+    function addToCart(Request $req,$productId){
+        $product = Product::find($productId);
+        $prevCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($prevCart);
+        $cart->addProduct($product,$product->id);
+        dd($req->Session()->get('cart'));
+        $req->Session()->put('cart',$cart);
+    }
 }

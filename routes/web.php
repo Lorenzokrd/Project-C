@@ -57,4 +57,4 @@ Route::get('dashboard/settings', function () {
 Route::get('dashboard/products/edit-product', 'Products@find');
 Route::post('dashboard/products/update-product','Products@update');
 
-Route::get('/{restaurantName}/{restaurantId}','Products@getProducts');
+Route::get('/{restaurantName}','Products@getProducts');
