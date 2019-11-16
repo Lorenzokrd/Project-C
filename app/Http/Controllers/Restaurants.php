@@ -20,7 +20,7 @@ class Restaurants extends Controller
             }
         }
 
-        try {
+        // try {
             $restaurant->user_id = $req->userId;
             $restaurant->name = $req->name;
             $restaurant->email = $req->email;
@@ -35,9 +35,9 @@ class Restaurants extends Controller
             }
             $restaurant->save();
             return redirect('register-restaurant/success');
-        } catch(\Exception $e){
+        // } catch(\Exception $e){
             return redirect('register-restaurant')->with('exception', 'Aanmelding is niet succesvol verwerkt!');
-        }
+        // }
     }
 
     function read(){

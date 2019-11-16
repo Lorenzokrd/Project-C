@@ -7,12 +7,12 @@ class Cart
 {
     public $products = null;
     public $totalQuantity = 0;
-    public $totalePrice = 0;
+    public $totalPrice = 0;
     public function __construct($prevCart){
         if ($prevCart){
-            $this->$products = $prevCart->products;
-            $this->$totalQuantity = $prevCart->totalQuantity;
-            $this->$totalePrice = $prevCart->totalePrice;
+            $this->products = $prevCart->products;
+            $this->totalQuantity = $prevCart->totalQuantity;
+            $this->totalPrice = $prevCart->totalPrice;
         }
     }
     public function addProduct($product,$id){
@@ -25,7 +25,18 @@ class Cart
         $storedProduct['quantity']++;
         $storedProduct['price'] = $product->price * $storedProduct['quantity'];
         $this->products[$id] = $storedProduct;
-        $totalQuantity++;
-        $this->totalePrice += $product->price;
+        $this->totalQuantity++;
+        $this->totalPrice += $product->price;
+    }
+
+    public function removeProduct($id){
+        $this->products[$id]['quantity'] -= 1;
+        $this->products[$id]['price'] -= $this->products[$id]['product']['price'];
+        $this->totalQuantity -= 1;
+        $this->totalPrice -= $this->products[$id]['product']['price'];
+
+        if ($this->products[$id]['quantity'] <= 0) {
+            unset($this->products[$id]);
+        }
     }
 }

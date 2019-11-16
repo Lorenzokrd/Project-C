@@ -86,18 +86,29 @@ class Products extends Controller
         $product=Product::find($req->productId);
         return view('dashboard/edit-product',['product'=>$product]);
     }
-    
+
     function getProducts($restaurantName){
         $restaurant = Restaurant::where('name',$restaurantName)->first();
-        $product = Product::where('restaurant_id', $restaurant->id)->get();
-        return $product;
+        $products = Product::where('restaurant_id', $restaurant->id)->get();
+        $info = array("restaurant" => $restaurant, "products" => $products);
+        return view('restaurant',['info'=>$info]);
     }
-    function addToCart(Request $req,$productId){
+
+    function addToCart($restaurantName,$productId){
         $product = Product::find($productId);
-        $prevCart = Session::has('cart') ? Session::get('cart') : null;
+        $prevCart = Session::has($restaurantName) ? Session::get($restaurantName) : null;
         $cart = new Cart($prevCart);
         $cart->addProduct($product,$product->id);
-        dd($req->Session()->get('cart'));
-        $req->Session()->put('cart',$cart);
+        Session::put($restaurantName,$cart);
+        return redirect($restaurantName);
     }
+
+    function removeFromCart($restaurantName,$productId) {
+        $prevCart = Session::has($restaurantName) ? Session::get($restaurantName) : null;
+        $cart = new Cart($prevCart);
+        $cart->removeProduct($productId);
+        Session::put($restaurantName, $cart);
+        return redirect($restaurantName);
+    }
+
 }

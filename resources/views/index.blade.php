@@ -139,7 +139,7 @@
                         </div>
                         <div class="restaurant-info">
                             <img class="restaurant-score" src="https://cdn.discordapp.com/attachments/206957264408412162/630042617047941132/image_1.png">
-                            <p class="price"><i class="fas fa-shopping-basket"></i>Min. {{ $restaurant->min_order_price}}</p>
+                            <p class="price"><i class="fas fa-shopping-basket"></i> Min. {{ $restaurant->min_order_price}}</p>
                         <p class="time"><i class="far fa-clock"></i> 30 min</p>
                             <p class="tags">Burgers, salades, patat</p>
                         </div>
