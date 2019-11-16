@@ -59,12 +59,16 @@
                 <div class="cart-sum">
                     <div class="cart-delivery">
                         <span>Bezorgkosten</span>
-                        <span class="float-right cart-delivery-price">€ {{$info["restaurant"]->delivery_price}}</span>
+                        <span class="float-right cart-delivery-price">€ {{str_replace('.', ',', number_format($info["restaurant"]->delivery_price, 2, ',', ' '))}}</span>
                     </div>
                     <div class="cart-total">
                         <span>Totaal</span>
                         @if (Session::has($info["restaurant"]->name))
+                        @if (Session::get($info["restaurant"]->name)->totalPrice == 0)
+                        <span class="float-right cart-total-price">€ {{str_replace('.', ',', number_format($info["restaurant"]->delivery_price, 2, ',', ' '))}}</span>
+                        @else
                         <span class="float-right cart-total-price">€ {{str_replace('.', ',', number_format(Session::get($info["restaurant"]->name)->totalPrice, 2, ',', ' '))}}</span>
+                        @endif
                         @else
                         <span class="float-right cart-total-price">€ {{$info["restaurant"]->delivery_price}}</span>
                         @endif
@@ -72,10 +76,10 @@
                 </div>
             </div>
             @if (Session::has($info["restaurant"]->name))
-            @if (Session::get($info["restaurant"]->name)->totalPrice < $info["restaurant"]->min_order_price )
+            @if (Session::get($info["restaurant"]->name)->totalPrice - $info["restaurant"]->delivery_price < $info["restaurant"]->min_order_price )
             <span class="min-order-warning">De minimale bestelprijs is €{{$info["restaurant"]->min_order_price}}</span>
             @endif
-            <button class="btn btn-primary cart-order-btn" <?php if(Session::get($info["restaurant"]->name)->totalPrice < $info["restaurant"]->min_order_price ) { echo "disabled"; } ?>>Bestellen</button>
+            <button class="btn btn-primary cart-order-btn" <?php if(Session::get($info["restaurant"]->name)->totalPrice - $info["restaurant"]->delivery_price < $info["restaurant"]->min_order_price ) { echo "disabled"; } ?>>Bestellen</button>
             @else
             <span class="min-order-warning">De minimale bestelprijs is €{{$info["restaurant"]->min_order_price}}</span>
             <button class="btn btn-primary cart-order-btn" disabled>Bestellen</button>

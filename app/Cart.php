@@ -15,7 +15,11 @@ class Cart
             $this->totalPrice = $prevCart->totalPrice;
         }
     }
-    public function addProduct($product,$id){
+    public function addProduct($product,$id,$deliveryPrice){
+        if($this->totalPrice == 0){
+            $this->totalPrice += $deliveryPrice;
+        }
+
         $storedProduct = ['quantity' => 0, 'price'=>$product->price, 'product'=>$product ];
         if ($this->products){
             if(array_key_exists($id, $this->products)){

@@ -96,9 +96,10 @@ class Products extends Controller
 
     function addToCart($restaurantName,$productId){
         $product = Product::find($productId);
+        $restaurant = Restaurant::where('name',$restaurantName)->get();
         $prevCart = Session::has($restaurantName) ? Session::get($restaurantName) : null;
         $cart = new Cart($prevCart);
-        $cart->addProduct($product,$product->id);
+        $cart->addProduct($product,$product->id,$restaurant[0]->delivery_price);
         Session::put($restaurantName,$cart);
         return redirect($restaurantName);
     }
