@@ -22,6 +22,10 @@ Route::get('/dashboard', function () {
     return view('dashboard/dashboard');
 });
 
+Route::get('/restaurant', function () {
+    return view('restaurant');
+});
+
 Route::get('dashboard','Restaurants@read');
 
 Route::get('register-restaurant/success', function () {
@@ -39,10 +43,6 @@ Route::get('dashboard/orders', function () {
     return view('dashboard/orders');
 });
 
-// Route::get('dashboard/products', function () {
-//     return view('dashboard/products');
-// });
-
 Route::get('dashboard/products/add-product', function () {
     return view('dashboard/add-product');
 });
@@ -58,3 +58,7 @@ Route::get('dashboard/products/edit-product', 'Products@find');
 Route::post('dashboard/products/update-product','Products@update');
 
 Route::get('/{restaurantName}','Products@getProducts');
+
+Route::get('/add-to-cart/{restaurantName}/{id}', 'Products@addToCart');
+
+Route::get('/remove-from-cart/{restaurantName}/{id}', 'Products@removeFromCart');
