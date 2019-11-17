@@ -42,7 +42,7 @@ class Products extends Controller
         $userId = \Auth::user()->id;
         $restaurant = Restaurant::where('user_id', $userId)->first();
         $products = Product::where('restaurant_id', $restaurant->id)->get();
-        return view('dashboard/products',['products'=>$products]);
+        return view('dashboard.products',['products'=>$products]);
     }
 
     function delete(Request $req){
