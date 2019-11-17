@@ -79,7 +79,7 @@
             @if (Session::get($info["restaurant"]->name)->totalPrice - $info["restaurant"]->delivery_price < $info["restaurant"]->min_order_price )
             <span class="min-order-warning">De minimale bestelprijs is €{{$info["restaurant"]->min_order_price}}</span>
             @endif
-            <button class="btn btn-primary cart-order-btn" <?php if(Session::get($info["restaurant"]->name)->totalPrice - $info["restaurant"]->delivery_price < $info["restaurant"]->min_order_price ) { echo "disabled"; } ?>>Bestellen</button>
+            <button class="btn btn-primary cart-order-btn" onclick="document.location='/{{$info["restaurant"]->name}}/order';" <?php if(Session::get($info["restaurant"]->name)->totalPrice - $info["restaurant"]->delivery_price < $info["restaurant"]->min_order_price ) { echo "disabled"; } ?>>Bestellen</button>
             @else
             <span class="min-order-warning">De minimale bestelprijs is €{{$info["restaurant"]->min_order_price}}</span>
             <button class="btn btn-primary cart-order-btn" disabled>Bestellen</button>
