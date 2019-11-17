@@ -18,7 +18,7 @@ Route::get('/','Restaurants@fetch');
 
 Auth::routes();
 Route::group(['middleware' => 'web'], function () {
-    
+
     Route::get('/dashboard', function () {
         return view('dashboard/dashboard');
     });
