@@ -60,6 +60,6 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/add-to-cart/{restaurantName}/{id}', 'Products@addToCart');
 
-    Route::get('/remove-from-cart/{restaurantName}/{id}', 'Products@removeFromCart');
+    Route::get('/remove-from-cart/{restaurantName}/{id}','Products@removeFromCart');
     Route::get('/{restaurantName}/order','OrdersController@createOrder');
 });

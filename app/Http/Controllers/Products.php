@@ -112,4 +112,18 @@ class Products extends Controller
         return redirect($restaurantName);
     }
 
+    function createAllergy(Request $req){
+        $allergy = new Allergy;
+        $allergy->name = $req->allergyName;
+        $allergy->description = $req->allergyDesc;
+        $allergy->save();
+    }
+
+    function addAllergyToProduct(Request $req){
+        $productAllergy = new ProductAllergy;
+        $productAllergy->product_id = $req->productId;
+        $productAllergy->allergy_id = $req->allergyId;
+        $productAllergy->save();
+    }
+
 }

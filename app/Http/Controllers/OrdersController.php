@@ -8,6 +8,7 @@ use App\Order;
 use App\Orders;
 use App\Restaurant;
 use App\Product;
+use Auth;
 
 class OrdersController extends Controller
 {
@@ -34,24 +35,33 @@ class OrdersController extends Controller
     function read(){
         $index=0;
         $restaurantorders = array();
-        $orders = null;
+        $orders = array();
         $orderedProducts = array();
         $userId = \Auth::user()->id;
         $restaurantId = Restaurant::where('user_id',$userId)->first()->id;
         $order = Order::where('restaurant_id',$restaurantId)->get();
-
         foreach($order as $item3){
             $orders[]=Orders::where('order_id',$item3->id)->get();
-            foreach($order as $item){
-                foreach($orders as $item2){
-                    $orderedProducts = [$item2[$index]["id"]=>['productName'=>Product::find($item2[$index]["product_id"])->name, 'quantity'=>$item2[$index]["quantity"],'price'=>Product::find($item2[$index]["product_id"])->price*$item2[$index]["quantity"]]]; 
-                    if($item->id == $item2[$index]["order_id"]){
-                        $restaurantorders += [$item->id=>['products'=>[$orderedProducts],'userId'=>$item->user_id]];
-                    }
-                }     
-            }   
+        }
+        
+        foreach($orders as $item2){
+            for($i = 0; $i<count($item2);$i++){
+                $item2[$i]["productName"] = Product::find($item2[$i]["product_id"])->name;
+                $item2[$i]["price"] = Product::find($item2[$i]["product_id"])->price*$item2[$i]["quantity"];
+                unset($item2[$i]['id']);
+                unset($item2[$i]['product_id']);
+            }      
         }
 
+        foreach($order as $item){
+            foreach($orders as $product){
+                for($i = 0; $i<count($product);$i++){
+                    if($product[$i]["order_id"] == $item->id){
+                        $restaurantorders += [$item->id=>['products'=>$product,'userId'=>$item->user_id]];
+                    }  
+                }
+            }
+        }
         return $restaurantorders;
     }
 }
