@@ -64,4 +64,9 @@ class OrdersController extends Controller
         }
         return $restaurantorders;
     }
+    function updateStatus(Request $req){
+        $order= Order::find($req->orderId);
+        $order->status = $req->orderStatus;
+        $order->save();
+    }
 }

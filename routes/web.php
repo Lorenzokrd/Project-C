@@ -62,4 +62,8 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/remove-from-cart/{restaurantName}/{id}','Products@removeFromCart');
     Route::get('/{restaurantName}/order','OrdersController@createOrder');
+
+    Route::post('updateStatus','OrdersController@updateStatus');
+    Route::post('createAllergy','Products@createAllergy');
+    Route::post('addAllergyToProduct', 'Products@addAllergyToProduct');
 });
