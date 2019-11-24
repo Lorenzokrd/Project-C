@@ -11,6 +11,14 @@
 |
 */
 
+Route::get('/user', function () {
+    return view('user');
+});
+
+Route::get('/user1', function () {
+    return view('user1');
+});
+
 Route::get('/', function () {
     return view('index');
 });
@@ -18,7 +26,7 @@ Route::get('/','Restaurants@fetch');
 
 Auth::routes();
 Route::group(['middleware' => 'web'], function () {
-    
+
     Route::get('/dashboard', function () {
         return view('dashboard/dashboard');
     });

@@ -11,6 +11,9 @@
 <script src="{{ asset('js/jquery.js') }}"></script>
 <script src="{{ asset('js/cart.js') }}" async></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 
 <nav class="navbar navbar-expand-md fixed-top">
     <div class="w-100 order-1 order-md-0">

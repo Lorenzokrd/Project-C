@@ -89,9 +89,9 @@ class Products extends Controller
 
     function getProducts($restaurantName){
         $restaurant = Restaurant::where('name',$restaurantName)->first();
-        $products = Product::where('restaurant_id', $restaurant->id)->get();
-        $info = array("restaurant" => $restaurant, "products" => $products);
-        return view('restaurant',['info'=>$info]);
+        //$products = Product::where('restaurant_id', $restaurant->id)->get();
+        //$info = array("restaurant" => $restaurant, "products" => $products);
+        //return view('restaurant',['info'=>$info]);
     }
 
     function addToCart($restaurantName,$productId){
