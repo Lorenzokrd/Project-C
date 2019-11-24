@@ -37,6 +37,10 @@ Route::group(['middleware' => 'web'], function () {
         return view('restaurant/register');
     });
 
+    Route::get('dashboard/categories', function () {
+        return view('dashboard/categories');
+    });
+
     Route::post('submitRestaurant','Restaurants@save');
     Route::post('approveRestaurant','Restaurants@approve');
 
@@ -49,6 +53,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('dashboard/products/sumbitProduct','Products@save');
     Route::get('dashboard/products','Products@read');
     Route::post('dashboard/deleteProduct','Products@delete');
+
+    Route::post('dashboard/submitCategory','CategoriesController@save');
+    //Route::get('dashboard/categories','CategoriesController@read');
 
     Route::get('dashboard/settings', function () {
         return view('dashboard/settings');
