@@ -12,12 +12,14 @@
 */
 
 Route::get('/user', function () {
-    return view('user');
+   return view('user');
 });
 
-Route::get('/user1', function () {
-    return view('user1');
-});
+#Route::get('/user1', function () {
+#    return view('user1');
+#});
+
+Route::get('/user1', 'Users@index');
 
 Route::get('/', function () {
     return view('index');
