@@ -1,5 +1,4 @@
 @include('include.navbar')
-
 <div id="restaurant-banner" class="restaurant-banner" style="background-image: url('{{URL('/images/restaurant-banner.png')}}');">
     <div class="restaurant-title">
         {{$info["restaurant"]->name}} <img src="https://i.imgur.com/HnD1EGv.png" style="width:120px;margin-bottom:3px;">
@@ -87,7 +86,6 @@
         </div>
     </div>
 </div>
-
 
 </body>
 </html>
