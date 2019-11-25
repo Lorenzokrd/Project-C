@@ -73,4 +73,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('updateStatus','OrdersController@updateStatus');
     Route::post('createAllergy','Products@createAllergy');
     Route::post('addAllergyToProduct', 'Products@addAllergyToProduct');
+
+    Route::get('/dashboard/categories','CategoriesController@read');
 });
