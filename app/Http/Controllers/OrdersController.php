@@ -9,6 +9,7 @@ use App\Orders;
 use App\Restaurant;
 use App\Product;
 use Auth;
+use App\Cart;
 
 class OrdersController extends Controller
 {
@@ -43,14 +44,14 @@ class OrdersController extends Controller
         foreach($order as $item3){
             $orders[]=Orders::where('order_id',$item3->id)->get();
         }
-        
+
         foreach($orders as $item2){
             for($i = 0; $i<count($item2);$i++){
                 $item2[$i]["productName"] = Product::find($item2[$i]["product_id"])->name;
                 $item2[$i]["price"] = Product::find($item2[$i]["product_id"])->price*$item2[$i]["quantity"];
                 unset($item2[$i]['id']);
                 unset($item2[$i]['product_id']);
-            }      
+            }
         }
 
         foreach($order as $item){
@@ -58,11 +59,12 @@ class OrdersController extends Controller
                 for($i = 0; $i<count($product);$i++){
                     if($product[$i]["order_id"] == $item->id){
                         $restaurantorders += [$item->id=>['products'=>$product,'userId'=>$item->user_id]];
-                    }  
+                    }
                 }
             }
         }
-        return $restaurantorders;
+        
+        return view('/dashboard/orders',['orders'=>$restaurantorders]);
     }
     function updateStatus(Request $req){
         $order= Order::find($req->orderId);
