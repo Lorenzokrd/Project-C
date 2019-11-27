@@ -17,6 +17,7 @@ class Order extends Migration
             $table->Increments('id');
             $table->integer('user_id')->references('id')->on('users');
             $table->integer('restaurant_id')->references('id')->on('restaurant');
+            $table->string('status')->default('geplaatst');
         });
     }
 

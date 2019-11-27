@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Restaurant;
 use App\Category;
 use App\Categories;
+use Auth;
 
 class CategoriesController extends Controller
 {
@@ -23,6 +24,12 @@ class CategoriesController extends Controller
     }
 
     function read(){
-        return redirect('dashboard/categories');
+        $userId = \Auth::user()->id;
+        $restaurantId= Restaurant::where('user_id',$userId)->first()->id;
+        $categories = Categories::where('restaurant_id',$restaurantId)->get();
+        foreach($categories as $category){
+            $category['categoryName'] = Category::find($category['category_id'])->name;
+        }
+        return view('dashboard/categories', $categories);
     }
 }
