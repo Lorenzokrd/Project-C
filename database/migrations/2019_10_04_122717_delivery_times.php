@@ -15,7 +15,8 @@ class DeliveryTimes extends Migration
     {
         Schema::create('delivery_times', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('restaurant_id');
+            $table->integer('restaurant_id')->unsigned();
+            $table->foreign('restaurant_id')->references('id')->on('restaurant')->onDelete('cascade');
             $table->string('monday');
             $table->string('tuesday');
             $table->string('wednesday');

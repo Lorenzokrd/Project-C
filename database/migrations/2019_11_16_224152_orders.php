@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class OptionChoice extends Migration
+class Orders extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class OptionChoice extends Migration
      */
     public function up()
     {
-        Schema::create('option_choice', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('product_id');
-            $table->string('name');
+        Schema::create('orders', function (Blueprint $table) {
+            $table->Increments('id');
+            $table->integer('order_id')->references('id')->on('order');
+            $table->integer('product_id')->references('id')->on('product');
+            $table->integer('quantity');
         });
     }
 
@@ -27,6 +28,6 @@ class OptionChoice extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('option_choice');
+        Schema::dropIfExists('orders');
     }
 }

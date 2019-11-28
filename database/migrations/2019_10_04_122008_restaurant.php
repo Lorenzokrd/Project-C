@@ -15,16 +15,18 @@ class Restaurant extends Migration
     {
         Schema::create('restaurant', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->integer('user_id');
+            $table->string('name')->unique;
             $table->string('email')->unique;
-            $table->string('password');
             $table->decimal('min_order_price',5,2);
             $table->decimal('delivery_price',5,2);
-            $table->integer('avg_delivery_time');
+            $table->integer('avg_delivery_time')->nullable();
             $table->string('website');
             $table->string('city');
             $table->string('street');
             $table->string('zip_code');
+            $table->string('image');
+            $table->boolean('approved')->default(0);
         });
     }
 

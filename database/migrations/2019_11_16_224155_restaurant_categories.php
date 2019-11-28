@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ProductAllergies extends Migration
+class RestaurantCategories extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class ProductAllergies extends Migration
      */
     public function up()
     {
-        Schema::create('product_allergies', function (Blueprint $table) {
+        Schema::create('restaurant_categories', function (Blueprint $table) {
             $table->Increments('id');
-            $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('product')->onDelete('cascade');
-            $table->integer('allergy_id');
+            $table->integer('restaurant_id')->references('id')->on('restaurant');
+            $table->integer('category_id')->references('id')->on('categories');
         });
     }
 
@@ -28,6 +27,6 @@ class ProductAllergies extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_allergies');
+        Schema::dropIfExists('restaurant_categories');
     }
 }

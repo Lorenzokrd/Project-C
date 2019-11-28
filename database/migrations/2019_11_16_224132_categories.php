@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Option extends Migration
+class Categories extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class Option extends Migration
      */
     public function up()
     {
-        Schema::create('option', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('option_choice_id')->unsigned();
-            $table->foreign('option_choice_id')->references('id')->on('option_choice')->onDelete('cascade');
+        Schema::create('categories', function (Blueprint $table) {
+            $table->Increments('id');
             $table->string('name');
-            $table->string('type');
         });
     }
 
@@ -29,6 +26,6 @@ class Option extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('option');
+        Schema::dropIfExists('categories');
     }
 }

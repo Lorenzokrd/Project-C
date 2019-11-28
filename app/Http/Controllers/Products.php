@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Restaurant;
 use Illuminate\Support\Facades\Storage;
+use Session;
+use App\Cart;
 
 class Products extends Controller
 {
@@ -20,7 +23,8 @@ class Products extends Controller
         }
 
         try {
-            $product->restaurant_id = 1;
+            $restaurant=Restaurant::where('user_id', $req->userId)->first();
+            $product->restaurant_id = $restaurant->id;
             $product->name = $req->productName;
             $product->description = $req->productDesc;
             if(!$req->productImage == null) {
@@ -30,14 +34,16 @@ class Products extends Controller
             $product->toggle_rating = ($req->productRating == null) ? 0 : 1;
             $product->save();
             return redirect('dashboard/products')->with('success', 'Nieuw product is succesvol aangemaakt!');
-        } catch(\Exception $e){
+        } catch(Exception $e){
             return redirect('dashboard/products')->with('exception', 'Product is unsuccesvol aangemaakt!');
         }
     }
 
     function read(){
-        $products = Product::all();
-        return view('dashboard/products',['products'=>$products]);
+        $userId = \Auth::user()->id;
+        $restaurant = Restaurant::where('user_id', $userId)->first();
+        $products = Product::where('restaurant_id', $restaurant->id)->get();
+        return view('dashboard.products',['products'=>$products]);
     }
 
     function delete(Request $req){
@@ -71,7 +77,7 @@ class Products extends Controller
             $product->price = $req->productPrice;
             $product->toggle_rating = ($req->productRating == null) ? 0 : 1;
             $product->save();
-            return redirect('dashboard/products')->with('success', 'product is succesvol bijgewerkt!');
+            return redirect('dashboard/products')->with('success', 'Product is succesvol bijgewerkt!');
         } catch(\Exception $e){
             return redirect('dashboard/products')->with('exception', 'Product is unsuccesvol aangemaakt!');
         }
@@ -80,6 +86,45 @@ class Products extends Controller
     function find(Request $req){
         $product=Product::find($req->productId);
         return view('dashboard/edit-product',['product'=>$product]);
+    }
+
+    function getProducts($restaurantName){
+        $restaurant = Restaurant::where('name',$restaurantName)->first();
+        $products = Product::where('restaurant_id', $restaurant->id)->get();
+        $info = array("restaurant" => $restaurant, "products" => $products);
+        return view('restaurant',['info'=>$info]);
+    }
+
+    function addToCart($restaurantName,$productId){
+        $product = Product::find($productId);
+        $restaurant = Restaurant::where('name',$restaurantName)->get();
+        $prevCart = Session::has($restaurantName) ? Session::get($restaurantName) : null;
+        $cart = new Cart($prevCart);
+        $cart->addProduct($product,$product->id,$restaurant[0]->delivery_price);
+        Session::put($restaurantName,$cart);
+        return redirect($restaurantName);
+    }
+
+    function removeFromCart($restaurantName,$productId) {
+        $prevCart = Session::has($restaurantName) ? Session::get($restaurantName) : null;
+        $cart = new Cart($prevCart);
+        $cart->removeProduct($productId);
+        Session::put($restaurantName, $cart);
+        return redirect($restaurantName);
+    }
+
+    function createAllergy(Request $req){
+        $allergy = new Allergy;
+        $allergy->name = $req->allergyName;
+        $allergy->description = $req->allergyDesc;
+        $allergy->save();
+    }
+
+    function addAllergyToProduct(Request $req){
+        $productAllergy = new ProductAllergy;
+        $productAllergy->product_id = $req->productId;
+        $productAllergy->allergy_id = $req->allergyId;
+        $productAllergy->save();
     }
 
 }

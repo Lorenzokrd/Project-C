@@ -14,6 +14,14 @@ p {
     margin-bottom: 0 !important;
 }
 
+li {
+    list-style-type: none;
+}
+
+.hidden {
+    display:none;
+}
+
 /****** BOOTSTRAP ******/
 
 @media (min-width: 1200px) {
@@ -26,6 +34,14 @@ p {
     color: #ffffff;
     background-color: #008100 !important;
     border-color: #008100 !important;
+    transition: none !important;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #036b03 !important;
+    border-color: #036b03 !important;
+    transition: none !important;
 }
 
 .btn-primary.focus, .btn-primary:focus {
@@ -174,7 +190,7 @@ p {
     position: absolute;
     width: 100px;
     top: 54px;
-    right: 10px;
+    right: 1px;
     font-size: 15px;
 }
 
@@ -311,9 +327,6 @@ p {
 .exception {
     background: #dc3545;
 }
-.productDescription{
-    height: 290px;
-}
 .listCustom{
     color:black !important;
     float: left !important;
@@ -338,4 +351,299 @@ p {
     font-weight: 600;
     color: #ffffff;
     background-color: #008100 !important;
+}
+
+/****** RESTAURANT SINGLE PAGE ******/
+
+.restaurant-banner {
+    height: 250px;
+    position: relative;
+}
+
+.restaurant-banner-margin {
+    margin-bottom: 45px;
+}
+
+.cart-container {
+    max-height: 100%;
+    display: inline-block;
+    width: 22%;
+    overflow: hidden;
+    position: relative;
+    top: -100px;
+    right: 100px;
+    float: right;
+    -webkit-box-shadow: 1px 0px 5px 1px rgba(0,0,0,0.27);
+    -moz-box-shadow: 1px 0px 5px 1px rgba(0,0,0,0.27);
+    box-shadow: 1px 0px 5px 1px rgba(0,0,0,0.27);
+    padding: 0 !important;
+    background: #ffffff;
+    z-index: 11;
+}
+
+.restaurant-title {
+    background: #ffffff;
+    font-weight: 600;
+    padding: 6px 15px;
+    border-radius: 4px;
+    font-size: 30px;
+    width: fit-content;
+    position: absolute;
+    left: 100px;
+    bottom: 15px;
+}
+
+.category-menu {
+    padding-left: 100px;
+    height: 45px;
+    padding-top: 9px;
+    background: #dcf1dc;
+    z-index: 10;
+}
+
+.category-menu-fixed {
+    position: fixed;
+    width: 100%;
+    top: 57px;
+}
+
+.category-item {
+    font-size: 17px;
+    font-weight: 600;
+    color: #0000008a;
+    padding-right: 15px;
+}
+
+.restaurant-products {
+    width: 76%;
+    padding:20px 107px;
+    display: inline-block;
+}
+
+.cart {
+    overflow: auto;
+}
+
+.cart-title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 500;
+    padding-top: 20px;
+}
+
+.cart-content {
+    font-size: 20px;
+    height: 100%;
+    padding: 20px 20px 0 20px;
+}
+
+.cart-items {
+    font-size: 17px !important;
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+
+.cart-item {
+    margin-bottom: 10px;
+}
+
+.cart-item span.product-name {
+    position: absolute;
+    left: 50px;
+}
+
+.cart-item span.product-quantity,
+.cart-item span.product-add,
+.cart-item span.product-remove {
+    color: #008100;
+    font-weight: 600;
+}
+
+.cart-item span.product-total {
+    font-weight: 600;
+}
+
+.product-price {
+    color: #008100;
+    font-weight: 500;
+    font-size: 21px;
+    position: absolute;
+    bottom: 1px;
+}
+.cart-item span {
+    margin-right: 8px;
+}
+
+.cart-item span.product-remove {
+    margin-right: 0 !important;
+}
+
+.product-remove, .product-add {
+    cursor: pointer;
+}
+
+.cart-sum {
+    width: 100%;
+}
+
+.cart-total {
+    font-weight: 600;
+    width: 100%;
+    margin: 7px 0;
+}
+
+.cart-delivery {
+    font-weight: 600;
+    width: 100%;
+    margin: 7px 0;
+}
+
+.cart-order-btn {
+    width: 92%;
+    margin: 16px;
+    height: 80px;
+    font-size: 28px !important;
+    font-weight: 600 !important;
+}
+
+.min-order-warning {
+    position: relative;
+    left: 16px;
+    top: 10px;
+    color: #a29a9a;
+}
+
+.fixed-cart {
+    position: fixed;
+    top: 59px;
+}
+
+.product-block {
+    flex: 0 0 48%;
+    max-width: 48%;
+    border: 1px #e9ecff solid;
+    margin: 8px;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 1px 0px 2px 1px rgba(0,0,0,0.21);
+}
+
+.product-block:hover {
+    background-color: #f5f5f5;
+    box-shadow: 1px 0px 4px 2px rgba(0,0,0,0.21);
+}
+
+.product-block:hover > .add-product {
+    color: #0d860d;
+}
+
+.product-image {
+    display: inline-block;
+    float: left;
+    height: 100%;
+    width: 20%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.product-info {
+    display: inline-block;
+    padding: 5px 10px;
+    height: 100%;
+    width: 75%;
+    position: relative;
+}
+
+.add-product {
+    width: fit-content;
+    position: absolute;
+    top: 0;
+    right: 7px;
+    font-size: 29px;
+    color: #008100b8;
+}
+
+.product-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.product-desc {
+    line-height: 16px;
+    font-size: 15px;
+}
+
+.product-rating {
+    width: 100px;
+    position: absolute;
+    bottom: 4px;
+    right: -23px;
+}
+
+/****** DASHBOARD ORDERS PAGE ******/
+
+.order-card {
+    margin-bottom: 30px;
+}
+
+.order-container {
+    -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.2);
+    box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.2);
+    background-color: #ffffff;
+    min-height: 220px;
+}
+
+.order-content-left {
+    padding: 10px;
+    width: 50%;
+    display: inline-block;
+}
+.order-content-right {
+    padding: 10px;
+    width: 50%;
+    float: right;
+    display: inline-block;
+}
+
+.order-top {
+    font-size: 19px;
+    font-weight: 500;
+    color: #ffffff;
+    padding: 6px 8px;
+    background: -webkit-linear-gradient(45deg, #008100 0%,#008100 23%,#008100 51%,#00a846 100%);
+}
+
+.order-title {
+    font-size: 19px;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.order-item {
+    margin-bottom: 7px;
+    font-size: 18px;
+}
+
+.order-item .product-quantity {
+    color: #008100;
+    font-weight: 500;
+}
+
+.order-container .order-total-price {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.order-delivered-btn {
+    padding: 7px 35px !important;
+    font-weight: 500 !important;
+    position: absolute;
+    bottom: 10px;
+    right: 26px;
+}
+
+.order-top i {
+    margin-right: 3px;
 }
