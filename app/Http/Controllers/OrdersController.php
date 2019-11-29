@@ -8,6 +8,7 @@ use App\Order;
 use App\Orders;
 use App\Restaurant;
 use App\Product;
+use Auth;
 use App\Cart;
 
 class OrdersController extends Controller
@@ -64,5 +65,10 @@ class OrdersController extends Controller
         }
         
         return view('/dashboard/orders',['orders'=>$restaurantorders]);
+    }
+    function updateStatus(Request $req){
+        $order= Order::find($req->orderId);
+        $order->status = $req->orderStatus;
+        $order->save();
     }
 }

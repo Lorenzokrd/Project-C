@@ -71,6 +71,17 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/add-to-cart/{restaurantName}/{id}', 'Products@addToCart');
 
-    Route::get('/remove-from-cart/{restaurantName}/{id}', 'Products@removeFromCart');
+    Route::get('/remove-from-cart/{restaurantName}/{id}','Products@removeFromCart');
     Route::get('/{restaurantName}/order','OrdersController@createOrder');
+
+    Route::post('updateStatus','OrdersController@updateStatus');
+    Route::post('createAllergy','Products@createAllergy');
+    Route::post('addAllergyToProduct', 'Products@addAllergyToProduct');
+
+    Route::get('/dashboard/categories','CategoriesController@read');
+
+    Route::get('/1/1','Restaurants@orderByPriceDesc');
+    Route::get('/2/2','Restaurants@orderByPriceDesc');
+
+    Route::post('review/{{restaurantId}}','Restaurants@rateRestaurant');
 });

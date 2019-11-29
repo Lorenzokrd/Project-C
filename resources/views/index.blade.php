@@ -110,8 +110,8 @@
                         Prijs
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Hoog - laag</a>
-                        <a class="dropdown-item" href="#">Laag - hoog</a>
+                        <a class="dropdown-item" href="/1/1">Hoog - laag</a>
+                        <a class="dropdown-item" href="/2/2">Laag - hoog</a>
                       </div>
                     </div>
                     <div class="filter-btn dropdown float-right">
