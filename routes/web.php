@@ -75,4 +75,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('addAllergyToProduct', 'Products@addAllergyToProduct');
 
     Route::get('/dashboard/categories','CategoriesController@read');
+
+    Route::get('/1/1','Restaurants@orderByPriceDesc');
+    Route::get('/2/2','Restaurants@orderByPriceDesc');
+
+    Route::post('review/{{restaurantId}}','Restaurants@rateRestaurant');
 });
