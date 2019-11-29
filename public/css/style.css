@@ -183,8 +183,9 @@ li {
 
 .restaurant-score {
     position: absolute;
-    top: 24px;
-    right: 2px;
+    bottom: 30px;
+    right: 9px;
+    color: #008100;
 }
 
 .price {
@@ -659,7 +660,7 @@ li {
     margin-bottom: 45px;
 }
 
-.body .circle-body{
+.circle-body{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -667,7 +668,7 @@ li {
     background: chartreuse;
 }
 
-.container{
+.containerfdgvdf{
     position: relative;
     width: 900px;
     display: flex;
