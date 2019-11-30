@@ -1,21 +1,24 @@
 @include('include.navbar')
+
 <div id="restaurant-banner" class="restaurant-banner" style="background-image: url('{{URL('/images/restaurant-banner.png')}}');">
     <div class="restaurant-title">
         {{$info["restaurant"]->name}} <img src="https://i.imgur.com/HnD1EGv.png" style="width:120px;margin-bottom:3px;">
     </div>
 </div>
 <div class="category-menu" id="category-menu">
-    <span class="category-item">Menu's</span>
-    <span class="category-item">Broodjes</span>
-    <span class="category-item">Bijgerechten</span>
-    <span class="category-item">Sauzen</span>
-    <span class="category-item">Extra</span>
+    @foreach($categories as $category)
+    <a href="#menu{{$category['id']}}"><span class="category-item">{{$category["name"]}}</span></a>
+    @endforeach
 </div>
 <div class="restaurant-container">
     <div class="restaurant-products">
+        @foreach($categories as $category)
+        <div class="category-title" id="menu{{$category['id']}}">
+            <h2>{{$category["name"]}}</h2>
+        </div>
         <div class="row">
-
-            @foreach ($info["products"] as $product)
+            @foreach($info["products"] as $product)
+            @if($category["id"] == $product["category"])
             <div class="product-block" style="height:100px;" onclick="document.location='/add-to-cart/{{$info["restaurant"]->name}}/{{$product->id}}';">
                 <div class="product-image" style="background-image:url({{ asset('storage/'.str_replace('public/', '', $product->image)) }});"></div>
                 <div class="product-info">
@@ -26,11 +29,19 @@
                     <img class="product-rating" src="https://i.imgur.com/HnD1EGv.png">
                     @endif
                 </div>
-                <div class="add-product"><i class="fas fa-plus-square"></i></div>
-            </div>
-            @endforeach
 
+                <div class="product-buttons">
+                    <!-- <a  onclick="event.stopPropagation();"> -->
+                        <i class="far fa-question-circle" data-toggle="modal" href="#myModal"></i>
+                    <!-- </a> -->
+                    <i class="fas fa-plus-square"></i>
+                </div>
+            </div>
+            @endif
+            @endforeach
         </div>
+        @endforeach
+
     </div>
     <div id="cart" class="cart-container">
         <div class="cart">
@@ -85,6 +96,27 @@
             @endif
         </div>
     </div>
+</div>
+
+<!-- Modals -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 </body>

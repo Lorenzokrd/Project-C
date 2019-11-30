@@ -41,21 +41,21 @@ Route::group(['middleware' => 'web'], function () {
         return view('dashboard/categories');
     });
 
+    Route::get('dashboard/products/add-product', function () {
+        return view('dashboard/add-product');
+    });
+
     Route::post('submitRestaurant','Restaurants@save');
     Route::post('approveRestaurant','Restaurants@approve');
 
     Route::get('dashboard/orders','OrdersController@read');
 
-    Route::get('dashboard/products/add-product', function () {
-        return view('dashboard/add-product');
-    });
-
+    Route::get('dashboard/products/add-product','CategoriesController@readProductCreate');
     Route::post('dashboard/products/sumbitProduct','Products@save');
     Route::get('dashboard/products','Products@read');
     Route::post('dashboard/deleteProduct','Products@delete');
 
     Route::post('dashboard/submitCategory','CategoriesController@save');
-    //Route::get('dashboard/categories','CategoriesController@read');
 
     Route::get('dashboard/settings', function () {
         return view('dashboard/settings');
@@ -74,5 +74,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('createAllergy','Products@createAllergy');
     Route::post('addAllergyToProduct', 'Products@addAllergyToProduct');
 
-    Route::get('/dashboard/categories','CategoriesController@read');
+    Route::get('/dashboard/categories','CategoriesController@readCategories');
+    Route::post('/dashboard/deleteCategory','CategoriesController@delete');
+    Route::get('dashboard/categories/edit-category', 'CategoriesController@find');
+    Route::post('dashboard/categories/update-category','CategoriesController@update');
 });

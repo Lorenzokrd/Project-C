@@ -317,7 +317,8 @@ li {
     width: fit-content;
     z-index: 10;
     position:fixed;
-    left:22%;
+    right:2%;
+    bottom: 5%;
 }
 
 .success {
@@ -410,8 +411,9 @@ li {
 .category-item {
     font-size: 17px;
     font-weight: 600;
-    color: #0000008a;
+    color: #008100;
     padding-right: 15px;
+    text-transform: capitalize;
 }
 
 .restaurant-products {
@@ -533,7 +535,7 @@ li {
     box-shadow: 1px 0px 4px 2px rgba(0,0,0,0.21);
 }
 
-.product-block:hover > .add-product {
+.product-block:hover > .product-buttons {
     color: #0d860d;
 }
 
@@ -555,13 +557,20 @@ li {
     position: relative;
 }
 
-.add-product {
+.product-buttons {
     width: fit-content;
     position: absolute;
     top: 0;
     right: 7px;
     font-size: 29px;
     color: #008100b8;
+}
+
+.product-buttons > i.far.fa-question-circle {
+    position: relative;
+    right: 5px;
+    color: gainsboro;
+    z-index: 100;
 }
 
 .product-title {
@@ -646,4 +655,10 @@ li {
 
 .order-top i {
     margin-right: 3px;
+}
+
+/****** DASHBOARD CATEGORIES PAGE ******/
+
+.category-table {
+    margin-top: 50px;
 }
