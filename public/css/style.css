@@ -23,6 +23,10 @@ li {
     display:none;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 /****** BOOTSTRAP ******/
 
 @media (min-width: 1200px) {

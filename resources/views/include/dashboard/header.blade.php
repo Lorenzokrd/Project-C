@@ -40,7 +40,7 @@ jQuery(function($) {
 </head>
 <body style="overflow:hidden;height:100%;background:#ececec">
 <div class="sidebar">
-    <img class="sidebar-logo" src="{{URL('/images/logo.png')}}" alt="">
+    <img class="sidebar-logo clickable" src="{{URL('/images/logo.png')}}" alt="" onclick="window.location='/'">
     <div class="sidebar-main">
         <ul class="list-group sidebar-items">
           <li class="list-group-item" id="dashboard" onclick="window.location='http://localhost:8000/dashboard';"><i class="fas fa-chart-bar mr-1"></i>Dashboard</li>

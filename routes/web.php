@@ -84,7 +84,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/order/rating','Restaurants@orderByRating');
 
     Route::post('review/{{restaurantId}}','Restaurants@rateRestaurant');
-    
+
     Route::get('/dashboard/categories','CategoriesController@readCategories');
     Route::post('/dashboard/deleteCategory','CategoriesController@delete');
     Route::get('dashboard/categories/edit-category', 'CategoriesController@find');
