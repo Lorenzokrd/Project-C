@@ -71,34 +71,49 @@ class Restaurants extends Controller
     }
 
     function orderByPriceDesc(){
-        $restaurants = DB::table('restaurant')->orderBy('min_order_price','desc')->get();
-        for($x = 0; $x<count($restaurants); $x++){
-            $restaurants[$x]->rating = DB::table('restaurant_rating')->where('restaurant_id',$restaurants[$x]->id)->avg('food_score');
-        }
+        $restaurants = DB::table('restaurant')
+        ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
+        ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
+        ->orderBy('min_order_price','desc')->
+        groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
+        'restaurant.user_id','restaurant.email','restaurant.min_order_price',
+        'restaurant.delivery_price','restaurant.avg_delivery_time',
+        'restaurant.website','restaurant.city','restaurant.street',
+        'restaurant.zip_code','restaurant.image','restaurant.approved')->get();
         return view('/index',['restaurants'=>$restaurants]);
     }
 
     function orderByPriceAsc(){
-        $restaurants = DB::table('restaurant')->orderBy('min_order_price','asc')->get();
-        for($x = 0; $x<count($restaurants); $x++){
-            $restaurants[$x]->rating = DB::table('restaurant_rating')->where('restaurant_id',$restaurants[$x]->id)->avg('food_score');
-        }
+        $restaurants = DB::table('restaurant')
+        ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
+        ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
+        ->orderBy('min_order_price','asc')->
+        groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
+        'restaurant.user_id','restaurant.email','restaurant.min_order_price',
+        'restaurant.delivery_price','restaurant.avg_delivery_time',
+        'restaurant.website','restaurant.city','restaurant.street',
+        'restaurant.zip_code','restaurant.image','restaurant.approved')->get();
         return view('/index',['restaurants'=>$restaurants]);
     }
 
     function orderByDeliveryTime(){
-        $restaurants = DB::table('restaurant')->orderBy('avg_delivery_time','asc')->get();
-        for($x = 0; $x<count($restaurants); $x++){
-            $restaurants[$x]->rating = DB::table('restaurant_rating')->where('restaurant_id',$restaurants[$x]->id)->avg('food_score');
-        }
+        $restaurants = DB::table('restaurant')
+        ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
+        ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
+        ->orderBy('restaurant.avg_delivery_time','asc')->
+        groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
+        'restaurant.user_id','restaurant.email','restaurant.min_order_price',
+        'restaurant.delivery_price','restaurant.avg_delivery_time',
+        'restaurant.website','restaurant.city','restaurant.street',
+        'restaurant.zip_code','restaurant.image','restaurant.approved')->get();
+        
         return view('/index',['restaurants'=>$restaurants]);
     }
 
     function orderByRating(){
-        $restaurantRatings = DB::table('restaurant_rating')->select(DB::raw('avg(food_score) as average_rating, restaurant_id'))->groupBy('restaurant_id')->orderBy('average_rating')->get();
         $restaurants = DB::table('restaurant')
         ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
-        ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score) as rating'))
+        ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
         ->orderBy('rating','desc')->
         groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
         'restaurant.user_id','restaurant.email','restaurant.min_order_price',
@@ -107,7 +122,7 @@ class Restaurants extends Controller
         'restaurant.zip_code','restaurant.image','restaurant.approved')->get();
         return view('/index',['restaurants'=>$restaurants]);
     }
-    
+
     function rateRestaurant(Request $req,$restaurantId){
         $currentUserOrders = Order::where([['user_id','=',\Auth::user()->id],
         ['restaurant_id','=',$restaurantId]])->get();
