@@ -110,8 +110,8 @@
                         Prijs
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="/1/1">Hoog - laag</a>
-                        <a class="dropdown-item" href="/2/2">Laag - hoog</a>
+                        <a class="dropdown-item" href="/order/price/desc">Hoog - laag</a>
+                        <a class="dropdown-item" href="/order/price/asc">Laag - hoog</a>
                       </div>
                     </div>
                     <div class="filter-btn dropdown float-right">
@@ -119,9 +119,8 @@
                           Soorteer op
                         </button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href="#">Favoriet</a>
-                          <a class="dropdown-item" href="#">Rating</a>
-                          <a class="dropdown-item" href="#">Bezorgtijd</a>
+                          <a class="dropdown-item" href="/order/delivery">Bezorgtijd</a>
+                          <a class="dropdown-item" href="/order/rating">Beoordeling</a>
                         </div>
                     </div>
                 </div>
@@ -129,7 +128,7 @@
             <div class="row">
                 @foreach ($restaurants as $restaurant)
                 @if($restaurant->approved == 1)
-            <div class="col col-12 col-sm-6 col-lg-4 restaurant-grid-item" onclick="document.location='/{{$restaurant->name}}';">
+            <div class="col col-12 col-sm-6 col-lg-4 restaurant-grid-item" onclick="document.location='/restaurant/{{$restaurant->name}}';">
                     <div class="restaurant-card" style="background-image:url({{ asset('storage/'.str_replace('public/', '', $restaurant->image)) }});">
                         <div class="restaurant-name">
                             <p><i class="far fa-star" aria-hidden="true"></i> {{$restaurant->name}}</p>
@@ -140,7 +139,11 @@
                         <div class="restaurant-info">
                             <img class="restaurant-score" src="https://cdn.discordapp.com/attachments/206957264408412162/630042617047941132/image_1.png">
                             <p class="price"><i class="fas fa-shopping-basket"></i> Min. {{ $restaurant->min_order_price}}</p>
-                        <p class="time"><i class="far fa-clock"></i> 30 min</p>
+                            @if($restaurant->avg_delivery_time)
+                            <p class="time"><i class="far fa-clock"></i> {{$restaurant->avg_delivery_time}} min</p>
+                            @else 
+                            <p class="time"><i class="far fa-clock"></i> 30 min</p>
+                            @endif
                             <p class="tags">Burgers, salades, patat</p>
                         </div>
                     </div>
