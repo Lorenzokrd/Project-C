@@ -67,7 +67,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('dashboard/products/edit-product', 'Products@find');
     Route::post('dashboard/products/update-product','Products@update');
 
-    Route::get('/restaurant/{restaurantName}','Products@getProducts');
+    Route::get('/{restaurantName}','Products@getProducts');
 
     Route::get('/add-to-cart/{restaurantName}/{id}', 'Products@addToCart');
 

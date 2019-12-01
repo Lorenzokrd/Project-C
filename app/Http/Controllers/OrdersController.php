@@ -38,7 +38,7 @@ class OrdersController extends Controller
         $restaurantorders = array();
         $orders = array();
         $orderedProducts = array();
-        $userId = \Auth::user()->id;
+        $userId =\Auth::user()->id;
         $restaurantId = Restaurant::where('user_id',$userId)->first()->id;
         $order = Order::where('restaurant_id',$restaurantId)->get();
         foreach($order as $item3){
