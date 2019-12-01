@@ -652,7 +652,7 @@ li {
 /****** ORDERS-Status PAGE ******/
 
 .ordered-banner{
-    height: 350px;
+    height: 357px;
     position: relative;
 }
 
@@ -660,19 +660,116 @@ li {
     margin-bottom: 45px;
 }
 
-.circle-body{
+.circle-div {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background: chartreuse;
+    /* min-height: 100vh; */
+    padding-top: 150px;
+    padding-bottom: 250px;
+    background: linear-gradient(#ddd9d9fe);
 }
-
-.containerfdgvdf{
+.circle-container{
     position: relative;
-    width: 900px;
+    width: 1600px;
     display: flex;
     justify-content: space-around;
+}
+.circle-container .card{
+    position: relative;
+    width: 350px;
+    background: linear-gradient(#008100,chartreuse,#008100,#008100);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 420px;
+    border-radius: 4px;
+    text-align: center;
+    overflow: hidden;
+    transition: 0.5s;
+}
+.circle-container .card:hover{
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 243, 0, 0.5);
+}
+
+.circle-container .card::before{
+    content: '';
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background: rgba(green,.03);
+    pointer-events: none;
+    z-index: 1;
+
+}
+.percent
+{
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 50px #000;
+    background: #222;
+    z-index: 1000;
+
+}
+
+.percent .number{
+    position: absolute;
+    top:0 ;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50% ;
+}
+.percent .number h2{
+    color: chartreuse;
+    font-weight: 700;
+    font-size: 40px;
+    transition: 0.5s;
+}
+.card:hover .percent .number h2 {
+    color: #008100;
+    font-size: 45px;
+}
+
+.percent .number h2 span{
+font-size: 24px;
+color: chartreuse;
+transition: 0.5s;
+}
+.card:hover .percent .number h2 span{
+  color: #008100;
+}
+.text{
+    position: relative;
+    color: white;
+    margin-top: 20px;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.5s;
+}
+.text1{
+    position: relative;
+    color: white;
+    margin-bottom: -10px;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.5s;
+}
+
+.card:hover .text{
+    color:white;
 }
 
 svg {
@@ -684,6 +781,7 @@ svg {
 svg circle{
     width: 100%;
     height: 100%;
+    color: white;
     fill: none;
     stroke: red;
     stroke-width: 10;
@@ -692,11 +790,12 @@ svg circle{
 }
 
 svg circle:nth-child(2){
-    stroke-dasharray: 220;
-    stroke-dashoffset: 220;
+    stroke-dasharray: 440;
+    stroke-dashoffset: 440;
 }
 
-.card:nth-child(1) svg circle:nth-child(2)
+.card:nth-child(2) svg circle:nth-child(2)
 {
-    stroke: green;
+    stroke-dashoffset: calc(440 - (440 * 90) / 100);
+    stroke: #008100;
 }
