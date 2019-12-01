@@ -66,6 +66,12 @@ li {
     box-shadow: 0 0 0 0.2rem #168e1678 !important;
 }
 
+.dropdown-item.active, .dropdown-item:active {
+    color: #ffffff !important;
+    text-decoration: none;
+    background-color: #008100 !important;
+}
+
 /****** NAVBAR ******/
 
 
@@ -666,9 +672,13 @@ li {
 .order-delivered-btn {
     padding: 7px 35px !important;
     font-weight: 500 !important;
-    position: absolute;
+    position: absolute !important;
     bottom: 10px;
-    right: 26px;
+    right: -10px;
+}
+
+.order-btn-holder {
+
 }
 
 .order-top i {
@@ -713,6 +723,8 @@ li {
 
 .modal p {
     padding-bottom: 20px;
+}
+
 /****** ORDERS-Status PAGE ******/
 
 .ordered-banner{
@@ -798,16 +810,18 @@ li {
     font-size: 40px;
     transition: 0.5s;
 }
+
 .card:hover .percent .number h2 {
     color: #008100;
     font-size: 45px;
 }
 
 .percent .number h2 span{
-font-size: 24px;
-color: chartreuse;
-transition: 0.5s;
+    font-size: 24px;
+    color: chartreuse;
+    transition: 0.5s;
 }
+
 .card:hover .percent .number h2 span{
   color: #008100;
 }

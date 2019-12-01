@@ -58,17 +58,18 @@ class OrdersController extends Controller
             foreach($orders as $product){
                 for($i = 0; $i<count($product);$i++){
                     if($product[$i]["order_id"] == $item->id){
-                        $restaurantorders += [$item->id=>['products'=>$product,'userId'=>$item->user_id]];
+                        $restaurantorders += [$item->id=>['products'=>$product,'userId'=>$item->user_id,'status'=>$item->status,'created-at'=>$item->created_at]];
                     }
                 }
             }
         }
-        
+
         return view('/dashboard/orders',['orders'=>$restaurantorders]);
     }
-    function updateStatus(Request $req){
-        $order= Order::find($req->orderId);
-        $order->status = $req->orderStatus;
+    function updateStatus($status,$orderId){
+        $order= Order::find($orderId);
+        $order->status = $status;
         $order->save();
+        return redirect('/dashboard/orders');
     }
 }
