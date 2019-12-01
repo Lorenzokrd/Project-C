@@ -34,7 +34,7 @@
         <div class="row">
             @foreach($info["products"] as $product)
             @if($category["id"] == $product["category"])
-            <div class="product-block" style="height:100px;" onclick="document.location='/add-to-cart/{{$info["restaurant"]->name}}/{{$product->id}}';">
+            <div class="product-block" style="height:100px;" onclick='document.location="/add-to-cart/{{$info["restaurant"]->name}}/{{$product->id}}";'>
                 <div class="product-image" style="background-image:url({{ asset('storage/'.str_replace('public/', '', $product->image)) }});"></div>
                 <div class="product-info">
                     <div class="product-title">{{$product->name}}</div>
