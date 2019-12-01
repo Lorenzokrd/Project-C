@@ -24,6 +24,7 @@ jQuery(function($) {
           <th scope="col">Beschrijving</th>
           <th scope="col">Prijs</th>
           <th scope="col">Foto</th>
+          <th scope="col">Category</th>
           <th scope="col">Rating</th>
           <th scope="col"></th>
           <th scope="col"></th>
@@ -40,6 +41,7 @@ jQuery(function($) {
               <img class="table-image" src="{{ asset('storage/'.str_replace('public/', '', $product->image)) }}" />
               @endif
           </td>
+          <td>{{$product->category}}</td>
           <td>{{$product->toggle_rating}}</td>
           <form action="products/edit-product" method="GET">
               @csrf

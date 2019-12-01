@@ -188,6 +188,12 @@ li {
     color: #008100;
 }
 
+.restaurant-page-score {
+    display: inline;
+    font-size: 22px;
+    color: #008100;
+}
+
 .price {
     position: absolute;
     width: 100px;
@@ -319,7 +325,8 @@ li {
     width: fit-content;
     z-index: 10;
     position:fixed;
-    left:22%;
+    right:2%;
+    bottom: 5%;
 }
 
 .success {
@@ -403,6 +410,14 @@ li {
     z-index: 10;
 }
 
+.category-title {
+    text-transform: capitalize;
+}
+
+.category-title > h2 {
+    font-size: 27px !important;
+}
+
 .category-menu-fixed {
     position: fixed;
     width: 100%;
@@ -412,8 +427,9 @@ li {
 .category-item {
     font-size: 17px;
     font-weight: 600;
-    color: #0000008a;
+    color: #008100;
     padding-right: 15px;
+    text-transform: capitalize;
 }
 
 .restaurant-products {
@@ -535,7 +551,7 @@ li {
     box-shadow: 1px 0px 4px 2px rgba(0,0,0,0.21);
 }
 
-.product-block:hover > .add-product {
+.product-block:hover > .product-buttons {
     color: #0d860d;
 }
 
@@ -557,13 +573,18 @@ li {
     position: relative;
 }
 
-.add-product {
+.product-buttons {
     width: fit-content;
     position: absolute;
     top: 0;
     right: 7px;
     font-size: 29px;
     color: #008100b8;
+}
+
+.product-buttons > i.far.fa-question-circle {
+    color: gainsboro;
+    z-index: 100;
 }
 
 .product-title {
@@ -649,6 +670,45 @@ li {
 .order-top i {
     margin-right: 3px;
 }
+
+/****** DASHBOARD CATEGORIES PAGE ******/
+
+.category-table {
+    margin-top: 50px;
+}
+
+/****** PRODUCT MODAL ******/
+.modal-content {
+    padding: 10px 23px;
+}
+
+.modal-body {
+    padding-top: 0 !important;
+}
+
+.modal-header {
+    padding-top: 0;
+    padding-left: 5px;
+    margin-bottom: 10px;
+}
+
+.modal-title {
+    text-transform: capitalize;
+    font-size: 25px;
+    color: #008100;
+}
+
+.modal-pdesc, .modal-ptypes, .modal-pallergies {
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.modal-ptypes {
+    margin-top: 20px;
+}
+
+.modal p {
+    padding-bottom: 20px;
 /****** ORDERS-Status PAGE ******/
 
 .ordered-banner{
