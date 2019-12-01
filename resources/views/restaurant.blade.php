@@ -31,12 +31,33 @@
                 </div>
 
                 <div class="product-buttons">
-                    <!-- <a  onclick="event.stopPropagation();"> -->
-                        <i class="far fa-question-circle" data-toggle="modal" href="#myModal"></i>
-                    <!-- </a> -->
+                    <i class="far fa-question-circle" onclick="$('#product{{$product->id}}').modal('show'); event.stopPropagation();"></i>
                     <i class="fas fa-plus-square"></i>
                 </div>
             </div>
+
+            <!-- Modal -->
+            <div class="modal fade product-modal" id="product{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{$product->name}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <span class="modal-pdesc">Product beschrijving</span>
+                    <p>{{$product->description}}</p>
+                    <span class="modal-ptypes">Product types</span>
+                    <p>Test</p>
+                    <span class="modal-pallergies">Product allergieen</span>
+                    <p>Test</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             @endif
             @endforeach
         </div>
@@ -96,27 +117,6 @@
             @endif
         </div>
     </div>
-</div>
-
-<!-- Modals -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
 </div>
 
 </body>

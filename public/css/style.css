@@ -402,6 +402,14 @@ li {
     z-index: 10;
 }
 
+.category-title {
+    text-transform: capitalize;
+}
+
+.category-title > h2 {
+    font-size: 27px !important;
+}
+
 .category-menu-fixed {
     position: fixed;
     width: 100%;
@@ -567,8 +575,6 @@ li {
 }
 
 .product-buttons > i.far.fa-question-circle {
-    position: relative;
-    right: 5px;
     color: gainsboro;
     z-index: 100;
 }
@@ -661,4 +667,38 @@ li {
 
 .category-table {
     margin-top: 50px;
+}
+
+/****** PRODUCT MODAL ******/
+.modal-content {
+    padding: 10px 23px;
+}
+
+.modal-body {
+    padding-top: 0 !important;
+}
+
+.modal-header {
+    padding-top: 0;
+    padding-left: 5px;
+    margin-bottom: 10px;
+}
+
+.modal-title {
+    text-transform: capitalize;
+    font-size: 25px;
+    color: #008100;
+}
+
+.modal-pdesc, .modal-ptypes, .modal-pallergies {
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.modal-ptypes {
+    margin-top: 20px;
+}
+
+.modal p {
+    padding-bottom: 20px;
 }

@@ -63,7 +63,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('dashboard/products/edit-product', 'Products@find');
     Route::post('dashboard/products/update-product','Products@update');
 
-    Route::get('/{restaurantName}','Products@getProducts');
+    Route::get('/restaurant/{restaurantName}','Products@getProducts');
 
     Route::get('/add-to-cart/{restaurantName}/{id}', 'Products@addToCart');
 
@@ -74,6 +74,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('createAllergy','Products@createAllergy');
     Route::post('addAllergyToProduct', 'Products@addAllergyToProduct');
 
+    Route::get('/order/price/desc','Restaurants@orderByPriceDesc');
+    Route::get('/order/price/asc','Restaurants@orderByPriceAsc');
+    Route::get('/order/delivery','Restaurants@orderByDeliveryTime');
+    Route::get('/order/rating','Restaurants@orderByRating');
+
+    Route::post('review/{{restaurantId}}','Restaurants@rateRestaurant');
+});
     Route::get('/dashboard/categories','CategoriesController@readCategories');
     Route::post('/dashboard/deleteCategory','CategoriesController@delete');
     Route::get('dashboard/categories/edit-category', 'CategoriesController@find');
