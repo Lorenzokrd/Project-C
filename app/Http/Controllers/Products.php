@@ -8,6 +8,8 @@ use App\Restaurant;
 use Illuminate\Support\Facades\Storage;
 use Session;
 use App\Cart;
+use Illuminate\Support\Facades\DB;
+use App\RestaurantRating;
 
 class Products extends Controller
 {
@@ -89,7 +91,9 @@ class Products extends Controller
     }
 
     function getProducts($restaurantName){
-        $restaurant = Restaurant::where('name',$restaurantName)->first();
+        $restaurant =Restaurant::where('name',$restaurantName)->first();
+        $restaurantrating = RestaurantRating::select(DB::raw('avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))->where('restaurant_id',1)->get();
+        $restaurant['rating'] = $restaurantrating[0]->rating;
         $products = Product::where('restaurant_id', $restaurant->id)->get();
         $info = array("restaurant" => $restaurant, "products" => $products);
         return view('restaurant',['info'=>$info]);
