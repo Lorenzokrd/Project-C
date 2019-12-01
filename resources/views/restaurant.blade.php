@@ -17,21 +17,23 @@
 
 <div id="restaurant-banner" class="restaurant-banner" style="background-image: url('{{URL('/images/restaurant-banner.png')}}');">
     <div class="restaurant-title">
-        {{$info["restaurant"]->name}}  <div class="restaurant-score"><?php Makestars($info["restaurant"]->rating) ?></div>
+        {{$info["restaurant"]->name}}  <div class="restaurant-page-score"><?php Makestars($info["restaurant"]->rating) ?></div>
     </div>
 </div>
 <div class="category-menu" id="category-menu">
-    <span class="category-item">Menu's</span>
-    <span class="category-item">Broodjes</span>
-    <span class="category-item">Bijgerechten</span>
-    <span class="category-item">Sauzen</span>
-    <span class="category-item">Extra</span>
+    @foreach($categories as $category)
+    <a href="#menu{{$category['id']}}"><span class="category-item">{{$category["name"]}}</span></a>
+    @endforeach
 </div>
 <div class="restaurant-container">
     <div class="restaurant-products">
+        @foreach($categories as $category)
+        <div class="category-title" id="menu{{$category['id']}}">
+            <h2>{{$category["name"]}}</h2>
+        </div>
         <div class="row">
-
-            @foreach ($info["products"] as $product)
+            @foreach($info["products"] as $product)
+            @if($category["id"] == $product["category"])
             <div class="product-block" style="height:100px;" onclick="document.location='/add-to-cart/{{$info["restaurant"]->name}}/{{$product->id}}';">
                 <div class="product-image" style="background-image:url({{ asset('storage/'.str_replace('public/', '', $product->image)) }});"></div>
                 <div class="product-info">
@@ -42,11 +44,40 @@
                     <img class="product-rating" src="https://i.imgur.com/HnD1EGv.png">
                     @endif
                 </div>
-                <div class="add-product"><i class="fas fa-plus-square"></i></div>
-            </div>
-            @endforeach
 
+                <div class="product-buttons">
+                    <i class="far fa-question-circle" onclick="$('#product{{$product->id}}').modal('show'); event.stopPropagation();"></i>
+                    <i class="fas fa-plus-square"></i>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade product-modal" id="product{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{$product->name}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <span class="modal-pdesc">Product beschrijving</span>
+                    <p>{{$product->description}}</p>
+                    <span class="modal-ptypes">Product types</span>
+                    <p>Test</p>
+                    <span class="modal-pallergies">Product allergieen</span>
+                    <p>Test</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            @endif
+            @endforeach
         </div>
+        @endforeach
+
     </div>
     <div id="cart" class="cart-container">
         <div class="cart">

@@ -14,6 +14,16 @@
                 <label for="productPrice">Product prijs</label>
                 <input type="input" class="form-control" name="productPrice" placeholder="Product prijs">
             </div>
+            <label for="productCategory">Categorie</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+              </div>
+              <select class="custom-select" name="productCategory" id="productCategory">
+                @foreach($categories as $category)
+                <option value="{{$category['id']}}">{{$category['name']}}</option>
+                @endforeach
+              </select>
+            </div>
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" name="productRating" >
                 <label class="form-check-label" for="productRating">Product beoordeling</label>
