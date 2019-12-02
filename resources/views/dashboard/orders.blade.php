@@ -2,6 +2,7 @@
 
 <div class="row">
 @foreach($orders as $key => $order)
+@if($order['status'] != 'Bezorgd')
 <?php
     $totalPrice = 0;
     foreach($order['products'] as $item) {
@@ -12,7 +13,7 @@
         <div class="order-container">
             <div class="order-top">
                 <span class="order-title"><i class="fas fa-clipboard-list"></i> Bestelling #{{$key}}</span>
-                <span class="order-date float-right"><i class="fas fa-clock"></i> 16:12 - 17 November</span>
+                <span class="order-date float-right"><i class="fas fa-clock"></i> {{date("d F Y, H:i", strtotime($order['created-at']))}}</span>
             </div>
             <div class="order-content-left">
                 <div class="order-items">
@@ -44,10 +45,20 @@
                     <span class="order-address">Postcode</span>
                     <span class="order-address float-right">3015 GG</span>
                 </div>
-                <button class="btn btn-primary order-delivered-btn">Bezorgd</button>
+                <div class="filter-btn dropdown order-delivered-btn">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                      {{$order['status']}}
+                    </button>
+                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
+                      <a class="dropdown-item" href="/updateStatus/{{'Wordt gemaakt'}}/{{$key}}">Wordt gemaakt</a>
+                      <a class="dropdown-item" href="/updateStatus/{{'Onderweg'}}/{{$key}}">Onderweg</a>
+                      <a class="dropdown-item" href="/updateStatus/{{'Bezorgd'}}/{{$key}}">Bezorgd</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+@endif
 @endforeach
 </div>
 

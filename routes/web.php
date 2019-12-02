@@ -74,7 +74,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/remove-from-cart/{restaurantName}/{id}','Products@removeFromCart');
     Route::get('/{restaurantName}/order','OrdersController@createOrder');
 
-    Route::post('updateStatus','OrdersController@updateStatus');
+    Route::get('updateStatus/{status}/{orderId}','OrdersController@updateStatus');
     Route::post('createAllergy','Products@createAllergy');
     Route::post('addAllergyToProduct', 'Products@addAllergyToProduct');
 
@@ -84,7 +84,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/order/rating','Restaurants@orderByRating');
 
     Route::post('review/{{restaurantId}}','Restaurants@rateRestaurant');
-    
+
     Route::get('/dashboard/categories','CategoriesController@readCategories');
     Route::post('/dashboard/deleteCategory','CategoriesController@delete');
     Route::get('dashboard/categories/edit-category', 'CategoriesController@find');
