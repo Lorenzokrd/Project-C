@@ -23,7 +23,7 @@ class Restaurants extends Controller
             }
         }
 
-        // try {
+        try {
             $restaurant->user_id = $req->userId;
             $restaurant->name = $req->name;
             $restaurant->email = $req->email;
@@ -38,9 +38,9 @@ class Restaurants extends Controller
             }
             $restaurant->save();
             return redirect('register-restaurant/success');
-        // } catch(\Exception $e){
+        } catch(\Exception $e){
             return redirect('register-restaurant')->with('exception', 'Aanmelding is niet succesvol verwerkt!');
-        // }
+        }
     }
 
     function read(){
@@ -63,10 +63,15 @@ class Restaurants extends Controller
 
     }
     function fetch(){
-        $restaurants = Restaurant::all();
-        for($x = 0; $x<count($restaurants); $x++){
-            $restaurants[$x]["rating"] = DB::table('restaurant_rating')->where('restaurant_id',$restaurants[$x]["id"])->avg('food_score');
-        }
+        $restaurants = DB::table('restaurant')
+        ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
+        ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
+        ->orderBy('min_order_price','asc')->
+        groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
+        'restaurant.user_id','restaurant.email','restaurant.min_order_price',
+        'restaurant.delivery_price','restaurant.avg_delivery_time',
+        'restaurant.website','restaurant.city','restaurant.street',
+        'restaurant.zip_code','restaurant.image','restaurant.approved')->get();
         return view('/index',['restaurants'=>$restaurants]);
     }
 
@@ -106,7 +111,7 @@ class Restaurants extends Controller
         'restaurant.delivery_price','restaurant.avg_delivery_time',
         'restaurant.website','restaurant.city','restaurant.street',
         'restaurant.zip_code','restaurant.image','restaurant.approved')->get();
-        
+
         return view('/index',['restaurants'=>$restaurants]);
     }
 
