@@ -12,7 +12,7 @@
 */
 
 Route::get('/user', function () {
-    return view('user');
+   return view('user');
 });
 
 Route::view('user1','user1');
