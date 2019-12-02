@@ -11,6 +11,13 @@
 |
 */
 
+Route::get('/user', function () {
+   return view('user');
+});
+
+Route::view('user1','user1');
+Route::post('update', 'Users@update');
+
 Route::get('/', function () {
     return view('index');
 });
