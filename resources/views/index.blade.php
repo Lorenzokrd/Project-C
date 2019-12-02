@@ -1,5 +1,21 @@
 @include('include.navbar')
 
+<?php function Makestars($rating){
+    for($x=0; $x<5; $x++){
+        if($rating >= 1 ){
+            echo "<i class='fas fa-star'></i>";
+            $rating--;
+        }
+        elseif($rating > 0 && $rating < 1){
+            echo "<i class='fas fa-star-half-alt'></i>";
+            $rating--;
+        }
+        else {
+            echo "<i class='far fa-star'></i>";
+        }
+    }
+} ?>
+
 <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="false">
     <ol class="carousel-indicators">
         <li data-target="#carousel" data-slide-to="0" class="active"></li>
@@ -110,8 +126,8 @@
                         Prijs
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Hoog - laag</a>
-                        <a class="dropdown-item" href="#">Laag - hoog</a>
+                        <a class="dropdown-item" href="/order/price/desc">Hoog - laag</a>
+                        <a class="dropdown-item" href="/order/price/asc">Laag - hoog</a>
                       </div>
                     </div>
                     <div class="filter-btn dropdown float-right">
@@ -119,9 +135,8 @@
                           Soorteer op
                         </button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href="#">Favoriet</a>
-                          <a class="dropdown-item" href="#">Rating</a>
-                          <a class="dropdown-item" href="#">Bezorgtijd</a>
+                          <a class="dropdown-item" href="/order/delivery">Bezorgtijd</a>
+                          <a class="dropdown-item" href="/order/rating">Beoordeling</a>
                         </div>
                     </div>
                 </div>
@@ -137,10 +152,15 @@
                         <div class="status restaurant-status-recommended">
                             <p>Aanbevolen voor jou</p>
                         </div>
+                        
                         <div class="restaurant-info">
-                            <img class="restaurant-score" src="https://cdn.discordapp.com/attachments/206957264408412162/630042617047941132/image_1.png">
+                            <div class="restaurant-score"><?php Makestars($restaurant->rating) ?></div>
                             <p class="price"><i class="fas fa-shopping-basket"></i> Min. {{ $restaurant->min_order_price}}</p>
-                        <p class="time"><i class="far fa-clock"></i> 30 min</p>
+                            @if($restaurant->avg_delivery_time)
+                            <p class="time"><i class="far fa-clock"></i> {{$restaurant->avg_delivery_time}} min</p>
+                            @else 
+                            <p class="time"><i class="far fa-clock"></i> 30 min</p>
+                            @endif
                             <p class="tags">Burgers, salades, patat</p>
                         </div>
                     </div>

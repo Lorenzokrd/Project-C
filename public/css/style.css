@@ -1,4 +1,5 @@
 /****** HTML *******/
+@import url('https://fonts.googleapis.com/css?family=roboto:300,400,500,700');
 
 a {
     color: #000000 !important;
@@ -22,6 +23,10 @@ li {
     display:none;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 /****** BOOTSTRAP ******/
 
 @media (min-width: 1200px) {
@@ -34,6 +39,14 @@ li {
     color: #ffffff;
     background-color: #008100 !important;
     border-color: #008100 !important;
+    transition: none !important;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #036b03 !important;
+    border-color: #036b03 !important;
+    transition: none !important;
 }
 
 .btn-primary.focus, .btn-primary:focus {
@@ -51,6 +64,12 @@ li {
 .form-control:focus {
     border-color: #008100 !important;
     box-shadow: 0 0 0 0.2rem #168e1678 !important;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    color: #ffffff !important;
+    text-decoration: none;
+    background-color: #008100 !important;
 }
 
 /****** NAVBAR ******/
@@ -174,8 +193,15 @@ li {
 
 .restaurant-score {
     position: absolute;
-    top: 24px;
-    right: 2px;
+    bottom: 30px;
+    right: 9px;
+    color: #008100;
+}
+
+.restaurant-page-score {
+    display: inline;
+    font-size: 22px;
+    color: #008100;
 }
 
 .price {
@@ -309,7 +335,8 @@ li {
     width: fit-content;
     z-index: 10;
     position:fixed;
-    left:22%;
+    right:2%;
+    bottom: 5%;
 }
 
 .success {
@@ -393,6 +420,14 @@ li {
     z-index: 10;
 }
 
+.category-title {
+    text-transform: capitalize;
+}
+
+.category-title > h2 {
+    font-size: 27px !important;
+}
+
 .category-menu-fixed {
     position: fixed;
     width: 100%;
@@ -402,8 +437,9 @@ li {
 .category-item {
     font-size: 17px;
     font-weight: 600;
-    color: #0000008a;
+    color: #008100;
     padding-right: 15px;
+    text-transform: capitalize;
 }
 
 .restaurant-products {
@@ -520,6 +556,15 @@ li {
     box-shadow: 1px 0px 2px 1px rgba(0,0,0,0.21);
 }
 
+.product-block:hover {
+    background-color: #f5f5f5;
+    box-shadow: 1px 0px 4px 2px rgba(0,0,0,0.21);
+}
+
+.product-block:hover > .product-buttons {
+    color: #0d860d;
+}
+
 .product-image {
     display: inline-block;
     float: left;
@@ -538,13 +583,18 @@ li {
     position: relative;
 }
 
-.add-product {
+.product-buttons {
     width: fit-content;
     position: absolute;
     top: 0;
     right: 7px;
     font-size: 29px;
     color: #008100b8;
+}
+
+.product-buttons > i.far.fa-question-circle {
+    color: gainsboro;
+    z-index: 100;
 }
 
 .product-title {
@@ -564,4 +614,267 @@ li {
     right: -23px;
 }
 
-/****** USER DASHBOARD ******/
+
+/****** DASHBOARD ORDERS PAGE ******/
+
+.order-card {
+    margin-bottom: 30px;
+}
+
+.order-container {
+    -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.2);
+    box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.2);
+    background-color: #ffffff;
+    min-height: 220px;
+}
+
+.order-content-left {
+    padding: 10px;
+    width: 50%;
+    display: inline-block;
+}
+.order-content-right {
+    padding: 10px;
+    width: 50%;
+    float: right;
+    display: inline-block;
+}
+
+.order-top {
+    font-size: 19px;
+    font-weight: 500;
+    color: #ffffff;
+    padding: 6px 8px;
+    background: -webkit-linear-gradient(45deg, #008100 0%,#008100 23%,#008100 51%,#00a846 100%);
+}
+
+.order-title {
+    font-size: 19px;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.order-item {
+    margin-bottom: 7px;
+    font-size: 18px;
+}
+
+.order-item .product-quantity {
+    color: #008100;
+    font-weight: 500;
+}
+
+.order-container .order-total-price {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.order-delivered-btn {
+    padding: 7px 35px !important;
+    font-weight: 500 !important;
+    position: absolute !important;
+    bottom: 10px;
+    right: -10px;
+}
+
+.order-btn-holder {
+
+}
+
+.order-top i {
+    margin-right: 3px;
+}
+
+/****** DASHBOARD CATEGORIES PAGE ******/
+
+.category-table {
+    margin-top: 50px;
+}
+
+/****** PRODUCT MODAL ******/
+.modal-content {
+    padding: 10px 23px;
+}
+
+.modal-body {
+    padding-top: 0 !important;
+}
+
+.modal-header {
+    padding-top: 0;
+    padding-left: 5px;
+    margin-bottom: 10px;
+}
+
+.modal-title {
+    text-transform: capitalize;
+    font-size: 25px;
+    color: #008100;
+}
+
+.modal-pdesc, .modal-ptypes, .modal-pallergies {
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.modal-ptypes {
+    margin-top: 20px;
+}
+
+.modal p {
+    padding-bottom: 20px;
+}
+
+/****** ORDERS-Status PAGE ******/
+
+.ordered-banner{
+    height: 357px;
+    position: relative;
+}
+
+.ordered-banner-margin{
+    margin-bottom: 45px;
+}
+
+.circle-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* min-height: 100vh; */
+    padding-top: 150px;
+    padding-bottom: 250px;
+    background: linear-gradient(#ddd9d9fe);
+}
+.circle-container{
+    position: relative;
+    width: 1600px;
+    display: flex;
+    justify-content: space-around;
+}
+.circle-container .card{
+    position: relative;
+    width: 350px;
+    background: linear-gradient(#008100,chartreuse,#008100,#008100);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 420px;
+    border-radius: 4px;
+    text-align: center;
+    overflow: hidden;
+    transition: 0.5s;
+}
+.circle-container .card:hover{
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 243, 0, 0.5);
+}
+
+.circle-container .card::before{
+    content: '';
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background: rgba(green,.03);
+    pointer-events: none;
+    z-index: 1;
+
+}
+.percent
+{
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 50px #000;
+    background: #222;
+    z-index: 1000;
+
+}
+
+.percent .number{
+    position: absolute;
+    top:0 ;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50% ;
+}
+.percent .number h2{
+    color: chartreuse;
+    font-weight: 700;
+    font-size: 40px;
+    transition: 0.5s;
+}
+
+.card:hover .percent .number h2 {
+    color: #008100;
+    font-size: 45px;
+}
+
+.percent .number h2 span{
+    font-size: 24px;
+    color: chartreuse;
+    transition: 0.5s;
+}
+
+.card:hover .percent .number h2 span{
+  color: #008100;
+}
+.text{
+    position: relative;
+    color: white;
+    margin-top: 20px;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.5s;
+}
+.text1{
+    position: relative;
+    color: white;
+    margin-bottom: -10px;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.5s;
+}
+
+.card:hover .text{
+    color:white;
+}
+
+svg {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    z-index: 1000;
+}
+svg circle{
+    width: 100%;
+    height: 100%;
+    color: white;
+    fill: none;
+    stroke: red;
+    stroke-width: 10;
+    stroke-linecap: round;
+    transform: translate(5px,5px);
+}
+
+svg circle:nth-child(2){
+    stroke-dasharray: 440;
+    stroke-dashoffset: 440;
+}
+
+.card:nth-child(2) svg circle:nth-child(2)
+{
+    stroke-dashoffset: calc(440 - (440 * 90) / 100);
+    stroke: #008100;
+}

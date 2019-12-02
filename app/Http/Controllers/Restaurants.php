@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Restaurant;
 use App\User;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use App\Order;
+use App\RestaurantRating;
 
 class Restaurants extends Controller
 {
@@ -20,7 +23,7 @@ class Restaurants extends Controller
             }
         }
 
-        // try {
+        try {
             $restaurant->user_id = $req->userId;
             $restaurant->name = $req->name;
             $restaurant->email = $req->email;
@@ -35,9 +38,9 @@ class Restaurants extends Controller
             }
             $restaurant->save();
             return redirect('register-restaurant/success');
-        // } catch(\Exception $e){
+        } catch(\Exception $e){
             return redirect('register-restaurant')->with('exception', 'Aanmelding is niet succesvol verwerkt!');
-        // }
+        }
     }
 
     function read(){
@@ -60,7 +63,82 @@ class Restaurants extends Controller
 
     }
     function fetch(){
-        $restaurants = Restaurant::all();
+        $restaurants = DB::table('restaurant')
+        ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
+        ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
+        ->orderBy('min_order_price','asc')->
+        groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
+        'restaurant.user_id','restaurant.email','restaurant.min_order_price',
+        'restaurant.delivery_price','restaurant.avg_delivery_time',
+        'restaurant.website','restaurant.city','restaurant.street',
+        'restaurant.zip_code','restaurant.image','restaurant.approved')->get();
         return view('/index',['restaurants'=>$restaurants]);
+    }
+
+    function orderByPriceDesc(){
+        $restaurants = DB::table('restaurant')
+        ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
+        ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
+        ->orderBy('min_order_price','desc')->
+        groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
+        'restaurant.user_id','restaurant.email','restaurant.min_order_price',
+        'restaurant.delivery_price','restaurant.avg_delivery_time',
+        'restaurant.website','restaurant.city','restaurant.street',
+        'restaurant.zip_code','restaurant.image','restaurant.approved')->get();
+        return view('/index',['restaurants'=>$restaurants]);
+    }
+
+    function orderByPriceAsc(){
+        $restaurants = DB::table('restaurant')
+        ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
+        ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
+        ->orderBy('min_order_price','asc')->
+        groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
+        'restaurant.user_id','restaurant.email','restaurant.min_order_price',
+        'restaurant.delivery_price','restaurant.avg_delivery_time',
+        'restaurant.website','restaurant.city','restaurant.street',
+        'restaurant.zip_code','restaurant.image','restaurant.approved')->get();
+        return view('/index',['restaurants'=>$restaurants]);
+    }
+
+    function orderByDeliveryTime(){
+        $restaurants = DB::table('restaurant')
+        ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
+        ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
+        ->orderBy('restaurant.avg_delivery_time','asc')->
+        groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
+        'restaurant.user_id','restaurant.email','restaurant.min_order_price',
+        'restaurant.delivery_price','restaurant.avg_delivery_time',
+        'restaurant.website','restaurant.city','restaurant.street',
+        'restaurant.zip_code','restaurant.image','restaurant.approved')->get();
+
+        return view('/index',['restaurants'=>$restaurants]);
+    }
+
+    function orderByRating(){
+        $restaurants = DB::table('restaurant')
+        ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
+        ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
+        ->orderBy('rating','desc')->
+        groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
+        'restaurant.user_id','restaurant.email','restaurant.min_order_price',
+        'restaurant.delivery_price','restaurant.avg_delivery_time',
+        'restaurant.website','restaurant.city','restaurant.street',
+        'restaurant.zip_code','restaurant.image','restaurant.approved')->get();
+        return view('/index',['restaurants'=>$restaurants]);
+    }
+
+    function rateRestaurant(Request $req,$restaurantId){
+        $currentUserOrders = Order::where([['user_id','=',\Auth::user()->id],
+        ['restaurant_id','=',$restaurantId]])->get();
+        if(count($currentUserOrders) > 0){
+            $rating = new RestaurantRating;
+            $rating->restaurant_id = $restaurantId;
+            $rating->food_score = $req->foodScore;
+            $rating->delivery_score = $req->deliveryScore;
+            $rating->comment = $req->reviewComment;
+            $rating->date = $req->reviewDate;
+            $rating->save();
+        }
     }
 }
