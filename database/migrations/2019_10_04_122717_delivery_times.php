@@ -17,13 +17,13 @@ class DeliveryTimes extends Migration
             $table->increments('id');
             $table->integer('restaurant_id')->unsigned();
             $table->foreign('restaurant_id')->references('id')->on('restaurant')->onDelete('cascade');
-            $table->string('monday');
-            $table->string('tuesday');
-            $table->string('wednesday');
-            $table->string('thursday');
-            $table->string('friday');
-            $table->string('saturday');
-            $table->string('sunday');
+            $table->string('monday')->default('Gesloten');
+            $table->string('tuesday')->default('Gesloten');
+            $table->string('wednesday')->default('Gesloten');
+            $table->string('thursday')->default('Gesloten');
+            $table->string('friday')->default('Gesloten');
+            $table->string('saturday')->default('Gesloten');
+            $table->string('sunday')->default('Gesloten');
         });
     }
 

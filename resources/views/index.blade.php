@@ -152,13 +152,13 @@
                         <div class="status restaurant-status-recommended">
                             <p>Aanbevolen voor jou</p>
                         </div>
-                        
+
                         <div class="restaurant-info">
                             <div class="restaurant-score"><?php Makestars($restaurant->rating) ?></div>
-                            <p class="price"><i class="fas fa-shopping-basket"></i> Min. {{ $restaurant->min_order_price}}</p>
+                            <p class="price"><i class="fas fa-shopping-basket"></i> Min. €{{ str_replace('.', ',', $restaurant->min_order_price)}}</p>
                             @if($restaurant->avg_delivery_time)
                             <p class="time"><i class="far fa-clock"></i> {{$restaurant->avg_delivery_time}} min</p>
-                            @else 
+                            @else
                             <p class="time"><i class="far fa-clock"></i> 30 min</p>
                             @endif
                             <p class="tags">Burgers, salades, patat</p>

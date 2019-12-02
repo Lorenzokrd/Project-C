@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Restaurant;
 use App\Categories;
+use App\DeliveryTimes;
 use App\Category;
 use Illuminate\Support\Facades\Storage;
 use Session;
@@ -35,7 +36,7 @@ class Products extends Controller
                 $product->image = $req->file('productImage')->store('public');
             }
             $product->category = $req->productCategory;
-            $product->price = $req->productPrice;
+            $product->price = str_replace(',', '.', $req->productPrice);
             $product->toggle_rating = ($req->productRating == null) ? 0 : 1;
             $product->save();
             return redirect('dashboard/products')->with('success', 'Nieuw product is succesvol aangemaakt!');
@@ -64,28 +65,18 @@ class Products extends Controller
     }
     function update(Request $req){
 
-        $data = $req->except('productImage');
-
-        foreach ($data as $key => $value) {
-            if($value == null){
-                return redirect('dashboard/products')->with('exception', 'Niet alle velden zijn ingevuld!');
-            }
-        }
         try {
             $product=Product::find($req->productId);
             $product->restaurant_id = 1;
             $product->name = $req->productName;
             $product->description = $req->productDesc;
-            if(!file_exists($req->file('productImage'))){
-
-            }
-            else{
+            if(file_exists($req->file('productImage'))){
                 $oldImage= $product->image;
                 $product->image = $req->file('productImage')->store('public');
                 storage::delete($oldImage);
             }
             $product->category = $req->productCategory;
-            $product->price = $req->productPrice;
+            $product->price = str_replace(',', '.', $req->productPrice);
             $product->toggle_rating = ($req->productRating == null) ? 0 : 1;
             $product->save();
             return redirect('dashboard/products')->with('success', 'Product is succesvol bijgewerkt!');
@@ -128,8 +119,9 @@ class Products extends Controller
         $restaurant['rating'] = $restaurantrating[0]->rating;
         $categories = $this->getCategories($restaurantName);
         $products = Product::where('restaurant_id', $restaurant->id)->get();
+        $deliveryTimes = DeliveryTimes::where('restaurant_id', $restaurant->id)->first();
         $info = array("restaurant" => $restaurant, "products" => $products);
-        return view('restaurant',['info'=>$info, 'categories'=>$categories]);
+        return view('restaurant',['deliveryTimes'=>$deliveryTimes, 'info'=>$info, 'categories'=>$categories]);
     }
 
     function addToCart($restaurantName,$productId){
