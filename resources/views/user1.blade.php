@@ -25,35 +25,24 @@
     		            </div>
     		            <div class="row">
     		                <div class="col-md-12">
-    		                    <form>
+    		                    <form action="update" method="post" enctype="multipart/form-data">
+															@csrf
                                   <div class="form-group row">
-                                    <label for="username" class="col-4 col-form-label">Gebruikers Naam</label>
+                                    <label for="name" class="col-4 col-form-label">Naam</label>
                                     <div class="col-8">
-                                      <input id="username" name="username" placeholder="Gebruikers Naam" class="form-control here" required="required" type="text">
-                                    </div>
-                                  </div>
-                                  <div class="form-group row">
-                                    <label for="name" class="col-4 col-form-label">Voornaam</label>
-                                    <div class="col-8">
-                                      <input id="name" name="name" placeholder="Voornaam" class="form-control here" type="text">
-                                    </div>
-                                  </div>
-                                  <div class="form-group row">
-                                    <label for="lastname" class="col-4 col-form-label">Achternaam</label>
-                                    <div class="col-8">
-                                      <input id="lastname" name="lastname" placeholder="Achternaam" class="form-control here" type="text">
+                                      <input id="name" name="name" placeholder="{{ Auth::user()->name }}" class="form-control here" type="text">
                                     </div>
                                   </div>
                                   <div class="form-group row">
                                     <label for="email" class="col-4 col-form-label">Email</label>
                                     <div class="col-8">
-                                      <input id="email" name="email" placeholder="Email" class="form-control here" required="required" type="text">
+                                      <input id="email" name="email" placeholder="{{ Auth::user()->email }}" class="form-control here" required="required" type="text">
                                     </div>
                                   </div>
                                   <div class="form-group row">
-                                    <label for="newpass" class="col-4 col-form-label">New Password</label>
+                                    <label for="newpass" class="col-4 col-form-label">Nieuw Wachtwoord</label>
                                     <div class="col-8">
-                                      <input id="newpass" name="newpass" placeholder="New Password" class="form-control here" type="text">
+                                      <input id="newpass" name="password" placeholder="Nieuw Wachtwoord" class="form-control here" type="password">
                                     </div>
                                   </div>
                                   <div class="form-group row">

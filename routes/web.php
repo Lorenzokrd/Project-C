@@ -15,9 +15,8 @@ Route::get('/user', function () {
     return view('user');
 });
 
-Route::get('/user1', function () {
-    return view('user1');
-});
+Route::view('user1','user1');
+Route::post('update', 'Users@update');
 
 Route::get('/', function () {
     return view('index');

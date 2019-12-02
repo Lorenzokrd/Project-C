@@ -16,8 +16,8 @@
     <div class="restaurant-products">
         <div class="row">
 
-            @foreach ($info["products"] as $product)
-            <div class="product-block" style="height:100px;" onclick="document.location='/add-to-cart/{{$info["restaurant"]->name}}/{{$product->id}}';">
+            @foreach ($info ?? ''["products"] as $product)
+            <div class="product-block" style="height:100px;" onclick="document.location='/add-to-cart/{{$info ?? ''["restaurant"]->name}}/{{$product->id}}';">
                 <div class="product-image" style="background-image:url({{ asset('storage/'.str_replace('public/', '', $product->image)) }});"></div>
                 <div class="product-info">
                     <div class="product-title">{{$product->name}}</div>
@@ -40,15 +40,15 @@
             </div>
             <div class="cart-content">
                 <div class="cart-items">
-                    @if (Session::has($info["restaurant"]->name))
-                    @foreach (Session::get($info["restaurant"]->name)->products as $item)
+                    @if (Session::has($info ?? ''["restaurant"]->name))
+                    @foreach (Session::get($info ?? ''["restaurant"]->name)->products as $item)
                     <div class="cart-item">
                         <span class="product-quantity">{{$item['quantity']}}x</span>
                         <span class="product-name">{{$item['product']['name']}}</span>
-                        <span class="product-remove float-right" onclick="document.location='/remove-from-cart/{{$info["restaurant"]->name}}/{{$item['product']['id']}}';">
+                        <span class="product-remove float-right" onclick="document.location='/remove-from-cart/{{$info ?? ''["restaurant"]->name}}/{{$item['product']['id']}}';">
                             <i class="fas fa-minus-square"></i>
                         </span>
-                        <span class="product-add float-right" onclick="document.location='/add-to-cart/{{$info["restaurant"]->name}}/{{$item['product']['id']}}';">
+                        <span class="product-add float-right" onclick="document.location='/add-to-cart/{{$info ?? ''["restaurant"]->name}}/{{$item['product']['id']}}';">
                             <i class="fas fa-plus-square"></i>
                         </span>
                         <span class="product-total float-right">€{{str_replace('.', ',', number_format($item['price'], 2, ',', ' '))}}</span>
@@ -59,29 +59,29 @@
                 <div class="cart-sum">
                     <div class="cart-delivery">
                         <span>Bezorgkosten</span>
-                        <span class="float-right cart-delivery-price">€ {{str_replace('.', ',', number_format($info["restaurant"]->delivery_price, 2, ',', ' '))}}</span>
+                        <span class="float-right cart-delivery-price">€ {{str_replace('.', ',', number_format($info ?? ''["restaurant"]->delivery_price, 2, ',', ' '))}}</span>
                     </div>
                     <div class="cart-total">
                         <span>Totaal</span>
-                        @if (Session::has($info["restaurant"]->name))
-                        @if (Session::get($info["restaurant"]->name)->totalPrice == 0)
-                        <span class="float-right cart-total-price">€ {{str_replace('.', ',', number_format($info["restaurant"]->delivery_price, 2, ',', ' '))}}</span>
+                        @if (Session::has($info ?? ''["restaurant"]->name))
+                        @if (Session::get($info ?? ''["restaurant"]->name)->totalPrice == 0)
+                        <span class="float-right cart-total-price">€ {{str_replace('.', ',', number_format($info ?? ''["restaurant"]->delivery_price, 2, ',', ' '))}}</span>
                         @else
-                        <span class="float-right cart-total-price">€ {{str_replace('.', ',', number_format(Session::get($info["restaurant"]->name)->totalPrice, 2, ',', ' '))}}</span>
+                        <span class="float-right cart-total-price">€ {{str_replace('.', ',', number_format(Session::get($info ?? ''["restaurant"]->name)->totalPrice, 2, ',', ' '))}}</span>
                         @endif
                         @else
-                        <span class="float-right cart-total-price">€ {{$info["restaurant"]->delivery_price}}</span>
+                        <span class="float-right cart-total-price">€ {{$info ?? ''["restaurant"]->delivery_price}}</span>
                         @endif
                     </div>
                 </div>
             </div>
-            @if (Session::has($info["restaurant"]->name))
-            @if (Session::get($info["restaurant"]->name)->totalPrice - $info["restaurant"]->delivery_price < $info["restaurant"]->min_order_price )
-            <span class="min-order-warning">De minimale bestelprijs is €{{$info["restaurant"]->min_order_price}}</span>
+            @if (Session::has($info ?? ''["restaurant"]->name))
+            @if (Session::get($info ?? ''["restaurant"]->name)->totalPrice - $info ?? ''["restaurant"]->delivery_price < $info ?? ''["restaurant"]->min_order_price )
+            <span class="min-order-warning">De minimale bestelprijs is €{{$info ?? ''["restaurant"]->min_order_price}}</span>
             @endif
-            <button class="btn btn-primary cart-order-btn" onclick="document.location='/{{$info["restaurant"]->name}}/order';" <?php if(Session::get($info["restaurant"]->name)->totalPrice - $info["restaurant"]->delivery_price < $info["restaurant"]->min_order_price ) { echo "disabled"; } ?>>Bestellen</button>
+            <button class="btn btn-primary cart-order-btn" onclick="document.location='/{{$info ?? ''["restaurant"]->name}}/order';" <?php if(Session::get($info ?? ''["restaurant"]->name)->totalPrice - $info ?? ''["restaurant"]->delivery_price < $info ?? ''["restaurant"]->min_order_price ) { echo "disabled"; } ?>>Bestellen</button>
             @else
-            <span class="min-order-warning">De minimale bestelprijs is €{{$info["restaurant"]->min_order_price}}</span>
+            <span class="min-order-warning">De minimale bestelprijs is €{{$info ?? ''["restaurant"]->min_order_price}}</span>
             <button class="btn btn-primary cart-order-btn" disabled>Bestellen</button>
             @endif
         </div>
