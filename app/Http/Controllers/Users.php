@@ -13,6 +13,8 @@ class Users extends Controller
     function update(Request $req){
       $user = \Auth::user();
       $user->name=$req->name;
+      $user->firstname=$req->firstname;
+      $user->surname=$req->surname;
       $user->email=$req->email;
       $user->password=$req->password;
       $user->save();

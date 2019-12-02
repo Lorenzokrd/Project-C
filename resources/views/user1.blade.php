@@ -30,19 +30,19 @@
                                   <div class="form-group row">
                                     <label for="name" class="col-4 col-form-label">Naam</label>
                                     <div class="col-8">
-                                      <input id="username" name="username" placeholder="{{ Auth::user()->name }}" class="form-control here" required="required" type="text">
+                                      <input id="username" name="name" placeholder="{{ Auth::user()->name }}" class="form-control here" required="required" type="text">
                                     </div>
                                   </div>
                                   <div class="form-group row">
-                                    <label for="name" class="col-4 col-form-label">Voornaam</label>
+                                    <label for="firstname" class="col-4 col-form-label">Voornaam</label>
                                     <div class="col-8">
-                                      <input id="name" name="name" placeholder="{{ Auth::user()->firstname }}" class="form-control here" type="text">
+                                      <input id="firstname" name="firstname" placeholder="{{ Auth::user()->firstname }}" class="form-control here" type="text">
                                     </div>
                                   </div>
                                   <div class="form-group row">
-                                    <label for="lastname" class="col-4 col-form-label">Achternaam</label>
+                                    <label for="surname" class="col-4 col-form-label">Achternaam</label>
                                     <div class="col-8">
-                                      <input id="lastname" name="lastname" placeholder="{{ Auth::user()->surname }}" class="form-control here" type="text">
+                                      <input id="surname" name="surname" placeholder="{{ Auth::user()->surname }}" class="form-control here" type="text">
                                     </div>
                                   </div>
                                   <div class="form-group row">
