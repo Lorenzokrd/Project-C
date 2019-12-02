@@ -61,9 +61,8 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::post('dashboard/submitCategory','CategoriesController@save');
 
-    Route::get('dashboard/settings', function () {
-        return view('dashboard/settings');
-    });
+    Route::get('dashboard/settings', 'Restaurants@readSettings');
+
     Route::get('dashboard/products/edit-product', 'Products@find');
     Route::post('dashboard/products/update-product','Products@update');
 
@@ -89,4 +88,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/dashboard/deleteCategory','CategoriesController@delete');
     Route::get('dashboard/categories/edit-category', 'CategoriesController@find');
     Route::post('dashboard/categories/update-category','CategoriesController@update');
+    Route::post('dashboard/updateRestaurant','Restaurants@update');
+    Route::post('dashboard/updateDeliveryTimes','Restaurants@updateDeliveryTimes');
 });

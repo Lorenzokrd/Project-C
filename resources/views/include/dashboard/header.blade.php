@@ -52,3 +52,17 @@ jQuery(function($) {
     </div>
 </div>
 <div class="content">
+
+    <script>
+    jQuery(function($) {
+        setTimeout(function() {
+            $('#popup').fadeOut('slow');
+        }, 3000);
+    });
+    </script>
+
+    @if(session('success'))
+        <div class="success popup" id="popup"><i class="far fa-check-circle"></i> {{session('success')}}</div>
+    @elseif(session('exception'))
+        <div class="exception popup" id="popup"><i class="far fa-check-circle"></i> {{session('exception')}}</div>
+    @endif

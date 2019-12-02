@@ -202,13 +202,15 @@ li {
     display: inline;
     font-size: 22px;
     color: #008100;
+    position: relative;
+    bottom: 2px;
 }
 
 .price {
     position: absolute;
     width: 100px;
     top: 54px;
-    right: 1px;
+    right: 8px;
     font-size: 15px;
 }
 
@@ -381,6 +383,18 @@ li {
 
 .restaurant-banner-margin {
     margin-bottom: 45px;
+}
+
+.restaurant-times {
+    display: block;
+    font-size: 13px;
+    color: #a0a0a0;
+    position: relative;
+    bottom: 7px;
+}
+
+.opening-table th {
+    padding-right: 50px !important;
 }
 
 .cart-container {
@@ -723,6 +737,14 @@ li {
 
 .modal p {
     padding-bottom: 20px;
+}
+
+.delivery-times-hint {
+    font-size: 13px;
+    position: relative;
+    bottom: 10px;
+    left: 2px;
+    font-weight: 500;
 }
 
 /****** ORDERS-Status PAGE ******/

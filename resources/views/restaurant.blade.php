@@ -17,9 +17,36 @@
 
 <div id="restaurant-banner" class="restaurant-banner" style="background-image: url('{{URL('/images/restaurant-banner.png')}}');">
     <div class="restaurant-title">
-        {{$info["restaurant"]->name}}  <div class="restaurant-page-score"><?php Makestars($info["restaurant"]->rating) ?></div>
+        <span>{{$info["restaurant"]->name}} <div class="restaurant-page-score"><?php Makestars($info["restaurant"]->rating) ?></div></span>
+        <span class="restaurant-times clickable" onclick="$('#opening-times').modal('show'); event.stopPropagation();">Openingstijden <i class="fas fa-clock clickable"></i></span>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade product-modal" id="opening-times" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Openingstijden</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="opening-table">
+            <tr><th>Maandag</th><td>{{$deliveryTimes->monday}}</td></tr>
+            <tr><th>Dinsdag</th><td>{{$deliveryTimes->tuesday}}</td></tr>
+            <tr><th>Woensdag</th><td>{{$deliveryTimes->wednesday}}</td></tr>
+            <tr><th>Donerdag</th><td>{{$deliveryTimes->thursday}}</td></tr>
+            <tr><th>Vrijdag</th><td>{{$deliveryTimes->friday}}</td></tr>
+            <tr><th>Zaterdag</th><td>{{$deliveryTimes->saturday}}</td></tr>
+            <tr><th>Zondag</th><td>{{$deliveryTimes->sunday}}</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="category-menu" id="category-menu">
     @foreach($categories as $category)
     <a href="#menu{{$category['id']}}"><span class="category-item">{{$category["name"]}}</span></a>
@@ -52,7 +79,7 @@
             </div>
 
             <!-- Modal -->
-            <div class="modal fade product-modal" id="product{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade product-modal" id="product{{$product->id}}" tabindex="-1" role="dialog" aria-hidden="true">
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
