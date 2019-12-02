@@ -8,8 +8,8 @@ use App\Order;
 use App\Orders;
 use App\Restaurant;
 use App\Product;
-use Auth;
 use App\Cart;
+use Auth;
 
 class OrdersController extends Controller
 {
