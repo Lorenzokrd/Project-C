@@ -26,6 +26,7 @@ class OrdersController extends Controller
                 $orderedItems->quantity = $item['quantity'];
                 $orderedItems->save();
             }
+            Session::forget($restaurantName);
         }
         else{
             return redirect('/login');

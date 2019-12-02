@@ -4,9 +4,9 @@
 <div class="container">
 	<div class="row" style="padding-top: 36px;">
 		<div class="col-md-3 ">
-    <div class="list-group" id="list-tab" role="tablist" style="background-color: green; box-shadow: 5px 5px 3px; border-radius: 10px;">
+    <div class="list-group" id="list-tab" role="tablist" style="background-color: green; box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.37); border-radius: 10px;">
       <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home" style="font-weight:600;color:#FAF6D5 !important">Gebruiker</a>
-      <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile" style="font-weight:600;color:#FAF6D5 !important">Bestellingen</a>
+      <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#orders-profile" role="tab" aria-controls="profile" style="font-weight:600;color:#FAF6D5 !important">Bestellingen</a>
       <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages" style="font-weight:600;color:#FAF6D5 !important">Adressen</a>
       <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings" style="font-weight:600;color:#FAF6D5 !important">Settings</a>
     </div>
@@ -25,41 +25,23 @@
     		            </div>
     		            <div class="row">
     		                <div class="col-md-12">
-    		                    <form action="update" method="post" enctype="multipart/form-data">
-															@csrf
+    		                    <form action="user/update" method="post" enctype="multipart/form-data">
+								@csrf
                                   <div class="form-group row">
                                     <label for="name" class="col-4 col-form-label">Naam</label>
                                     <div class="col-8">
-                                      <input id="username" name="name" placeholder="{{ Auth::user()->name }}" class="form-control here" required="required" type="text">
-                                    </div>
-                                  </div>
-                                  <div class="form-group row">
-                                    <label for="firstname" class="col-4 col-form-label">Voornaam</label>
-                                    <div class="col-8">
-                                      <input id="firstname" name="firstname" placeholder="{{ Auth::user()->firstname }}" class="form-control here" type="text">
-                                    </div>
-                                  </div>
-                                  <div class="form-group row">
-                                    <label for="surname" class="col-4 col-form-label">Achternaam</label>
-                                    <div class="col-8">
-                                      <input id="surname" name="surname" placeholder="{{ Auth::user()->surname }}" class="form-control here" type="text">
+                                      <input id="username" name="name" placeholder="name" value="{{ Auth::user()->name }}" class="form-control here" required="required" type="text">
                                     </div>
                                   </div>
                                   <div class="form-group row">
                                     <label for="email" class="col-4 col-form-label">Email</label>
                                     <div class="col-8">
-                                      <input id="email" name="email" placeholder="{{ Auth::user()->email }}" class="form-control here" required="required" type="text">
-                                    </div>
-                                  </div>
-                                  <div class="form-group row">
-                                    <label for="newpass" class="col-4 col-form-label">Nieuw Wachtwoord</label>
-                                    <div class="col-8">
-                                      <input id="newpass" name="password" placeholder="Nieuw Wachtwoord" class="form-control here" type="password">
+                                      <input id="email" name="email" placeholder="email" value="{{ Auth::user()->email }}" class="form-control here" required="required" type="text">
                                     </div>
                                   </div>
                                   <div class="form-group row">
                                     <div class="offset-4 col-8">
-                                      <button name="submit" type="submit" class="btn btn-primary">Update My Profile</button>
+                                      <button name="submit" type="submit" class="btn btn-primary">Profiel wijzigen</button>
                                     </div>
                                   </div>
                                 </form>
@@ -70,7 +52,7 @@
     		    </div>
     		</div>
       </div>
-      <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+      <div class="tab-pane fade" id="orders-profile" role="tabpanel" aria-labelledby="list-profile-list">
         <div class="col-md-13">
     		    <div class="card">
     		        <div class="card-body">
