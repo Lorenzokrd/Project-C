@@ -19,6 +19,7 @@ class Product extends Migration
             $table->foreign('restaurant_id')->references('id')->on('restaurant')->onDelete('cascade');
             $table->string('name');
             $table->string('description');
+            $table->string('category');
             $table->string('image')->nullable();
             $table->decimal('price',5,2);
             $table->boolean('toggle_rating');

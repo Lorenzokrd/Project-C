@@ -1,19 +1,5 @@
 @include('include.dashboard.header')
 
-<script>
-jQuery(function($) {
-    setTimeout(function() {
-        $('#popup').fadeOut('slow');
-    }, 3000);
-});
-</script>
-
-@if(session('success'))
-    <div class="success popup" id="popup"><i class="far fa-check-circle"></i> {{session('success')}}</div>
-@elseif(session('exception'))
-    <div class="exception popup" id="popup"><i class="far fa-check-circle"></i> {{session('exception')}}</div>
-@endif
-
 <div class="products">
     <button onclick="window.location='http://localhost:8000/dashboard/products/add-product';" class="btn btn-primary" style="float:right;margin-top:4px;">Product aanmaken</button>
     <h1>Producten</h1>
@@ -24,6 +10,7 @@ jQuery(function($) {
           <th scope="col">Beschrijving</th>
           <th scope="col">Prijs</th>
           <th scope="col">Foto</th>
+          <th scope="col">Category</th>
           <th scope="col">Rating</th>
           <th scope="col"></th>
           <th scope="col"></th>
@@ -34,12 +21,13 @@ jQuery(function($) {
         <tr>
           <td>{{$product->name}}</td>
           <td>{{$product->description}}</td>
-          <td>{{$product->price}}</td>
+          <td>€{{str_replace('.', ',', $product->price)}}</td>
           <td>
               @if(!$product->image == null)
               <img class="table-image" src="{{ asset('storage/'.str_replace('public/', '', $product->image)) }}" />
               @endif
           </td>
+          <td>{{$product->category}}</td>
           <td>{{$product->toggle_rating}}</td>
           <form action="products/edit-product" method="GET">
               @csrf

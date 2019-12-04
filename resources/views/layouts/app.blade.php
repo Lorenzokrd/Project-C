@@ -18,11 +18,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @include('include.navbar')
 </head>
 <body style="background: url('https://www.nerdwallet.com/assets/blog/wp-content/uploads/2017/10/ThanksgivingDinner-1920x1280.jpg')">
     <div id="app">
-
 
         <main class="py-4">
             <div class="space-200">

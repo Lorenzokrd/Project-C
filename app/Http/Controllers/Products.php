@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Restaurant;
+use App\Categories;
+use App\DeliveryTimes;
+use App\Category;
 use Illuminate\Support\Facades\Storage;
 use Session;
 use App\Cart;
+use Illuminate\Support\Facades\DB;
+use App\RestaurantRating;
 
 class Products extends Controller
 {
@@ -30,7 +35,8 @@ class Products extends Controller
             if(!$req->productImage == null) {
                 $product->image = $req->file('productImage')->store('public');
             }
-            $product->price = $req->productPrice;
+            $product->category = $req->productCategory;
+            $product->price = str_replace(',', '.', $req->productPrice);
             $product->toggle_rating = ($req->productRating == null) ? 0 : 1;
             $product->save();
             return redirect('dashboard/products')->with('success', 'Nieuw product is succesvol aangemaakt!');
@@ -40,9 +46,14 @@ class Products extends Controller
     }
 
     function read(){
-        $userId = \Auth::user()->id;
+        if(isset(\Auth::user()->id)) {
+            $userId = \Auth::user()->id;
+        } else{
+            return redirect('/');
+        }
         $restaurant = Restaurant::where('user_id', $userId)->first();
         $products = Product::where('restaurant_id', $restaurant->id)->get();
+
         return view('dashboard.products',['products'=>$products]);
     }
 
@@ -54,27 +65,18 @@ class Products extends Controller
     }
     function update(Request $req){
 
-        $data = $req->except('productImage');
-
-        foreach ($data as $key => $value) {
-            if($value == null){
-                return redirect('dashboard/products')->with('exception', 'Niet alle velden zijn ingevuld!');
-            }
-        }
         try {
             $product=Product::find($req->productId);
             $product->restaurant_id = 1;
             $product->name = $req->productName;
             $product->description = $req->productDesc;
-            if(!file_exists($req->file('productImage'))){
-
-            }
-            else{
+            if(file_exists($req->file('productImage'))){
                 $oldImage= $product->image;
                 $product->image = $req->file('productImage')->store('public');
                 storage::delete($oldImage);
             }
-            $product->price = $req->productPrice;
+            $product->category = $req->productCategory;
+            $product->price = str_replace(',', '.', $req->productPrice);
             $product->toggle_rating = ($req->productRating == null) ? 0 : 1;
             $product->save();
             return redirect('dashboard/products')->with('success', 'Product is succesvol bijgewerkt!');
@@ -85,14 +87,41 @@ class Products extends Controller
     }
     function find(Request $req){
         $product=Product::find($req->productId);
-        return view('dashboard/edit-product',['product'=>$product]);
+
+        if(isset(\Auth::user()->id)) {
+            $userId = \Auth::user()->id;
+        } else{
+            return redirect('/');
+        }
+        $restaurantId= Restaurant::where('user_id',$userId)->first()->id;
+        $categories = Categories::where('restaurant_id',$restaurantId)->get();
+        foreach($categories as $category){
+            $category['name'] = Category::find($category['category_id'])->name;
+            $category['id'] = Category::find($category['category_id'])->id;
+        }
+
+        return view('dashboard/edit-product',['product'=>$product,'categories'=>$categories]);
+    }
+
+    function getCategories($restaurantName){
+        $restaurantId= Restaurant::where('name',$restaurantName)->first()->id;
+        $categories = Categories::where('restaurant_id',$restaurantId)->get();
+        foreach($categories as $category){
+            $category['name'] = Category::find($category['category_id'])->name;
+            $category['id'] = Category::find($category['category_id'])->id;
+        }
+        return $categories;
     }
 
     function getProducts($restaurantName){
-        $restaurant = Restaurant::where('name',$restaurantName)->first();
+        $restaurant =Restaurant::where('name',$restaurantName)->first();
+        $restaurantrating = RestaurantRating::select(DB::raw('avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))->where('restaurant_id',1)->get();
+        $restaurant['rating'] = $restaurantrating[0]->rating;
+        $categories = $this->getCategories($restaurantName);
         $products = Product::where('restaurant_id', $restaurant->id)->get();
+        $deliveryTimes = DeliveryTimes::where('restaurant_id', $restaurant->id)->first();
         $info = array("restaurant" => $restaurant, "products" => $products);
-        return view('restaurant',['info'=>$info]);
+        return view('restaurant',['deliveryTimes'=>$deliveryTimes, 'info'=>$info, 'categories'=>$categories]);
     }
 
     function addToCart($restaurantName,$productId){

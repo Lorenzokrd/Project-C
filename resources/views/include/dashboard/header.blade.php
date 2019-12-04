@@ -40,15 +40,29 @@ jQuery(function($) {
 </head>
 <body style="overflow:hidden;height:100%;background:#ececec">
 <div class="sidebar">
-    <img class="sidebar-logo" src="{{URL('/images/logo.png')}}" alt="">
+    <img class="sidebar-logo clickable" src="{{URL('/images/logo.png')}}" alt="" onclick="window.location='/'">
     <div class="sidebar-main">
         <ul class="list-group sidebar-items">
           <li class="list-group-item" id="dashboard" onclick="window.location='http://localhost:8000/dashboard';"><i class="fas fa-chart-bar mr-1"></i>Dashboard</li>
           <li class="list-group-item" id="orders" onclick="window.location='http://localhost:8000/dashboard/orders';"><i class="fas fa-clipboard-list mr-2"></i>Bestellingen</li>
           <li class="list-group-item" id="products" onclick="window.location='http://localhost:8000/dashboard/products';"><i class="fas fa-utensils mr-2"></i>Producten</li>
-          <li class="list-group-item" id="categories" onclick="window.location='http://localhost:8000/dashboard/categories';"><i class="fas fa-utensils mr-2"></i>Categorieën</li>
+          <li class="list-group-item" id="categories" onclick="window.location='http://localhost:8000/dashboard/categories';"><i class="fas fa-list mr-1"></i>Categorieën</li>
           <li class="list-group-item" id="settings" onclick="window.location='http://localhost:8000/dashboard/settings';"><i class="fas fa-cog mr-1"></i>Instellingen</li>
         </ul>
     </div>
 </div>
 <div class="content">
+
+    <script>
+    jQuery(function($) {
+        setTimeout(function() {
+            $('#popup').fadeOut('slow');
+        }, 3000);
+    });
+    </script>
+
+    @if(session('success'))
+        <div class="success popup" id="popup"><i class="far fa-check-circle"></i> {{session('success')}}</div>
+    @elseif(session('exception'))
+        <div class="exception popup" id="popup"><i class="far fa-check-circle"></i> {{session('exception')}}</div>
+    @endif

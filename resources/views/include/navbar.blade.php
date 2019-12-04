@@ -10,7 +10,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="{{ asset('js/jquery.js') }}"></script>
 <script src="{{ asset('js/cart.js') }}" async></script>
+<script src="{{ asset('js/js.js') }}" async></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 
 <nav class="navbar navbar-expand-md fixed-top">
     <div class="w-100 order-1 order-md-0">
@@ -43,6 +45,9 @@
                     @if (Auth::user()->role < 3)
                     <a class="dropdown-item" href="/dashboard">Dashboard</a>
                     @endif
+                    <a class="dropdown-item" href="/user">
+                        Mijn gegevens
+                    </a>
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                                      document.getElementById('logout-form').submit();">

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Restaurant;
 use App\Category;
 use App\Categories;
+use App\Product;
 use Auth;
 
 class CategoriesController extends Controller
@@ -23,13 +24,62 @@ class CategoriesController extends Controller
         return redirect('dashboard/categories');
     }
 
+    function update(Request $req){
+        $category=Category::where('id', $req->categoryId)->first();
+        $category->name = $req->categoryName;
+        $category->save();
+        return redirect('dashboard/categories');
+    }
+
+    function find(Request $req){
+        $category=Category::where('id', $req->categoryId)->first();
+        return view('dashboard/edit-category',['category'=>$category]);
+    }
+
     function read(){
-        $userId = \Auth::user()->id;
+        if(isset(\Auth::user()->id)) {
+            $userId = \Auth::user()->id;
+        } else{
+            return redirect('/');
+        }
         $restaurantId= Restaurant::where('user_id',$userId)->first()->id;
         $categories = Categories::where('restaurant_id',$restaurantId)->get();
         foreach($categories as $category){
-            $category['categoryName'] = Category::find($category['category_id'])->name;
+            $category['name'] = Category::find($category['category_id'])->name;
+            $category['id'] = Category::find($category['category_id'])->id;
         }
-        return view('dashboard/categories', $categories);
+        return $categories;
     }
+
+    function readCategories(){
+        $categories = $this->read();
+        return view('dashboard/categories', ['categories'=>$categories]);
+    }
+
+    function readProductCreate(){
+        $categories = $this->read();
+        return view('dashboard/add-product', ['categories'=>$categories]);
+    }
+
+    function delete(Request $req){
+        if(isset(\Auth::user()->id)) {
+            $userId = \Auth::user()->id;
+        } else{
+            return redirect('/');
+        }
+
+        $restaurantId = Restaurant::where('user_id', $userId)->first()->id;
+        if(Product::where('category', $req->categoryId)->get()){
+            return redirect('dashboard/categories')->with('exception', 'Categorie kan niet worden verwijderd, omdat het nog producten bevat!');
+        }
+
+
+        $category=Category::where('id',$req->categoryId)->first();
+        $categories=Categories::where('category_id',$req->categoryId)->first();
+        $category->delete();
+        $categories->delete();
+
+        return redirect('dashboard/categories')->with('success', 'Categorie is succesvol verwijderd!');
+    }
+
 }

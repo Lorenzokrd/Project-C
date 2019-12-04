@@ -26,6 +26,7 @@ class OrdersController extends Controller
                 $orderedItems->quantity = $item['quantity'];
                 $orderedItems->save();
             }
+            Session::forget($restaurantName);
         }
         else{
             return redirect('/login');
@@ -38,7 +39,7 @@ class OrdersController extends Controller
         $restaurantorders = array();
         $orders = array();
         $orderedProducts = array();
-        $userId = \Auth::user()->id;
+        $userId =\Auth::user()->id;
         $restaurantId = Restaurant::where('user_id',$userId)->first()->id;
         $order = Order::where('restaurant_id',$restaurantId)->get();
         foreach($order as $item3){
@@ -58,17 +59,18 @@ class OrdersController extends Controller
             foreach($orders as $product){
                 for($i = 0; $i<count($product);$i++){
                     if($product[$i]["order_id"] == $item->id){
-                        $restaurantorders += [$item->id=>['products'=>$product,'userId'=>$item->user_id]];
+                        $restaurantorders += [$item->id=>['products'=>$product,'userId'=>$item->user_id,'status'=>$item->status,'created-at'=>$item->created_at]];
                     }
                 }
             }
         }
-        
+
         return view('/dashboard/orders',['orders'=>$restaurantorders]);
     }
-    function updateStatus(Request $req){
-        $order= Order::find($req->orderId);
-        $order->status = $req->orderStatus;
+    function updateStatus($status,$orderId){
+        $order= Order::find($orderId);
+        $order->status = $status;
         $order->save();
+        return redirect('/dashboard/orders');
     }
 }
