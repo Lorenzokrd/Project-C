@@ -165,12 +165,16 @@
                         </div>
                     </div>
                 </div>
+                
                 @endif
                 @endforeach
             </div>
+            {{ $restaurants->links()}}
         </div>
+    
     </div>
 </div>
 
 </body>
+
 </html>
