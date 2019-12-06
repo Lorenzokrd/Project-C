@@ -912,14 +912,10 @@ svg circle:nth-child(2){
 
 /* pagination */
 
-.pagination a:hover{
-    background-color: #008100b8;
-    color: #ffffff !important;
-}
 
-
-.page-item.active .page-link {
-    background-color: #008100b8 !important;
+.page-item.active .page-link 
+{
+    background-color:#008100 !important;
     color: #ffffff !important;
     border-color:  #027e025d !important;
 }
