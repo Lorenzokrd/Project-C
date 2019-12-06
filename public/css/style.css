@@ -912,6 +912,10 @@ svg circle:nth-child(2){
 
 /* pagination */
 
+nav ul.pagination
+{
+    margin: auto !important;
+}
 
 .page-item.active .page-link 
 {

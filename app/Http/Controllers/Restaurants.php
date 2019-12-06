@@ -105,7 +105,7 @@ class Restaurants extends Controller
         'restaurant.user_id','restaurant.email','restaurant.min_order_price',
         'restaurant.delivery_price','restaurant.avg_delivery_time',
         'restaurant.website','restaurant.city','restaurant.street',
-        'restaurant.zip_code','restaurant.image','restaurant.approved')->paginate(6);
+        'restaurant.zip_code','restaurant.image','restaurant.approved')->paginate(9);
         return view('/index',['restaurants'=>$restaurants]);
     }
 
@@ -118,7 +118,7 @@ class Restaurants extends Controller
         'restaurant.user_id','restaurant.email','restaurant.min_order_price',
         'restaurant.delivery_price','restaurant.avg_delivery_time',
         'restaurant.website','restaurant.city','restaurant.street',
-        'restaurant.zip_code','restaurant.image','restaurant.approved')->paginate(6);
+        'restaurant.zip_code','restaurant.image','restaurant.approved')->paginate(9);
         return view('/index',['restaurants'=>$restaurants]);
     }
 
@@ -131,7 +131,7 @@ class Restaurants extends Controller
         'restaurant.user_id','restaurant.email','restaurant.min_order_price',
         'restaurant.delivery_price','restaurant.avg_delivery_time',
         'restaurant.website','restaurant.city','restaurant.street',
-        'restaurant.zip_code','restaurant.image','restaurant.approved')->paginate(6);
+        'restaurant.zip_code','restaurant.image','restaurant.approved')->paginate(9);
         return view('/index',['restaurants'=>$restaurants]);
     }
 
@@ -144,7 +144,7 @@ class Restaurants extends Controller
         'restaurant.user_id','restaurant.email','restaurant.min_order_price',
         'restaurant.delivery_price','restaurant.avg_delivery_time',
         'restaurant.website','restaurant.city','restaurant.street',
-        'restaurant.zip_code','restaurant.image','restaurant.approved')->paginate(6);
+        'restaurant.zip_code','restaurant.image','restaurant.approved')->paginate(9);
 
         return view('/index',['restaurants'=>$restaurants]);
 
@@ -159,7 +159,7 @@ class Restaurants extends Controller
         'restaurant.user_id','restaurant.email','restaurant.min_order_price',
         'restaurant.delivery_price','restaurant.avg_delivery_time',
         'restaurant.website','restaurant.city','restaurant.street',
-        'restaurant.zip_code','restaurant.image','restaurant.approved')->paginate(6);
+        'restaurant.zip_code','restaurant.image','restaurant.approved')->paginate(9);
         return view('/index',['restaurants'=>$restaurants]);
     }
 
