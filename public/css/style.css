@@ -117,9 +117,15 @@ li {
 
 /****** RESTAURANT GRID ******/
 
+
+
 .restaurant-grid {
     margin-top:70px;
 }
+
+
+
+
 
 .restaurant-grid-item {
     margin-bottom: 35px;
@@ -635,6 +641,7 @@ li {
     margin-bottom: 30px;
 }
 
+
 .order-container {
     -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.2);
     -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.2);
@@ -691,6 +698,8 @@ li {
     bottom: 10px;
     right: -10px;
 }
+
+
 
 .order-btn-holder {
 
@@ -899,4 +908,22 @@ svg circle:nth-child(2){
 {
     stroke-dashoffset: calc(440 - (440 * 90) / 100);
     stroke: #008100;
+}
+
+/* pagination */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .pagination li {
+    display: block;
+   }
+
+.page-item.active .page-link 
+{
+    background-color:#008100 !important;
+    color: #ffffff !important;
+    border-color:  #027e025d !important;
 }
