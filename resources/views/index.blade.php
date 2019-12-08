@@ -197,11 +197,14 @@
                 @endforeach
 
             </div>
+            {{ $restaurants->links()}}
         </div>
+    
     </div>
 </div>
 
 <script>
 </script>
 </body>
+
 </html>
