@@ -96,4 +96,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('dashboard/categories/update-category','CategoriesController@update');
     Route::post('dashboard/updateRestaurant','Restaurants@update');
     Route::post('dashboard/updateDeliveryTimes','Restaurants@updateDeliveryTimes');
+    Route::get('dashboard/tags','TagsController@getAllTags');
+    Route::post('/dashboard/tags/addTagToRestaurant','TagsController@addTagToRestaurant');
+    Route::post('/dashboard/tags/RemoveTag','TagsController@removeTagFromRestaurant');
+    Route::get('dashboard/tags/chosenTags','TagsController@getChosenTags');
+    Route::get('/recommended/restaurants','Restaurants@recommendedRestaurants');
 });

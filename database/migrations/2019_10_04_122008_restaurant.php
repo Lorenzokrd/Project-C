@@ -27,7 +27,6 @@ class Restaurant extends Migration
             $table->string('zip_code');
             $table->string('image');
             $table->boolean('approved')->default(0);
-            $table->integer('recommended')->default(0);
         });
     }
 

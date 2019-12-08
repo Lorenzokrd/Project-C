@@ -900,3 +900,15 @@ svg circle:nth-child(2){
     stroke-dashoffset: calc(440 - (440 * 90) / 100);
     stroke: #008100;
 }
+.plus-icon{
+    color: #008100;
+    float:right;
+    margin-right:25px;
+}
+.tag-badge{
+    margin-right: 10px;
+    margin-left:15px;
+}
+.delete-tag{
+    margin-left:5px;
+}
