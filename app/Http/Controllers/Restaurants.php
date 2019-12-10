@@ -109,16 +109,20 @@ class Restaurants extends Controller
         $restaurants = DB::table('restaurant')
         ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
         ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
-        ->whereNotIn('restaurant.id',$recommendedRestaurantsIds)
         ->groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
         'restaurant.user_id','restaurant.email','restaurant.min_order_price',
         'restaurant.delivery_price','restaurant.avg_delivery_time',
         'restaurant.website','restaurant.city','restaurant.street',
         'restaurant.zip_code','restaurant.image','restaurant.approved')->paginate(9);
         foreach($restaurants as $restaurant){
-            $restaurant->recommended = 0;
+            if(in_array($restaurant->id,$recommendedRestaurantsIds)){
+                $restaurant->recommended = 1;
+            }
+            else{
+                $restaurant->recommended = 0;
+            }
         }
-        return view('/index',['restaurants'=>$restaurants,'recommendedRestaurants'=>$recommendedRestaurants]);
+        return view('/index',['restaurants'=>$restaurants]);
     }
 
     function orderByPriceDesc(){
