@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@include('include.navbar')
 @section('content')
 
 <?php

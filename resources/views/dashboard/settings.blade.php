@@ -1,7 +1,6 @@
 @include('include.dashboard.header')
 
 <? echo $restaurant; ?>
-
 <h1>Gegevens</h1>
 <div class="row">
     <div class="col-lg-6">
