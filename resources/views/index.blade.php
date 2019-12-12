@@ -49,76 +49,39 @@
     <div class="row">
         <div class="col-lg-2">
             <p style="font-weight:700">Categorieën</p>
+            @foreach($tags as $tag)
+            @if($tag->tagNumber == 0)
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="cat1">
-                <label class="custom-control-label" for="cat1">Alcohol</label>
+                <input type="checkbox" class="custom-control-input" id={{$tag->id}} disabled>
+                <label class="tag-check custom-control-label" for={{$tag->id}}>{{$tag->name}} ({{$tag->tagNumber}})</label>
             </div>
+            @else
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="cat2">
-                <label class="custom-control-label" for="cat2">Amerikaans</label>
+                <input type="checkbox" class="custom-control-input" id={{$tag->id}}>
+                <label class="tag-input custom-control-label" for={{$tag->id}}>{{$tag->name}} ({{$tag->tagNumber}})</label>
             </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="cat3">
-                <label class="custom-control-label" for="cat3">Arabisch</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="cat4">
-                <label class="custom-control-label" for="cat4">Aziatisch</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="cat5">
-                <label class="custom-control-label" for="cat5">BBQ</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="cat6">
-                <label class="custom-control-label" for="cat6">Bowls</label>
-            </div>
-            <br><br>
-            <p style="font-weight:700">Dieet</p>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="diet1">
-                <label class="custom-control-label" for="diet1">Vegetarisch</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="diet2">
-                <label class="custom-control-label" for="diet2">Vegan</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="diet3">
-                <label class="custom-control-label" for="diet3">Organisch</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="diet4">
-                <label class="custom-control-label" for="diet4">Gluten vrij</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="diet5">
-                <label class="custom-control-label" for="diet5">Halal</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="diet6">
-                <label class="custom-control-label" for="diet6">Lactose vrij</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="diet7">
-                <label class="custom-control-label" for="diet7">Zonder koriander</label>
-            </div>
+            @endif
+            @endforeach
             <br><br>
             <p style="font-weight:700">Min. Bestelbedrag</p>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="price1">
-                <label class="custom-control-label" for="price1">Vanaf €5,00</label>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radio0" name="price" value = "0">
+                <label class="priceInput custom-control-label" for="radio0" value=0>Geen voorkeur</label>
             </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="price2">
-                <label class="custom-control-label" for="price2">Vanaf €10,00</label>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radio1" name="price" value="5">
+                <label class="priceInput custom-control-label" for="radio1" value=5>Vanaf €5,00</label>
             </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="price3">
-                <label class="custom-control-label" for="price3">Vanaf €15,00</label>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radio2" name="price" value="10">
+                <label class="priceInput custom-control-label" for="radio2" value=10>Vanaf €10,00</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="radio3" name="price" value = "15">
+                <label class="priceInput custom-control-label" for="radio3" value=15>Vanaf €15,00</label>
             </div>
         </div>
-        <div class="col-lg-10">
+        <div id="restaurants-overview" class="col-lg-10">
             <div class="row">
                 <div class="filters-top">
                     <div class="filter-btn dropdown float-right">
@@ -141,7 +104,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div  class="row">
                 @foreach ($restaurants as $restaurant)
                 @if($restaurant->approved == 1)
                 <div class="col col-12 col-sm-6 col-lg-4 restaurant-grid-item" onclick="document.location='/{{$restaurant->name}}';">
@@ -170,14 +133,77 @@
                 @endforeach
 
             </div>
-            {{ $restaurants->links()}}
+            {{$restaurants->links()}}
         </div>
     
     </div>
 </div>
-
 <script>
-
+$(document).ready(function(){
+    var selectedTags = [];
+    var lastChosenMinPrice = 0;
+    $("#radio0").prop("checked",true);
+    $(".tag-input").click(function(){
+        if(isChosen($(this).attr("for"),selectedTags)){
+            removeTag($(this).attr("for"),selectedTags);
+            $(this). prop("checked", false);
+            $.ajax({
+                type:"get",
+                url: "",
+                data: {chosenTags: selectedTags, chosenTagsLength: selectedTags.length,minPrice: lastChosenMinPrice,_token: '{{csrf_token()}}' },
+                success: function(response){
+                    console.log("succeeded");
+                    $("#restaurants-overview").html(response);
+                },
+                error: function(data){
+                    console.log("error");
+                }
+            });
+        }
+        else{
+            selectedTags.push($(this).attr("for"));
+            $.ajax({
+                type:"get",
+                url: "",
+                data: {chosenTags: selectedTags, chosenTagsLength: selectedTags,minPrice: lastChosenMinPrice ,_token: '{{csrf_token()}}' },
+                success: function(response){
+                    console.log("succeeded");
+                    $("#restaurants-overview").html(response);
+                },
+                error: function(data){
+                    console.log(data);
+                    console.log("error");
+                }
+                });
+        }
+    })
+    $(".priceInput").click(function(){
+        $.ajax({
+                type:"get",
+                url: "",
+                data: {chosenTags: selectedTags, chosenTagsLength: selectedTags.length,minPrice: $(this).attr("value"),_token: '{{csrf_token()}}' },
+                success: function(response){
+                    console.log("succeeded");
+                    lastChosenMinPrice = $(this).attr("value");
+                    $("#restaurants-overview").html(response);
+                },
+                error: function(data){
+                    console.log(data)
+                    console.log("error");
+                }
+            });
+    })
+    function isChosen(item,array){
+        for(var i =0; i<array.length;i++){
+            if(item == array[i]){
+                return true;
+            }
+        }
+    }
+    function removeTag(tagToRemove,TagsArray){
+        TagsArray.splice(jQuery.inArray(tagToRemove, TagsArray),1);
+    }
+})
 </script>
 </body>
 
