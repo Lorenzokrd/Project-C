@@ -26,20 +26,26 @@
         <input class="form-control" type="text" placeholder="Vind restaurant" aria-label="Search">
     </div>
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+
+    
         <ul class="navbar-nav ml-auto">
             @guest
-            <li class="nav-item">
-                <a class="nav-link" style="font-weight:600;color:#FAF6D5 !important" href="{{ route('login') }}">{{ __('Login') }}</a>
-            </li>
-            @if (Route::has('register'))
-            <li class="nav-item">
-                <a class="nav-link" style="font-weight:600;color:#FAF6D5 !important" href="{{ route('register') }}">{{ __('Register') }}</a>
+            <li class="nav-item dropdown">
+                <a id="navbarDropdown" style="font-weight:600;color:#FAF6D5 !important" class="fas fa-bars nav-icon-right"  href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item"  href="{{ route('login') }}">{{ __('Login') }}</a>
+                    @if (Route::has('register'))
+                    <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    </div>
             </li>
             @endif
             @else
             <li class="nav-item dropdown">
-                <a id="navbarDropdown" style="font-weight:600;color:#FAF6D5 !important" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                <a id="navbarDropdown" style="font-weight:600;color:#FAF6D5 !important" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                     {{ Auth::user()->name }} <span class="caret"></span>
+                    <span>     </span>
+                    <i class="fas fa-bars nav-icon-right"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     @if (Auth::user()->role < 3)
@@ -59,9 +65,6 @@
                 </div>
             </li>
             @endguest
-            <li class="nav-item mt-1" style="margin-left:10px;">
-                <i class="fas fa-bars nav-icon-right"></i>
-            </li>
         </ul>
     </div>
 </nav>
