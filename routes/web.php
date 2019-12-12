@@ -101,4 +101,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/dashboard/tags/RemoveTag','TagsController@removeTagFromRestaurant');
     Route::get('dashboard/tags/chosenTags','TagsController@getChosenTags');
     Route::get('/recommended/restaurants','Restaurants@recommendedRestaurants');
+    Route::post('submitRestaurant','Restaurants@save');
+    // Route::post("/cats/restaurants","Restaurants@fetchTest");
+    Route::get("/cats/restaurants","Restaurants@fetchTest");
+    Route::get('/tags-test/2','Restaurants@getTags');
 });
