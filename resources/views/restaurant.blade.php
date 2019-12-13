@@ -173,6 +173,7 @@
       size: 'medium',
       color: 'white',
       shape: 'rect',
+      label: 'pay',
     },
 
     // Enable Pay Now checkout flow (optional)
