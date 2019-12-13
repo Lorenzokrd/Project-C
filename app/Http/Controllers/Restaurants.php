@@ -32,7 +32,8 @@ class Restaurants extends Controller
             }
             $restaurant->save();
             return redirect('register-restaurant/success');
-        } catch(\Exception $e){
+        } 
+        catch(\Exception $e){
             return redirect('register-restaurant')->with('exception', 'Aanmelding is niet succesvol verwerkt!');
         }
     }
