@@ -167,7 +167,6 @@ class Restaurants extends Controller
                     $restaurant->recommended = 0;
                 }
             }
-            var_dump($recommendedRestaurants);
             return view('index',["restaurants"=>$restaurants,"tags"=>$this->getTags()]);
         }
     }
