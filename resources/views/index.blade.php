@@ -187,13 +187,13 @@ $(document).ready(function(){
         }
     })
     $(".priceInput").click(function(){
+        lastChosenMinPrice = $(this).attr("value");
         $.ajax({
                 type:"get",
                 url: "",
                 data: {chosenTags: selectedTags, chosenTagsLength: selectedTags.length,minPrice: $(this).attr("value"),_token: '{{csrf_token()}}' },
                 success: function(response){
                     console.log("succeeded");
-                    lastChosenMinPrice = $(this).attr("value");
                     $("#restaurants-overview").html(response);
                 },
                 error: function(data){
