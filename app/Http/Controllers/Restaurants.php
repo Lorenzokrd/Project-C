@@ -346,7 +346,7 @@ class Restaurants extends Controller
                 'restaurant.website','restaurant.city','restaurant.street',
                 'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')
                 ->having('rating','>',3)->get();
-                return $recommendedRestaurants; 
+                return $recommendedRestaurants;
             }
             catch(Exception $e){
                 $recommendedRestaurants = [];
@@ -356,7 +356,7 @@ class Restaurants extends Controller
         else{
             $recommendedRestaurants = [];
             return $recommendedRestaurants;
-        }        
+        }
     }
     function getTags(){
         $tags = DB::table('tags')->
