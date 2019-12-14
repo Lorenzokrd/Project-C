@@ -45,17 +45,12 @@
     </a>
 </div>
 
-<div class="container restaurant-grid" style="padding-bottom:100px">
+<div class="container restaurant-grid" style="padding-bottom:100px;position:relative;">
     <div class="row">
         <div class="col-lg-2">
             <p style="font-weight:700">Categorieën</p>
             @foreach($tags as $tag)
-            @if($tag->tagNumber == 0)
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id={{$tag->id}} disabled>
-                <label class="tag-check custom-control-label" for={{$tag->id}}>{{$tag->name}} ({{$tag->tagNumber}})</label>
-            </div>
-            @else
+            @if(!$tag->tagNumber == 0)
             <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id={{$tag->id}}>
                 <label class="tag-input custom-control-label" for={{$tag->id}}>{{$tag->name}} ({{$tag->tagNumber}})</label>
@@ -81,7 +76,11 @@
                 <label class="priceInput custom-control-label" for="radio3" value=15>Vanaf €15,00</label>
             </div>
         </div>
+        <div id="loading">
+          <img src="{{URL('/images/load.gif')}}" />
+        </div>
         <div id="restaurants-overview" class="col-lg-10">
+
             <div class="row">
                 <div class="filters-top">
                     <div class="filter-btn dropdown float-right">
@@ -135,10 +134,20 @@
             </div>
             {{$restaurants->links()}}
         </div>
-    
+
     </div>
 </div>
 <script>
+
+var $loading = $('#loading').hide();
+$(document)
+  .ajaxStart(function () {
+    $loading.show();
+  })
+  .ajaxStop(function () {
+    $loading.hide();
+  });
+
 $(document).ready(function(){
     var selectedTags = [];
     var lastChosenMinPrice = 0;

@@ -303,6 +303,13 @@ class Restaurants extends Controller
             } else {
                 $deliveryTimes = new DeliveryTimes;
             }
+
+            if (preg_match('([0-9]{2}:[0-9]{2}-[0-9]{2}:[0-9]{2})', $req->monday) || $req->monday == "Gesloten") {
+
+            } else {
+                return redirect('dashboard/settings')->with('exception', 'Onjuist format voor openingstijd!');
+            }
+
             $deliveryTimes->restaurant_id = $req->restaurantId;
             $deliveryTimes->monday = $req->monday;
             $deliveryTimes->tuesday = $req->tuesday;
@@ -344,7 +351,7 @@ class Restaurants extends Controller
                 'restaurant.website','restaurant.city','restaurant.street',
                 'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')
                 ->having('rating','>',3)->get();
-                return $recommendedRestaurants; 
+                return $recommendedRestaurants;
             }
             catch(Exception $e){
                 $recommendedRestaurants = [];
@@ -354,7 +361,7 @@ class Restaurants extends Controller
         else{
             $recommendedRestaurants = [];
             return $recommendedRestaurants;
-        }        
+        }
     }
     function getTags(){
         $tags = DB::table('tags')->
