@@ -917,6 +917,75 @@ svg circle:nth-child(2){
     stroke-dashoffset: calc(440 - (440 * 90) / 100);
     stroke: #008100;
 }
+
+/****** ORDERS USER ******/
+
+.order-status-user{
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.order-status-user span{
+  background-color: green;
+  border-radius: 10px;
+  color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.review-order-user{
+  background-color: green;
+  border-radius: 10px;
+  color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  float: right;
+  margin-top: 20px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.review-button-user{
+  float: right;
+}
+
+.rate {
+    height: 46px;
+    padding: 0 10px;
+    margin-right: 21%;
+
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:40px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: green;
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #009d00;
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #004e00;
+}
+
 .plus-icon{
     color: #008100;
     float:right;
@@ -953,4 +1022,3 @@ svg circle:nth-child(2){
     display: inline;
     margin: 12%;
 }
-
