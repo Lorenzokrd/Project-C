@@ -121,7 +121,7 @@ class Products extends Controller
         $products = Product::where('restaurant_id', $restaurant->id)->get();
         $deliveryTimes = DeliveryTimes::where('restaurant_id', $restaurant->id)->first();
         $info = array("restaurant" => $restaurant, "products" => $products);
-        return view('restaurant',['deliveryTimes'=>$deliveryTimes, 'info'=>$info, 'categories'=>$categories]);
+        return view('restaurant',['deliveryTimes'=>$deliveryTimes, 'info'=>$info, 'categories'=>$categories,"deliveryTime"=>$this->getDeliveryTimes(),"restaurant"=>$restaurant]);
     }
 
     function addToCart($restaurantName,$productId){
@@ -181,6 +181,14 @@ class Products extends Controller
         else{
             return redirect('/login');
         }
-        
+
+    }
+
+    function getDeliveryTimes(){
+        $currentDay = date("l");
+
+        $deliveryTimes = DB::table('delivery_times')->select('restaurant_id', $currentDay . " as day")->get();
+
+        return $deliveryTimes;
     }
 }

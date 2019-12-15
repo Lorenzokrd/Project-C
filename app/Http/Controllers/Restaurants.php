@@ -196,7 +196,7 @@ class Restaurants extends Controller
                 $restaurant->recommended = 0;
             }
         }
-        return view('/index',['restaurants'=>$restaurants,'restaurantsLinks'=>[],"tags"=>$this->getTags()]);
+        return view('/index',['restaurants'=>$restaurants,'restaurantsLinks'=>[],"tags"=>$this->getTags(),"deliveryTimes"=>$this->getDeliveryTimes()]);
     }
 
     function orderByPriceAsc(){
@@ -252,7 +252,7 @@ class Restaurants extends Controller
                 $restaurant->recommended = 0;
             }
         }
-        return view('/index',['restaurants'=>$restaurants,'restaurantsLinks'=>[],"tags"=>$this->getTags()]);
+        return view('/index',['restaurants'=>$restaurants,'restaurantsLinks'=>[],"tags"=>$this->getTags(),"deliveryTimes"=>$this->getDeliveryTimes()]);
     }
 
     function orderByRating(){
@@ -280,7 +280,7 @@ class Restaurants extends Controller
                 $restaurant->recommended = 0;
             }
         }
-        return view('/index',['restaurants'=>$restaurants,'restaurantsLinks'=>[],"tags"=>$this->getTags()]);
+        return view('/index',['restaurants'=>$restaurants,'restaurantsLinks'=>[],"tags"=>$this->getTags(),"deliveryTimes"=>$this->getDeliveryTimes()]);
     }
 
     function rateRestaurant(Request $req,$restaurantId){
