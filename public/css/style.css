@@ -939,3 +939,10 @@ svg circle:nth-child(2){
     color: #ffffff !important;
     border-color:  #027e025d !important;
 }
+
+/* paypal */
+.paypal-button{
+    display: inline;
+    margin: 12%;
+}
+
