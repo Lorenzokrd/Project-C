@@ -103,7 +103,7 @@
                     </div>
                 </div>
             </div>
-            <div  class="row">
+            <div id="restaurants-overview" class="row">
                 @foreach ($restaurants as $restaurant)
                 @if($restaurant->approved == 1)
                 <div class="col col-12 col-sm-6 col-lg-4 restaurant-grid-item" onclick="document.location='/{{$restaurant->name}}';">
@@ -111,6 +111,18 @@
                             <div class="restaurant-name">
                                 <p><i class="far fa-star" aria-hidden="true"></i> {{$restaurant->name}}</p>
                             </div>
+                            
+                            @foreach($deliveryTimes as $time)
+                            @if($time->restaurant_id == $restaurant->id)
+                            @if(strtotime(substr($time->day, 0, 5)) < strtotime(date("H:i")) && strtotime(substr($time->day, 6, 5)) > strtotime(date("H:i")))
+                            @else
+                            <div class="status restaurant-status-closed">
+                                    <p>Gesloten</p>
+                            </div>
+                            @endif
+                            @endif
+                            @endforeach
+
                             @if($restaurant->recommended == 1)
                             <div class="status restaurant-status-recommended">
                                     <p>Aanbevolen voor jou</p>
@@ -142,9 +154,11 @@
 var $loading = $('#loading').hide();
 $(document)
   .ajaxStart(function () {
+    //$('#restaurants').hide();
     $loading.show();
   })
   .ajaxStop(function () {
+    //$('#restaurants').show();
     $loading.hide();
   });
 

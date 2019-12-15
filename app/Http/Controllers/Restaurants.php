@@ -167,7 +167,7 @@ class Restaurants extends Controller
                     $restaurant->recommended = 0;
                 }
             }
-            return view('index',["restaurants"=>$restaurants,"tags"=>$this->getTags()]);
+            return view('index',["restaurants"=>$restaurants,"tags"=>$this->getTags(),"deliveryTimes"=>$this->getDeliveryTimes()]);
         }
     }
 
@@ -305,10 +305,27 @@ class Restaurants extends Controller
                 $deliveryTimes = new DeliveryTimes;
             }
 
-            if (preg_match('([0-9]{2}:[0-9]{2}-[0-9]{2}:[0-9]{2})', $req->monday) || $req->monday == "Gesloten") {
+            return date("H:i");
 
-            } else {
-                return redirect('dashboard/settings')->with('exception', 'Onjuist format voor openingstijd!');
+            foreach ($req->all() as $key => $day) {
+                if($key == "_token" || $key == "restaurantId"){
+                    continue;
+                }
+
+                if (preg_match('(^[0-9]{2}:[0-9]{2}-[0-9]{2}:[0-9]{2}$)', $day) || $day == "Gesloten") {}
+                else {
+                    return redirect('dashboard/settings')->with('exception', 'Onjuist format voor openingstijd!');
+                }
+
+                if(strtotime(substr($day, 0, 5)) && strtotime(substr($day, 6, 5)) || $day == "Gesloten"){}
+                else {
+                    return redirect('dashboard/settings')->with('exception', 'Ingevulde tijd bestaat niet!');
+                }
+
+                if(strtotime(substr($day, 0, 5)) > strtotime(substr($day, 6, 5))){
+                    return redirect('dashboard/settings')->with('exception', 'Openingstijd kan niet later zijn dan sluitingstijd!');
+                }
+
             }
 
             $deliveryTimes->restaurant_id = $req->restaurantId;
@@ -368,5 +385,13 @@ class Restaurants extends Controller
         $tags = DB::table('tags')->
         leftJoin('restaurant_tags','restaurant_tags.tag_id','=','tags.id')->select('tags.*',DB::raw('count(restaurant_tags.tag_id) as tagNumber'))->groupBy('tags.name','tags.id')->get();
         return $tags;
+    }
+
+    function getDeliveryTimes(){
+        $currentDay = date("l");
+
+        $deliveryTimes = DB::table('delivery_times')->select('restaurant_id', $currentDay . " as day")->get();
+
+        return $deliveryTimes;
     }
 }
