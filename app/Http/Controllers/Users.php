@@ -34,7 +34,7 @@ class Users extends Controller
         foreach($order as $item3){
             $orders[]=Orders::where('order_id',$item3->id)->get();
         }
-        $test = $orders;
+
         foreach($orders as $item2){
             for($i = 0; $i<count($item2);$i++){
                 $item2[$i]["productName"] = Product::find($item2[$i]["product_id"])->name;
