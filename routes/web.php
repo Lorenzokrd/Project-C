@@ -19,9 +19,7 @@ Route::get('/','Restaurants@fetch');
 Auth::routes();
 Route::group(['middleware' => 'web'], function () {
 
-    Route::get('/user', function () {
-        return view('user');
-    });
+    Route::get('/user', 'Users@read' );
 
     Route::post('user/update', 'Users@update');
 
