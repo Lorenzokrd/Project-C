@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+// Route::get('/', function () {
+//     return view('index');
+// });
 Route::get('/','Restaurants@fetch');
 
 Auth::routes();
@@ -94,4 +94,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('dashboard/categories/update-category','CategoriesController@update');
     Route::post('dashboard/updateRestaurant','Restaurants@update');
     Route::post('dashboard/updateDeliveryTimes','Restaurants@updateDeliveryTimes');
+    Route::get('dashboard/tags','TagsController@getAllTags');
+    Route::post('/dashboard/tags/addTagToRestaurant','TagsController@addTagToRestaurant');
+    Route::post('/dashboard/tags/RemoveTag','TagsController@removeTagFromRestaurant');
+    Route::get('dashboard/tags/chosenTags','TagsController@getChosenTags');
+    Route::get('/recommended/restaurants','Restaurants@recommendedRestaurants');
+    Route::post('submitRestaurant','Restaurants@save');
+    Route::get("/cats/restaurants","Restaurants@fetchTest");
+    Route::get('/tags-test/2','Restaurants@getTags');
+    Route::get('/review/rate-product','Products@rateProduct');
 });
