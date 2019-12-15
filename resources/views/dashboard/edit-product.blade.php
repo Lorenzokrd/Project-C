@@ -14,11 +14,11 @@
                 <label for="productPrice">Product prijs</label>
                 <input type="input" class="form-control" name="productPrice" placeholder="Product prijs" value="{{$product->price}}">
             </div>
-            <label for="productCategory">Categorie</label>
+            <label for="productCategorys">Categorie</label>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
               </div>
-              <select class="custom-select" name="productCategory" id="productCategory">
+              <select class="custom-select" name="productCategorys" id="productCategorys">
                 @foreach($categories as $category)
                 @if($category['id'] == $product->category)
                 <option value="{{$category['id']}}" selected>{{$category['name']}}</option>
@@ -28,6 +28,7 @@
                 @endforeach
               </select>
             </div>
+            
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" name="productRating" <?php if($product->toggle_rating == 1){ echo "checked"; } ?>
                 <label class="form-check-label" for="productRating">Product beoordeling</label>
@@ -47,6 +48,8 @@
                 <label for="productDesc">Product Beschrijving</label>
                 <input type="input" class="form-control" name="productDesc" placeholder="Beschrijving" value="{{$product->description}}">
             </div>
+            <label for="productAllergy">Allergiën</label>
+           
         </div>
     </form>
 </div>

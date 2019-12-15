@@ -20,6 +20,7 @@ class Product extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('category');
+            $table->string('allergy');
             $table->string('image')->nullable();
             $table->decimal('price',5,2);
             $table->boolean('toggle_rating');

@@ -118,7 +118,7 @@ class Products extends Controller
         $restaurantrating = RestaurantRating::select(DB::raw('avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))->where('restaurant_id',1)->get();
         $restaurant['rating'] = $restaurantrating[0]->rating;
         $categories = $this->getCategories($restaurantName);
-        $products = Product::where('restaurant_id', $restaurant->id)->get();
+        $products = Product::where('restaurant_id', $restaurant->id)->leftJoin("product_allergies","product_allergies.product_id","=", "product.id")->leftjoin("allergy","allergy.id","=", "product_allergies.allergy_id")->select("allergy.name","allergy.description","product.*")->get();
         $deliveryTimes = DeliveryTimes::where('restaurant_id', $restaurant->id)->first();
         $info = array("restaurant" => $restaurant, "products" => $products);
         return view('restaurant',['deliveryTimes'=>$deliveryTimes, 'info'=>$info, 'categories'=>$categories]);

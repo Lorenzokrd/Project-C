@@ -76,6 +76,7 @@
                     <i class="far fa-question-circle" onclick="$('#product{{$product->id}}').modal('show'); event.stopPropagation();"></i>
                     <i class="fas fa-plus-square"></i>
                 </div>
+                
             </div>
 
             <!-- Modal -->
@@ -92,9 +93,12 @@
                     <span class="modal-pdesc">Product beschrijving</span>
                     <p>{{$product->description}}</p>
                     <span class="modal-ptypes">Product types</span>
-                    <p>Test</p>
-                    <span class="modal-pallergies">Product allergieen</span>
-                    <p>Test</p>
+                    <p>asd</p>
+                    <span class="modal-pallergies">dfs </span>
+                    <p>{{$product->name}}</p>
+                    <div class="restaurant-page-score"><?php Makestars($info["restaurant"]->rating) ?></div>
+                    <p></p>
+                    <button @click="setRating"class "btn btn-primary">Rate</button>
                   </div>
                 </div>
               </div>
