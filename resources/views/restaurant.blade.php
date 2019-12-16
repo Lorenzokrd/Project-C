@@ -186,6 +186,7 @@
         transactions: [{
           amount: {
 
+            
             total:{{number_format(Session::get($info["restaurant"]->name)->totalPrice)}},
             //{{number_format($info["restaurant"]->totalPrice)}},
             currency: 'EUR'
