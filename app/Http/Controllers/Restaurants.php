@@ -121,7 +121,8 @@ class Restaurants extends Controller
                 'restaurant.user_id','restaurant.email','restaurant.min_order_price',
                 'restaurant.delivery_price','restaurant.avg_delivery_time',
                 'restaurant.website','restaurant.city','restaurant.street',
-                'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')->paginate(9);
+                'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')
+                ->orderBy($receivedData["orderBy"],$receivedData["ascOrDesc"])->paginate(9);
             }
             else{
                 $restaurants = DB::table('restaurant')
@@ -129,11 +130,13 @@ class Restaurants extends Controller
                 ->leftJoin('restaurant_tags','restaurant_tags.restaurant_id','=','restaurant.id')
                 ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
                 ->where("restaurant.min_order_price",">=",$receivedData["minPrice"])
+
                 ->groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
                 'restaurant.user_id','restaurant.email','restaurant.min_order_price',
                 'restaurant.delivery_price','restaurant.avg_delivery_time',
                 'restaurant.website','restaurant.city','restaurant.street',
-                'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')->paginate(9);
+                'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')
+                ->orderBy($receivedData["orderBy"],$receivedData["ascOrDesc"])->paginate(9);
             }
         }
         else{
@@ -170,119 +173,7 @@ class Restaurants extends Controller
             return view('index',["restaurants"=>$restaurants,"tags"=>$this->getTags()]);
         }
     }
-
-    function orderByPriceDesc(){
-        $recommendedRestaurants = $this->recommendedRestaurants();
-        $recommendedRestaurantsIds = [];
-        if(count($recommendedRestaurants)>0){
-            foreach($recommendedRestaurants as $recommendedRestaurant){
-                $recommendedRestaurantsIds []= $recommendedRestaurant->id;
-            }
-        }
-        $restaurants = DB::table('restaurant')
-        ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
-        ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
-        ->orderBy('min_order_price','desc')->
-        groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
-        'restaurant.user_id','restaurant.email','restaurant.min_order_price',
-        'restaurant.delivery_price','restaurant.avg_delivery_time',
-        'restaurant.website','restaurant.city','restaurant.street',
-        'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')->paginate(9);
-        foreach($restaurants as $restaurant){
-            if(in_array($restaurant->id,$recommendedRestaurantsIds)){
-                $restaurant->recommended = 1;
-            }
-            else{
-                $restaurant->recommended = 0;
-            }
-        }
-        return view('/index',['restaurants'=>$restaurants,'restaurantsLinks'=>[]]);
-    }
-
-    function orderByPriceAsc(){
-        $recommendedRestaurants = $this->recommendedRestaurants();
-        $recommendedRestaurantsIds = [];
-        if(count($recommendedRestaurants)>0){
-            foreach($recommendedRestaurants as $recommendedRestaurant){
-                $recommendedRestaurantsIds []= $recommendedRestaurant->id;
-            }
-        }
-        $restaurants = DB::table('restaurant')
-        ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
-        ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
-        ->orderBy('min_order_price','asc')->
-        groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
-        'restaurant.user_id','restaurant.email','restaurant.min_order_price',
-        'restaurant.delivery_price','restaurant.avg_delivery_time',
-        'restaurant.website','restaurant.city','restaurant.street',
-        'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')->paginate(9);
-        foreach($restaurants as $restaurant){
-            if(in_array($restaurant->id,$recommendedRestaurantsIds)){
-                $restaurant->recommended = 1;
-            }
-            else{
-                $restaurant->recommended = 0;
-            }
-        }
-        return view('/index',['restaurants'=>$restaurants,'restaurantsLinks'=>[]]);
-    }
-
-    function orderByDeliveryTime(){
-        $recommendedRestaurants = $this->recommendedRestaurants();
-        $recommendedRestaurantsIds = [];
-        if(count($recommendedRestaurants)>0){
-            foreach($recommendedRestaurants as $recommendedRestaurant){
-                $recommendedRestaurantsIds []= $recommendedRestaurant->id;
-            }
-        }
-        $restaurants = DB::table('restaurant')
-        ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
-        ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
-        ->orderBy('restaurant.avg_delivery_time','asc')->
-        groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
-        'restaurant.user_id','restaurant.email','restaurant.min_order_price',
-        'restaurant.delivery_price','restaurant.avg_delivery_time',
-        'restaurant.website','restaurant.city','restaurant.street',
-        'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')->paginate(9);
-        foreach($restaurants as $restaurant){
-            if(in_array($restaurant->id,$recommendedRestaurantsIds)){
-                $restaurant->recommended = 1;
-            }
-            else{
-                $restaurant->recommended = 0;
-            }
-        }
-        return view('/index',['restaurants'=>$restaurants,'restaurantsLinks'=>[]]);
-    }
-
-    function orderByRating(){
-        $recommendedRestaurants = $this->recommendedRestaurants();
-        $recommendedRestaurantsIds = [];
-        if(count($recommendedRestaurants)>0){
-            foreach($recommendedRestaurants as $recommendedRestaurant){
-                $recommendedRestaurantsIds []= $recommendedRestaurant->id;
-            }
-        }
-        $restaurants = DB::table('restaurant')
-        ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
-        ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
-        ->orderBy('rating','desc')->
-        groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
-        'restaurant.user_id','restaurant.email','restaurant.min_order_price',
-        'restaurant.delivery_price','restaurant.avg_delivery_time',
-        'restaurant.website','restaurant.city','restaurant.street',
-        'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')->paginate(9);
-        foreach($restaurants as $restaurant){
-            if(in_array($restaurant->id,$recommendedRestaurantsIds)){
-                $restaurant->recommended = 1;
-            }
-            else{
-                $restaurant->recommended = 0;
-            }
-        }
-        return view('/index',['restaurants'=>$restaurants,'restaurantsLinks'=>[]]);
-    }
-
+    
     function rateRestaurant(Request $req,$restaurantId){
         $currentUserOrders = Order::where([['user_id','=',\Auth::user()->id],
         ['restaurant_id','=',$restaurantId]])->get();

@@ -14,30 +14,6 @@
         }
     }
 } ?>
-    <div class="row">
-            <div class="filters-top">
-
-                <div class="filter-btn dropdown float-right">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Prijs
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="/order/price/desc">Hoog - laag</a>
-                    <a class="dropdown-item" href="/order/price/asc">Laag - hoog</a>
-                    </div>
-                </div>
-                <div class="filter-btn dropdown float-right">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        Soorteer op
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/order/delivery">Bezorgtijd</a>
-                        <a class="dropdown-item" href="/order/rating">Beoordeling</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="restaurants-overview" class="row">
             @foreach ($restaurants as $restaurant)
             @if($restaurant->approved == 1)
             <div class="col col-12 col-sm-6 col-lg-4 restaurant-grid-item" onclick="document.location='/{{$restaurant->name}}';">
@@ -64,6 +40,3 @@
                 </div>
             @endif
             @endforeach
-
-        </div>
-        {{$restaurants->links()}}
