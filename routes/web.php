@@ -53,11 +53,8 @@ Route::group(['middleware' => 'web'], function () {
         return view('dashboard/add-product');
     });
 
-    Route::get('/{restaurantName}/order', function () {
-        return view('order');
-    });
-
-    //Route::get('/{restaurantName}/order','OrdersController@createOrder');
+    Route::get('/{restaurantName}/order','Products@getProductsCart');
+    Route::get('/{restaurantName}/order/success','OrdersController@createOrder');
 
     Route::post('submitRestaurant','Restaurants@save');
     Route::post('approveRestaurant','Restaurants@approve');

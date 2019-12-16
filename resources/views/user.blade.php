@@ -102,42 +102,41 @@
 				                    <span class="order-address">Postcode</span>
 				                    <span class="order-address float-right">3015 GG</span>
 				                </div>
-												<div class=review-button-user>
-													<button type="button" name="review-button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#userReviewModal">Beoordeel Bestelling</button>
-												</div>
-												<!-- Modal User Review -->
-												<div class="modal fade" id="userReviewModal" tabindex="-1" role="dialog" aria-labelledby="userReviewModalCenterTitle" aria-hidden="true">
-												  <div class="modal-dialog modal-dialog-centered" role="document">
-												    <div class="modal-content">
-												      <div class="modal-header">
-												        <h5 class="modal-title" id="userReviewModalCenterTitle">Beoordeel uw bestelling van {{date("d F Y, H:i", strtotime($order['created-at']))}} bij {{$order['restaurantname']}}</h5>
-												        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-												          <span aria-hidden="true">&times;</span>
-												        </button>
-												      </div>
-												      <div class="modal-body">
-																<div class="container">
-																 <div class="rate">
-																    <input type="radio" id="star5" name="rate" value="5" />
-																    <label for="star5" title="5">5 stars</label>
-																    <input type="radio" id="star4" name="rate" value="4" />
-																    <label for="star4" title="4">4 stars</label>
-																    <input type="radio" id="star3" name="rate" value="3" />
-																    <label for="star3" title="3">3 stars</label>
-																    <input type="radio" id="star2" name="rate" value="2" />
-																    <label for="star2" title="2">2 stars</label>
-																    <input type="radio" id="star1" name="rate" value="1" />
-																    <label for="star1" title="1">1 star</label>
-																  </div>
-																</div>
-												      </div>
-												      <div class="modal-footer">
-												        <button type="button" class="btn btn-primary">Beoordeel Bestelling</button>
-												      </div>
-												    </div>
-												  </div>
-												</div>
-
+									<div class=review-button-user>
+										<button type="button" name="review-button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#userReviewModal">Beoordeel Bestelling</button>
+									</div>
+									<!-- Modal User Review -->
+									<div class="modal fade" id="userReviewModal" tabindex="-1" role="dialog" aria-labelledby="userReviewModalCenterTitle" aria-hidden="true">
+									  <div class="modal-dialog modal-dialog-centered" role="document">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <h5 class="modal-title" id="userReviewModalCenterTitle">Beoordeel uw bestelling van {{date("d F Y, H:i", strtotime($order['created-at']))}} bij {{$order['restaurantname']}}</h5>
+									        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									          <span aria-hidden="true">&times;</span>
+									        </button>
+									      </div>
+									      <div class="modal-body">
+													<div class="container">
+													 <div class="rate">
+													    <input type="radio" id="star5" name="rate" value="5" />
+													    <label for="star5" title="5">5 stars</label>
+													    <input type="radio" id="star4" name="rate" value="4" />
+													    <label for="star4" title="4">4 stars</label>
+													    <input type="radio" id="star3" name="rate" value="3" />
+													    <label for="star3" title="3">3 stars</label>
+													    <input type="radio" id="star2" name="rate" value="2" />
+													    <label for="star2" title="2">2 stars</label>
+													    <input type="radio" id="star1" name="rate" value="1" />
+													    <label for="star1" title="1">1 star</label>
+													  </div>
+													</div>
+									      </div>
+									      <div class="modal-footer">
+									        <button type="button" class="btn btn-primary">Beoordeel Bestelling</button>
+									      </div>
+									    </div>
+									  </div>
+									</div>
 				            </div>
 				        </div>
 				    </div>

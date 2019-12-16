@@ -26,7 +26,7 @@
     <div class="mx-auto order-0 md-form mt-0 w-100">
         <input class="form-control" type="text" placeholder="Vind restaurant" aria-label="Search">
     </div>
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2 mr-2">
         <ul class="navbar-nav ml-auto">
             @guest
             <li class="nav-item">
@@ -39,8 +39,8 @@
             @endif
             @else
             <li class="nav-item dropdown">
-                <a id="navbarDropdown" style="font-weight:600;color:#FAF6D5 !important" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    {{ Auth::user()->name }} <span class="caret"></span>
+                <a id="navbarDropdown" style="font-weight:600;color:#FAF6D5 !important;font-size:17px;" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    {{ Auth::user()->name }} <i class="far fa-user-circle"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     @if (Auth::user()->role < 3)
@@ -60,9 +60,6 @@
                 </div>
             </li>
             @endguest
-            <li class="nav-item mt-1" style="margin-left:10px;">
-                <i class="fas fa-bars nav-icon-right"></i>
-            </li>
         </ul>
     </div>
 </nav>

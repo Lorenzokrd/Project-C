@@ -32,6 +32,7 @@ class OrdersController extends Controller
             return redirect('/login');
         }
 
+        return view('order-status',['order'=>$Order]);
     }
 
     function read(){

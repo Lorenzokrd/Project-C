@@ -72,6 +72,23 @@ li {
     background-color: #008100 !important;
 }
 
+.zoid-outlet {
+    left: 37px;
+}
+
+.dropdown-menu {
+    border-radius: 0 !important;
+    min-width: 166px !important;
+}
+
+.form-control {
+    border-radius: 0 !important;
+}
+
+.form-group {
+    margin-bottom: 0.4rem !important;
+}
+
 /****** NAVBAR ******/
 
 
@@ -995,7 +1012,6 @@ svg circle:nth-child(2){
     margin-right:25px;
 }
 .tag-badge{
-    margin-right: 10px;
     margin-left:15px;
 }
 .delete-tag{

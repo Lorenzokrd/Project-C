@@ -166,50 +166,6 @@
             @endif
             @endif
             @endforeach
-
-
-            <div id="paypal-button"></div>
-<script src="https://www.paypalobjects.com/api/checkout.js"></script>
-<script>
-  paypal.Button.render({
-
-    env: 'sandbox',
-    client: {
-      sandbox: 'AaaDA6AnEnKoiLCF3HwC09UGajcyCyFpatW1hYFHBnT3urrXRmqie4LKwing3Qq0D9oqPJrmog3hS70O',
-      production: 'demo_production_client_id'
-    },
-    locale: 'nl_NL',
-    style: {
-      size: 'medium',
-      color: 'white',
-      shape: 'rect',
-      label: 'pay',
-    },
-
-    // Enable Pay Now checkout flow (optional)
-    commit: true,
-
-    // Set up a payment
-    payment: function(data, actions) {
-      return actions.payment.create({
-        transactions: [{
-          amount: {
-            total: '2.00',
-            currency: 'EUR'
-          }
-        }]
-      });
-    },
-    // Execute the payment
-    onAuthorize: function(data, actions) {
-      return actions.payment.execute().then(function() {
-
-        window.alert('Bedankt voor uw bestelling, we gaan er mee aan de slag!');
-      });
-    }
-  }, '#paypal-button');
-
-</script>
         </div>
 
     </div>
