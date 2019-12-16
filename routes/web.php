@@ -11,17 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+// Route::get('/', function () {
+//     return view('index');
+// });
 Route::get('/','Restaurants@fetch');
 
 Auth::routes();
 Route::group(['middleware' => 'web'], function () {
 
-    Route::get('/user', function () {
-        return view('user');
-    });
+    Route::get('/user', 'Users@read' );
 
     Route::post('user/update', 'Users@update');
 
@@ -102,7 +100,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('dashboard/tags/chosenTags','TagsController@getChosenTags');
     Route::get('/recommended/restaurants','Restaurants@recommendedRestaurants');
     Route::post('submitRestaurant','Restaurants@save');
-    // Route::post("/cats/restaurants","Restaurants@fetchTest");
     Route::get("/cats/restaurants","Restaurants@fetchTest");
     Route::get('/tags-test/2','Restaurants@getTags');
+    Route::get('/review/rate-product','Products@rateProduct');
 });

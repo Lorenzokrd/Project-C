@@ -156,4 +156,31 @@ class Products extends Controller
         $productAllergy->save();
     }
 
+    function rateProduct(Request $req){
+        if(\Auth::user() != null){
+            $userId = \Auth::user()->id;
+            $userBigOrders = DB::table("order")->select('id')->where('user_id','=',$userId)->get();
+            $userBigOrdersIds = [];
+            foreach($userBigOrders as $userBigOrder){
+                $userBigOrdersIds []= $userBigOrder->id;
+            }
+            $userOrderedProducts = DB::table("orders")->whereIn("order_id",$userBigOrdersIds)->get();
+            $userOrderedProductsIds = [];
+            foreach($userOrderedProducts as $userOrderedProduct){
+                $userOrderedProductsIds []= $userOrderedProduct->product_id;
+            }
+            if(in_array($req->productId,$userOrderedProductsIds)){
+                $productRating = new ProductRating;
+                $productRating->product_id = $req->productId;
+                $productRating->score = $req->ProductScore;
+                $productRating->comment = $req->ProductComment;
+                $productRating->date = $req->reviewDate;
+                $productRating->save();
+            }
+        }
+        else{
+            return redirect('/login');
+        }
+        
+    }
 }
