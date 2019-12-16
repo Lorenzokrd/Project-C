@@ -180,11 +180,14 @@
     commit: true,
 
     // Set up a payment
+    
     payment: function(data, actions) {
       return actions.payment.create({
         transactions: [{
           amount: {
-            total: '2.00',
+
+            total:{{number_format(Session::get($info["restaurant"]->name)->totalPrice)}},
+            //{{number_format($info["restaurant"]->totalPrice)}},
             currency: 'EUR'
           }
         }]
