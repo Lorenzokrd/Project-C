@@ -174,17 +174,25 @@ class Restaurants extends Controller
         }
     }
     
-    function rateRestaurant(Request $req,$restaurantId){
+    function rateRestaurant(Request $req){
+        $receivedData= $req->all();
         $currentUserOrders = Order::where([['user_id','=',\Auth::user()->id],
-        ['restaurant_id','=',$restaurantId]])->get();
+        ['restaurant_id','=',$receivedData["restaurantId"]]])->get();
         if(count($currentUserOrders) > 0){
-            $rating = new RestaurantRating;
-            $rating->restaurant_id = $restaurantId;
-            $rating->food_score = $req->foodScore;
-            $rating->delivery_score = $req->deliveryScore;
-            $rating->comment = $req->reviewComment;
-            $rating->date = $req->reviewDate;
-            $rating->save();
+            try{
+                $rating = new RestaurantRating;
+                $rating->restaurant_id = $receivedData["restaurantId"];
+                $rating->user_id = \Auth::user()->id;
+                $rating->food_score = $receivedData["food_score"];
+                $rating->delivery_score =$receivedData["delivery_score"];
+                $rating->save();
+                $response ="Het restaurant is succesvol door u beoordeeld";
+                return Response()->json($response);
+            }
+            catch(Exception $e){
+                $response = "Restaurant beoordelen is niet gelukt!";
+                return Response()->json($response);
+            }
         }
     }
 
