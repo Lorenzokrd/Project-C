@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 use App\Restaurant;
 use App\DeliveryTimes;
 use App\User;
@@ -122,7 +123,13 @@ class Restaurants extends Controller
                 'restaurant.delivery_price','restaurant.avg_delivery_time',
                 'restaurant.website','restaurant.city','restaurant.street',
                 'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')
-                ->orderBy($receivedData["orderBy"],$receivedData["ascOrDesc"])->paginate(9);
+                ->orderBy($receivedData["orderBy"],$receivedData["ascOrDesc"])->limit(9)->get();
+
+                $restaurantsCount = DB::table('restaurant')
+                ->leftJoin('restaurant_tags','restaurant_tags.restaurant_id','=','restaurant.id')
+                ->where("restaurant.min_order_price",">=",$receivedData["minPrice"])
+                ->whereIn('restaurant_tags.tag_id',$receivedData["chosenTags"])
+                ->get()->count();
             }
             else{
                 $restaurants = DB::table('restaurant')
@@ -130,13 +137,16 @@ class Restaurants extends Controller
                 ->leftJoin('restaurant_tags','restaurant_tags.restaurant_id','=','restaurant.id')
                 ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
                 ->where("restaurant.min_order_price",">=",$receivedData["minPrice"])
-
                 ->groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
                 'restaurant.user_id','restaurant.email','restaurant.min_order_price',
                 'restaurant.delivery_price','restaurant.avg_delivery_time',
                 'restaurant.website','restaurant.city','restaurant.street',
                 'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')
-                ->orderBy($receivedData["orderBy"],$receivedData["ascOrDesc"])->paginate(9);
+                ->orderBy($receivedData["orderBy"],$receivedData["ascOrDesc"])->limit(9)->get();
+
+                $restaurantsCount = DB::table('restaurant')
+                ->where("min_order_price",">=",$receivedData["minPrice"])
+                ->get()->count();
             }
         }
         else{
@@ -148,7 +158,9 @@ class Restaurants extends Controller
             'restaurant.user_id','restaurant.email','restaurant.min_order_price',
             'restaurant.delivery_price','restaurant.avg_delivery_time',
             'restaurant.website','restaurant.city','restaurant.street',
-            'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')->paginate(9);
+            'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')->orderBy('restaurant.id','asc')->limit(9)->get();
+
+            $restaurantsCount = DB::table('restaurant')->get()->count();
         }
         if(isset($receivedData["chosenTagsLength"])){
             foreach($restaurants as $restaurant){
@@ -159,7 +171,8 @@ class Restaurants extends Controller
                     $restaurant->recommended = 0;
                 }
             }
-            return view('filtered-restaurants',["restaurants"=>$restaurants]);
+            $filteredRest = (string)View::make('/filtered-restaurants',["restaurants"=>$restaurants]);
+            return ["sentRestaurantsAmount"=>count($restaurants),"totalRestaurantsNum"=>$restaurantsCount,"restaurants"=>$restaurants,"filteredRestaurantsPage"=>$filteredRest];
         }
         else{
             foreach($restaurants as $restaurant){
@@ -170,8 +183,84 @@ class Restaurants extends Controller
                     $restaurant->recommended = 0;
                 }
             }
-            return view('index',["restaurants"=>$restaurants,"tags"=>$this->getTags()]);
+            return view('index',["sentRestaurantsAmount"=>count($restaurants),"totalRestaurantsNum"=>$restaurantsCount,"restaurants"=>$restaurants,"tags"=>$this->getTags()]);
         }
+    }
+
+
+
+    function loadMoreRestaurants(Request $req){
+        $receivedData = $req->all();
+        $recommendedRestaurants = $this->recommendedRestaurants();
+        $recommendedRestaurantsIds = [];
+        if(count($recommendedRestaurants)>0){
+            foreach($recommendedRestaurants as $recommendedRestaurant){
+                $recommendedRestaurantsIds []= $recommendedRestaurant->id;
+            }
+        }
+        if(isset($receivedData["chosenTagsLength"]) && isset($receivedData["minPrice"])){
+            if(($receivedData["chosenTagsLength"] > 0 && $receivedData["minPrice"] == 0) || ($receivedData["chosenTagsLength"] > 0 && $receivedData["minPrice"] > 0)){
+                $restaurants = DB::table('restaurant')
+                ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
+                ->leftJoin('restaurant_tags','restaurant_tags.restaurant_id','=','restaurant.id')
+                ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
+                ->where("restaurant.min_order_price",">=",$receivedData["minPrice"])
+                ->whereIn('restaurant_tags.tag_id',$receivedData["chosenTags"])
+                ->groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
+                'restaurant.user_id','restaurant.email','restaurant.min_order_price',
+                'restaurant.delivery_price','restaurant.avg_delivery_time',
+                'restaurant.website','restaurant.city','restaurant.street',
+                'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')
+                ->orderBy($receivedData["orderBy"],$receivedData["ascOrDesc"])->offset($receivedData["offset"])->limit(9)->get();
+
+                $restaurantsCount = DB::table('restaurant')
+                ->leftJoin('restaurant_tags','restaurant_tags.restaurant_id','=','restaurant.id')
+                ->where("restaurant.min_order_price",">=",$receivedData["minPrice"])
+                ->whereIn('restaurant_tags.tag_id',$receivedData["chosenTags"])
+                ->get()->count();
+            }
+            else{
+                $restaurants = DB::table('restaurant')
+                ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
+                ->leftJoin('restaurant_tags','restaurant_tags.restaurant_id','=','restaurant.id')
+                ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
+                ->where("restaurant.min_order_price",">=",$receivedData["minPrice"])
+                ->groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
+                'restaurant.user_id','restaurant.email','restaurant.min_order_price',
+                'restaurant.delivery_price','restaurant.avg_delivery_time',
+                'restaurant.website','restaurant.city','restaurant.street',
+                'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')
+                ->orderBy($receivedData["orderBy"],$receivedData["ascOrDesc"])->offset($receivedData["offset"])->limit(9)->get();
+
+                $restaurantsCount = DB::table('restaurant')
+                ->where("min_order_price",">=",$receivedData["minPrice"])
+                ->get()->count();
+            }
+        }
+        // $remainingRest = DB::table('restaurant')->offset($receivedData["offset"])->limit(9)->get();
+        // if(count($remainingRest)>0){
+        //     $moreRestaurantsAvailable = 1;
+        // }
+        // else{
+        //     $moreRestaurantsAvailable = 0;
+        // }
+        if(count($restaurants)>0){
+            foreach($restaurants as $restaurant){
+                if(in_array($restaurant->id,$recommendedRestaurantsIds)){
+                    $restaurant->recommended = 1;
+                }
+                else{
+                    $restaurant->recommended = 0;
+                }
+            }
+            $filteredRest = (string)View::make('/filtered-restaurants',["restaurants"=>$restaurants]);
+            return ["sentRestaurantsAmount"=>count($restaurants),"totalRestaurantsNum"=>$restaurantsCount,"restaurants"=>$restaurants,"filteredRestaurantsPage"=>$filteredRest];
+            // return view('filtered-restaurants',["totalRestaurantsNum"=>$restaurantsCount,"restaurants"=>$restaurants,"lastRestaurantId"=>$last_id,"ableToLoadMore"=>$moreRestaurantsAvailable]);
+        }
+        else{
+            return ["restaurants"=>$restaurants];
+        }
+
     }
     
     function rateRestaurant(Request $req){
@@ -260,5 +349,9 @@ class Restaurants extends Controller
         $tags = DB::table('tags')->
         leftJoin('restaurant_tags','restaurant_tags.tag_id','=','tags.id')->select('tags.*',DB::raw('count(restaurant_tags.tag_id) as tagNumber'))->groupBy('tags.name','tags.id')->get();
         return $tags;
+    }
+
+    function showFilteredRestaurants($data){
+        return view("/filtered-restaurants",["restaurants"->$data]);
     }
 }

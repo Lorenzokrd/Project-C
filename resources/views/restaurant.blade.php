@@ -1,19 +1,5 @@
 @include('include.navbar')
-<?php function Makestars($rating){
-    for($x=0; $x<5; $x++){
-        if($rating >= 1 ){
-            echo "<i class='fas fa-star'></i>";
-            $rating--;
-        }
-        elseif($rating > 0 && $rating < 1){
-            echo "<i class='fas fa-star-half-alt'></i>";
-            $rating--;
-        }
-        else {
-            echo "<i class='far fa-star'></i>";
-        }
-    }
-} ?>
+
 
 <div id="restaurant-banner" class="restaurant-banner" style="background-image: url('{{URL('/images/restaurant-banner.png')}}');">
     <div class="restaurant-title">

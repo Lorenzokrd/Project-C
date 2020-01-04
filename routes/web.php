@@ -103,4 +103,5 @@ Route::group(['middleware' => 'web'], function () {
     Route::get("/cats/restaurants","Restaurants@fetchTest");
     Route::get('/tags-test/2','Restaurants@getTags');
     Route::get('/review/rate-product','Products@rateProduct');
+    Route::get('/load/more/restaurants','Restaurants@loadMoreRestaurants');
 });

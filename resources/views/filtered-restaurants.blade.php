@@ -40,3 +40,4 @@
                 </div>
             @endif
             @endforeach
+            {{-- <p type="text" id="lastRestaurantIdValue" value="{{$lastRestaurantId}}"></p> --}}

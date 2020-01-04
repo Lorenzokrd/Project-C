@@ -33,11 +33,11 @@
         <ul class="navbar-nav ml-auto">
             @guest
             <li class="nav-item">
-                <a class="nav-link" style="font-weight:600;color:#FAF6D5 !important" href="{{ route('login') }}">{{ __('Login') }}</a>
+                <a class="nav-link login-link" style="font-weight:600;color:#FAF6D5 !important" href="{{ route('login') }}">{{ __('Login') }}</a>
             </li>
             @if (Route::has('register'))
             <li class="nav-item">
-                <a class="nav-link" style="font-weight:600;color:#FAF6D5 !important" href="{{ route('register') }}">{{ __('Register') }}</a>
+                <a class="nav-link register-link" style="font-weight:600;color:#FAF6D5 !important" href="{{ route('register') }}">{{ __('Register') }}</a>
             </li>
             @endif
             @else

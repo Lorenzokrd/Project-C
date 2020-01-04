@@ -1020,3 +1020,7 @@ svg circle:nth-child(2){
     color: #008100;
     float: left;
 }
+.load-more-btn{
+    align-self: center;
+    width: 100%;
+}
