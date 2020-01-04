@@ -18,7 +18,7 @@ class StatusTest extends TestCase
         $user = new user;
         $user->name = 'foo bar';
         $user->firstname = 'foo';
-        $user->lastname = 'bar';
+        $user->surname = 'bar';
         $user->email = 'user@email.com';
         $user->password = 'admin123';
         $user->role = 2;
@@ -72,7 +72,7 @@ class StatusTest extends TestCase
         $user = new user;
         $user->name = 'foo bar';
         $user->firstname = 'foo';
-        $user->lastname = 'bar';
+        $user->surname = 'bar';
         $user->email = 'user@email.com';
         $user->password = 'admin123';
         $user->role = 3;
