@@ -89,7 +89,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/order/delivery','Restaurants@orderByDeliveryTime');
     Route::get('/order/rating','Restaurants@orderByRating');
 
-    Route::post('review/{{restaurantId}}','Restaurants@rateRestaurant');
+    Route::post('review/Restaurant','Restaurants@rateRestaurant');
 
     Route::get('/dashboard/categories','CategoriesController@readCategories');
     Route::post('/dashboard/deleteCategory','CategoriesController@delete');
@@ -106,4 +106,5 @@ Route::group(['middleware' => 'web'], function () {
     Route::get("/cats/restaurants","Restaurants@fetchTest");
     Route::get('/tags-test/2','Restaurants@getTags');
     Route::get('/review/rate-product','Products@rateProduct');
+    Route::get('/load/more/restaurants','Restaurants@loadMoreRestaurants');
 });
