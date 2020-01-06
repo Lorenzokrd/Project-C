@@ -17,10 +17,10 @@ class RestaurantRating extends Migration
             $table->increments('id');
             $table->integer('restaurant_id')->unsigned();
             $table->foreign('restaurant_id')->references('id')->on('restaurant')->onDelete('cascade');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->decimal('food_score');
             $table->decimal('delivery_score');
-            $table->text('comment');
-            $table->date('date');
         });
     }
 

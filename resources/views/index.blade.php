@@ -81,7 +81,7 @@
                 <label class="priceInput custom-control-label" for="radio3" value=15>Vanaf €15,00</label>
             </div>
         </div>
-        <div id="restaurants-overview" class="col-lg-10">
+        <div  class="col-lg-10">
             <div class="row">
                 <div class="filters-top">
                     <div class="filter-btn dropdown float-right">
@@ -89,8 +89,8 @@
                         Prijs
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="/order/price/desc">Hoog - laag</a>
-                        <a class="dropdown-item" href="/order/price/asc">Laag - hoog</a>
+                        <a id="orderByPriceDes" class="dropdown-item" href="">Hoog - laag</a>
+                        <a id="orderByPriceAs" class="dropdown-item" href="">Laag - hoog</a>
                       </div>
                     </div>
                     <div class="filter-btn dropdown float-right">
@@ -98,13 +98,13 @@
                           Soorteer op
                         </button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href="/order/delivery">Bezorgtijd</a>
-                          <a class="dropdown-item" href="/order/rating">Beoordeling</a>
+                          <a id="orderByDelivery" class="dropdown-item" href="">Bezorgtijd</a>
+                          <a id="orderByRating" class="dropdown-item" href="">Beoordeling</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div  class="row">
+            <div  id="restaurants-overview" class="row">
                 @foreach ($restaurants as $restaurant)
                 @if($restaurant->approved == 1)
                 <div class="col col-12 col-sm-6 col-lg-4 restaurant-grid-item" onclick="document.location='/{{$restaurant->name}}';">
@@ -130,10 +130,12 @@
                         </div>
                     </div>
                 @endif
-                @endforeach
-
+                @endforeach  
             </div>
-            {{$restaurants->links()}}
+            @if($totalRestaurantsNum > 9)
+            <button class="load-more-btn btn btn-primary">Meer restaurants laden</button>
+            @else
+            @endif
         </div>
     
     </div>
@@ -142,56 +144,129 @@
 $(document).ready(function(){
     var selectedTags = [];
     var lastChosenMinPrice = 0;
-    $("#radio0").prop("checked",true);
-    $(".tag-input").click(function(){
-        if(isChosen($(this).attr("for"),selectedTags)){
-            removeTag($(this).attr("for"),selectedTags);
-            $(this). prop("checked", false);
-            $.ajax({
+    var lastOrderChoice = "restaurant.id";
+    var lastOrderBy = "asc";
+    var offsetValue = <?php echo count($restaurants)?>;
+    console.log(offsetValue)
+    function createGetRequest(tags,tagsLength,order,orderByValue,chosenMinPrice){
+        $.ajax({
                 type:"get",
                 url: "",
-                data: {chosenTags: selectedTags, chosenTagsLength: selectedTags.length,minPrice: lastChosenMinPrice,_token: '{{csrf_token()}}' },
+                data: {chosenTags: tags, chosenTagsLength: tagsLength,ascOrDesc: order,orderBy:orderByValue ,minPrice: chosenMinPrice,_token: '{{csrf_token()}}' },
                 success: function(response){
                     console.log("succeeded");
-                    $("#restaurants-overview").html(response);
-                },
-                error: function(data){
-                    console.log("error");
-                }
-            });
-        }
-        else{
-            selectedTags.push($(this).attr("for"));
-            $.ajax({
-                type:"get",
-                url: "",
-                data: {chosenTags: selectedTags, chosenTagsLength: selectedTags,minPrice: lastChosenMinPrice ,_token: '{{csrf_token()}}' },
-                success: function(response){
-                    console.log("succeeded");
-                    $("#restaurants-overview").html(response);
+                    console.log(response["restaurants"])
+                    offsetValue = response["sentRestaurantsAmount"];
+                    $("#restaurants-overview").html(response["filteredRestaurantsPage"]);
+                    if((response['totalRestaurantsNum'] <= 9)|| (response["totalRestaurantNum"]-response["sentRestaurantsAmount"] <= 0)){$('.load-more-btn').hide();}
+                    else{$('.load-more-btn').show();}
                 },
                 error: function(data){
                     console.log(data);
                     console.log("error");
                 }
-                });
+            });
+    }
+    $("#radio0").prop("checked",true);
+
+    $(".tag-input").click(function(){
+        if(isChosen($(this).attr("for"),selectedTags)){
+            removeTag($(this).attr("for"),selectedTags);
+            $(this). prop("checked", false);
+            createGetRequest(selectedTags,selectedTags.length,lastOrderBy,lastOrderChoice,lastChosenMinPrice);
         }
-    })
+        else{
+            selectedTags.push($(this).attr("for"));
+            createGetRequest(selectedTags,selectedTags.length,lastOrderBy,lastOrderChoice,lastChosenMinPrice);
+        }
+    });
+
     $(".priceInput").click(function(){
         lastChosenMinPrice = $(this).attr("value");
+        createGetRequest(selectedTags,selectedTags.length,lastOrderBy,lastOrderChoice,lastChosenMinPrice);
+        // $.ajax({
+        //         type:"get",
+        //         url: "",
+        //         data: {chosenTags: selectedTags, chosenTagsLength: selectedTags.length,ascOrDesc: lastOrderBy,orderBy:lastOrderChoice ,minPrice: lastChosenMinPrice ,last_id: lastId,_token: '{{csrf_token()}}' },
+        //         success: function(response){
+        //             console.log("succeeded");
+        //             console.log(response["restaurants"])
+        //             $("#restaurants-overview").html(response["filteredRestaurantsPage"]);
+        //         },
+        //         error: function(data){
+        //             console.log(data);
+        //             console.log("error");
+        //         }
+        //     });
+    });
+
+    $("#orderByPriceDes").click(function(){
+        event.preventDefault();
+        lastOrderChoice = "restaurant.min_order_price";
+        lastOrderBy = "desc";
+        createGetRequest(selectedTags,selectedTags.length,lastOrderBy,lastOrderChoice,lastChosenMinPrice);
+        // $.ajax({
+        //         type:"get",
+        //         url: "",
+        //         data: {chosenTags: selectedTags, chosenTagsLength: selectedTags.length,ascOrDesc: lastOrderBy,orderBy:lastOrderChoice ,minPrice: lastChosenMinPrice,_token: '{{csrf_token()}}' },
+        //         success: function(response){
+        //             console.log("succeeded");
+        //             console.log(response["restaurants"])
+        //             $("#restaurants-overview").html(response["filteredRestaurantsPage"]);
+        //         },
+        //         error: function(data){
+        //             console.log(data);
+        //             console.log("error");
+        //         }
+        //     });
+
+    });
+
+    $("#orderByPriceAs").click(function(){
+        event.preventDefault();
+        lastOrderChoice = "restaurant.min_order_price";
+        lastOrderBy = "asc";
+        createGetRequest(selectedTags,selectedTags.length,lastOrderBy,lastOrderChoice,lastChosenMinPrice);
+
+    });
+
+    $("#orderByDelivery").click(function(){
+        event.preventDefault();
+        lastOrderChoice = "restaurant.avg_delivery_time";
+        lastOrderBy = "asc";
+        createGetRequest(selectedTags,selectedTags.length,lastOrderBy,lastOrderChoice,lastChosenMinPrice);
+
+    });
+
+    $("#orderByRating").click(function(){
+        event.preventDefault();
+        lastOrderChoice = "rating";
+        lastOrderBy = "desc";
+        createGetRequest(selectedTags,selectedTags.length,lastOrderBy,lastOrderChoice,lastChosenMinPrice);
+    });
+
+    $(".load-more-btn").click(function(){
+        console.log("this is the last id");
         $.ajax({
                 type:"get",
-                url: "",
-                data: {chosenTags: selectedTags, chosenTagsLength: selectedTags.length,minPrice: $(this).attr("value"),_token: '{{csrf_token()}}' },
+                url: "/load/more/restaurants",
+                data: {chosenTags: selectedTags, chosenTagsLength: selectedTags.length,minPrice: lastChosenMinPrice,ascOrDesc: lastOrderBy,orderBy:lastOrderChoice,offset: offsetValue ,_token: '{{csrf_token()}}' },
                 success: function(response){
-                    console.log("succeeded");
-                    $("#restaurants-overview").html(response);
+
+                    if(response["totalRestaurantsNum"] - (offsetValue + response["sentRestaurantsAmount"]) > 0){
+                        $("#restaurants-overview").append(response["filteredRestaurantsPage"]);
+                    }
+                    else{
+                        $("#restaurants-overview").append(response["filteredRestaurantsPage"]);
+                        $(".load-more-btn").hide();
+                    }
+                    offsetValue += response["sentRestaurantsAmount"];
                 },
                 error: function(data){
                     console.log(data)
                     console.log("error");
                 }
-            });
+        });
     })
     function isChosen(item,array){
         for(var i =0; i<array.length;i++){
@@ -203,6 +278,7 @@ $(document).ready(function(){
     function removeTag(tagToRemove,TagsArray){
         TagsArray.splice(jQuery.inArray(tagToRemove, TagsArray),1);
     }
+
 })
 </script>
 </body>

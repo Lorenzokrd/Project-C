@@ -647,7 +647,8 @@ li {
     -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.2);
     box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.2);
     background-color: #ffffff;
-    min-height: 220px;
+    min-height: 265px;
+    height: fit-content;
 }
 
 .order-content-left {
@@ -1013,4 +1014,13 @@ svg circle:nth-child(2){
 .paypal-button{
     display: inline;
     margin: 12%;
+}
+
+.rating-titles{
+    color: #008100;
+    float: left;
+}
+.load-more-btn{
+    align-self: center;
+    width: 100%;
 }
