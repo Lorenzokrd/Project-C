@@ -157,12 +157,12 @@
             <span class="min-order-warning">De minimale bestelprijs is €{{$info["restaurant"]->min_order_price}}</span>
             <button class="btn btn-primary cart-order-btn" disabled>Bestellen</button>
             @endif
-            
+
             <div id="paypal-button"></div>
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <script>
   paypal.Button.render({
-   
+
     env: 'sandbox',
     client: {
       sandbox: 'AaaDA6AnEnKoiLCF3HwC09UGajcyCyFpatW1hYFHBnT3urrXRmqie4LKwing3Qq0D9oqPJrmog3hS70O',
@@ -176,28 +176,24 @@
       label: 'pay',
     },
 
-    // Enable Pay Now checkout flow (optional)
     commit: true,
 
-    // Set up a payment
-    
+
+
     payment: function(data, actions) {
       return actions.payment.create({
         transactions: [{
-          amount: {
-
-            
-            total:{{number_format(Session::get($info["restaurant"]->name)->totalPrice)}},
+          amount: {total:{{number_format(Session::get($info["restaurant"]->name)->totalPrice)}},
             //{{number_format($info["restaurant"]->totalPrice)}},
             currency: 'EUR'
           }
         }]
       });
     },
-    // Execute the payment
+
     onAuthorize: function(data, actions) {
       return actions.payment.execute().then(function() {
-        
+
         window.alert('Bedankt voor uw bestelling, we gaan er mee aan de slag!');
       });
     }
@@ -205,7 +201,7 @@
 
 </script>
         </div>
-        
+
     </div>
 </div>
 
