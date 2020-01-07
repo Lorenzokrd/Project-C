@@ -268,6 +268,44 @@ $(document).ready(function(){
                 }
         });
     })
+
+    $(document).on("click", function(event){
+        if(!$(event.target).closest(".search-results-box").length){
+            $(".search-results-box").empty();
+        }
+    });
+    $("#searchBar").on('click',function(){
+        if($("#searchBar").val()){
+                $.ajax({
+                    type:"get",
+                    url: "/search/restaurant",
+                    data: {searchInput: $("#searchBar").val() ,_token: '{{csrf_token()}}' },
+                    success: function(response){
+                        $("#search-results").html(response)
+                    },
+                    error: function(data){
+                        console.log(data)
+                        console.log("error");
+                    }
+            });
+        }
+    })
+    $("#searchBar").on('input',function(){
+        console.log($("#searchBar").val())
+        $.ajax({
+                type:"get",
+                url: "/search/restaurant",
+                data: {searchInput: $("#searchBar").val() ,_token: '{{csrf_token()}}' },
+                success: function(response){
+                    $("#search-results").html(response)
+                },
+                error: function(data){
+                    console.log(data)
+                    console.log("error");
+                }
+        });
+    })
+
     function isChosen(item,array){
         for(var i =0; i<array.length;i++){
             if(item == array[i]){

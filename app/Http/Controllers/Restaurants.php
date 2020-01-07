@@ -237,13 +237,6 @@ class Restaurants extends Controller
                 ->get()->count();
             }
         }
-        // $remainingRest = DB::table('restaurant')->offset($receivedData["offset"])->limit(9)->get();
-        // if(count($remainingRest)>0){
-        //     $moreRestaurantsAvailable = 1;
-        // }
-        // else{
-        //     $moreRestaurantsAvailable = 0;
-        // }
         if(count($restaurants)>0){
             foreach($restaurants as $restaurant){
                 if(in_array($restaurant->id,$recommendedRestaurantsIds)){
@@ -262,7 +255,29 @@ class Restaurants extends Controller
         }
 
     }
-    
+    function searchRestaurant(Request $req){
+        $receivedData = $req->all();
+        $restaurantsMatch = DB::table("restaurant")
+        ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
+        ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
+        ->where("name","like","%".$receivedData["searchInput"]."%")
+        ->orWhere("city","like","%".$receivedData["searchInput"]."%")
+        ->orWhere("zip_code","like","%".$receivedData["searchInput"]."%")
+        ->orWhere("street","like","%".$receivedData["searchInput"]."%")
+        ->groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
+        'restaurant.user_id','restaurant.email','restaurant.min_order_price',
+        'restaurant.delivery_price','restaurant.avg_delivery_time',
+        'restaurant.website','restaurant.city','restaurant.street',
+        'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')->limit(4)->get();
+        
+        $restaurantsMatchCount = DB::table("restaurant")
+        ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
+        ->where("name","like","%".$receivedData["searchInput"]."%")
+        ->orWhere("city","like","%".$receivedData["searchInput"]."%")
+        ->orWhere("zip_code","like","%".$receivedData["searchInput"]."%")
+        ->orWhere("street","like","%".$receivedData["searchInput"]."%")->get()->count();
+        return view("search-result",["searchResult"=>$restaurantsMatch,"searchInput"=>$receivedData["searchInput"],"searchMatchesNumber"=>$restaurantsMatchCount]);
+    }
     function rateRestaurant(Request $req){
         $receivedData= $req->all();
         $currentUserOrders = Order::where([['user_id','=',\Auth::user()->id],
