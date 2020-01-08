@@ -33,6 +33,10 @@ li {
 
 /****** BOOTSTRAP ******/
 
+.carousel-caption {
+  text-align: left !important;
+}
+
 @media (min-width: 1200px) {
 .container {
     max-width: 1500px !important;
@@ -95,7 +99,7 @@ li {
 
 .carousel-caption.d-none.d-md-block {
     top: 10%;
-    left: 60%;
+    right: 60%;
     width: 32%;
 }
 
@@ -263,7 +267,7 @@ li {
     color: #008100;
     visibility: hidden;
     font-weight: 600;
-    font-size: small;
+    font-size: 14px;
     max-width: 233px;
     word-break: normal;
 }

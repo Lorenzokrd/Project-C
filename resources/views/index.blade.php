@@ -24,17 +24,22 @@
     </ol>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img class="d-block w-100" src="{{URL('/images/pizza.png')}}" alt="First slide">
+            <img class="d-block w-100" src="{{URL('/images/steak.png')}}" alt="First slide">
             <div class="carousel-caption d-none d-md-block">
-              <!-- <h1>Registreer je restaurant</h1>
-              <button type="button" class="btn btn-primary">Registreren</button> -->
+              <h1>Laten we samenwerken</h1>
+              <p style="margin-bottom:3px !important;"><i class="fa fa-check" aria-hidden="true"></i> Meer bestellingen</p>
+              <p style="margin-bottom:3px !important;"><i class="fa fa-check" aria-hidden="true"></i> Meer omzet</p>
+              <p style="margin-bottom:3px !important;"><i class="fa fa-check" aria-hidden="true"></i> Meer klanten</p>
+              <a href="/register-restaurant">
+                <button type="button" class="btn btn-primary" style="margin-top:10px">Restaurant aanmelden</button>
+              </a>
             </div>
         </div>
         <div class="carousel-item">
             <img class="d-block w-100" src="{{URL('/images/sushi.png')}}" alt="Second slide">
         </div>
         <div class="carousel-item">
-            <img class="d-block w-100" src="{{URL('/images/steak.png')}}" alt="Third slide">
+            <img class="d-block w-100" src="{{URL('/images/pizza.png')}}" alt="Third slide">
         </div>
     </div>
     <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
@@ -101,11 +106,14 @@
                     </div>
                 </div>
             </div>
+            <div id="loading">
+              <img src="{{URL('/images/load.gif')}}" />
+            </div>
             <div  id="restaurants-overview" class="row">
                 @foreach ($restaurants as $restaurant)
                 @if($restaurant->approved == 1)
                 <div class="col col-12 col-sm-6 col-lg-4 restaurant-grid-item" onclick="document.location='/{{$restaurant->name}}';">
-                        <div class="restaurant-card" style="background-image:url({{ asset('storage/'.str_replace('public/', '', $restaurant->image)) }});">
+                        <div class="restaurant-card" style="background-image:url({{ asset('storage/'.str_replace('public/', '', $restaurant->image)) }}); background-size: cover;">
                             <div class="restaurant-name">
                                 <p><i class="far fa-star" aria-hidden="true"></i> {{$restaurant->name}}</p>
                             </div>

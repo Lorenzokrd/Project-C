@@ -8,8 +8,6 @@
     <div class="list-group" id="list-tab" role="tablist" style="background-color: green; box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.37); border-radius: 10px;">
       <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home" style="font-weight:600;color:#FAF6D5 !important">Gebruiker</a>
       <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#orders-profile" role="tab" aria-controls="profile" style="font-weight:600;color:#FAF6D5 !important">Bestellingen</a>
-      <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages" style="font-weight:600;color:#FAF6D5 !important">Adressen</a>
-      <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings" style="font-weight:600;color:#FAF6D5 !important">Settings</a>
     </div>
   </div>
   <div class="col-8">

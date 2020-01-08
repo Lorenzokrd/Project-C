@@ -74,7 +74,7 @@ class Restaurants extends Controller
         if(isset(\Auth::user()->id)) {
             $userId = \Auth::user()->id;
         } else{
-            return redirect('/');
+            return redirect('/login');
         }
         $userId = \Auth::user()->id;
         $restaurant = Restaurant::where('user_id', $userId)->first();
@@ -181,7 +181,7 @@ class Restaurants extends Controller
                     else{
                         $restaurant->tags .= $restaurantTag->name;
                     }
-                    
+
                 }
             }
             $filteredRest = (string)View::make('/filtered-restaurants',["restaurants"=>$restaurants]);
@@ -202,14 +202,14 @@ class Restaurants extends Controller
                 ->where('restaurant_tags.restaurant_id',$restaurant->id)->get();
                 foreach($restaurantTags as $restaurantTag){
                     if($restaurantTag->name != collect($restaurantTags)->last()->name){
-                        $restaurant->tags .= $restaurantTag->name.=",";
+                        $restaurant->tags .= $restaurantTag->name.=", ";
                     }
                     else{
                         $restaurant->tags .= $restaurantTag->name;
                     }
-                    
+
                 }
-                
+
 
             }
             return view('index',["sentRestaurantsAmount"=>count($restaurants),"totalRestaurantsNum"=>$restaurantsCount,"restaurants"=>$restaurants,"tags"=>$this->getTags(),"deliveryTimes"=>$this->getDeliveryTimes()]);
@@ -283,7 +283,7 @@ class Restaurants extends Controller
                     else{
                         $restaurant->tags .= $restaurantTag->name;
                     }
-                    
+
                 }
             }
             $filteredRest = (string)View::make('/filtered-restaurants',["restaurants"=>$restaurants]);
