@@ -18,6 +18,12 @@ class Order extends Migration
             $table->integer('user_id')->references('id')->on('users');
             $table->integer('restaurant_id')->references('id')->on('restaurant');
             $table->text('status')->default('Ontvangen');
+            $table->text('email');
+            $table->text('city');
+            $table->text('street');
+            $table->text('zipcode');
+            $table->text('phonenumber');
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

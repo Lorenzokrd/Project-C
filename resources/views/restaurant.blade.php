@@ -152,60 +152,26 @@
                     </div>
                 </div>
             </div>
-            @if (Session::has($info["restaurant"]->name))
-            @if (Session::get($info["restaurant"]->name)->totalPrice - $info["restaurant"]->delivery_price < $info["restaurant"]->min_order_price )
-            <span class="min-order-warning">De minimale bestelprijs is €{{$info["restaurant"]->min_order_price}}</span>
-            @endif
-            <button class="btn btn-primary cart-order-btn" onclick="document.location='/{{$info["restaurant"]->name}}/order';" <?php if(Session::get($info["restaurant"]->name)->totalPrice - $info["restaurant"]->delivery_price < $info["restaurant"]->min_order_price ) { echo "disabled"; } ?>>Bestellen</button>
+            @foreach($deliveryTime as $time)
+            @if($time->restaurant_id == $restaurant->id)
+            @if(strtotime(substr($time->day, 0, 5)) < strtotime(date("H:i")) && strtotime(substr($time->day, 6, 5)) > strtotime(date("H:i")))
+                @if (Session::has($info["restaurant"]->name))
+                @if (Session::get($info["restaurant"]->name)->totalPrice - $info["restaurant"]->delivery_price < $info["restaurant"]->min_order_price )
+                <span class="min-order-warning">De minimale bestelprijs is €{{$info["restaurant"]->min_order_price}}</span>
+                @endif
+                <button class="btn btn-primary cart-order-btn" onclick="document.location='/{{$info["restaurant"]->name}}/order';" <?php if(Session::get($info["restaurant"]->name)->totalPrice - $info["restaurant"]->delivery_price < $info["restaurant"]->min_order_price ) { echo "disabled"; } ?>>Bestellen</button>
+                @else
+                <span class="min-order-warning">De minimale bestelprijs is €{{$info["restaurant"]->min_order_price}}</span>
+                <button class="btn btn-primary cart-order-btn" disabled>Bestellen</button>
+                @endif
             @else
-            <span class="min-order-warning">De minimale bestelprijs is €{{$info["restaurant"]->min_order_price}}</span>
-            <button class="btn btn-primary cart-order-btn" disabled>Bestellen</button>
+                <span class="min-order-warning">Dit restaurant is momenteel gesloten</span>
+                <button class="btn btn-primary cart-order-btn" disabled>Bestellen</button>
             @endif
-            
-            <div id="paypal-button"></div>
-<script src="https://www.paypalobjects.com/api/checkout.js"></script>
-<script>
-  paypal.Button.render({
-   
-    env: 'sandbox',
-    client: {
-      sandbox: 'AaaDA6AnEnKoiLCF3HwC09UGajcyCyFpatW1hYFHBnT3urrXRmqie4LKwing3Qq0D9oqPJrmog3hS70O',
-      production: 'demo_production_client_id'
-    },
-    locale: 'nl_NL',
-    style: {
-      size: 'medium',
-      color: 'white',
-      shape: 'rect',
-      label: 'pay',
-    },
-
-    // Enable Pay Now checkout flow (optional)
-    commit: true,
-
-    // Set up a payment
-    payment: function(data, actions) {
-      return actions.payment.create({
-        transactions: [{
-          amount: {
-            total: '2.00',
-            currency: 'EUR'
-          }
-        }]
-      });
-    },
-    // Execute the payment
-    onAuthorize: function(data, actions) {
-      return actions.payment.execute().then(function() {
-        
-        window.alert('Bedankt voor uw bestelling, we gaan er mee aan de slag!');
-      });
-    }
-  }, '#paypal-button');
-
-</script>
+            @endif
+            @endforeach
         </div>
-        
+
     </div>
 </div>
 

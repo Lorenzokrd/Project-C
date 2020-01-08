@@ -27,6 +27,10 @@ li {
     cursor: pointer;
 }
 
+.bold {
+  font-weight: 600;
+}
+
 /****** BOOTSTRAP ******/
 
 @media (min-width: 1200px) {
@@ -70,6 +74,29 @@ li {
     color: #ffffff !important;
     text-decoration: none;
     background-color: #008100 !important;
+}
+
+.zoid-outlet {
+    left: 37px;
+}
+
+.dropdown-menu {
+    border-radius: 0 !important;
+    min-width: 166px !important;
+}
+
+.form-control {
+    border-radius: 0 !important;
+}
+
+.form-group {
+    margin-bottom: 0.4rem !important;
+}
+
+.carousel-caption.d-none.d-md-block {
+    top: 10%;
+    left: 60%;
+    width: 32%;
 }
 
 /****** NAVBAR ******/
@@ -116,7 +143,7 @@ li {
 /****** CAROUSEL ******/
 
 .carousel-item{
-    height: 500px;
+    height: 360px;
 }
 
 .carousel-item img{
@@ -240,12 +267,12 @@ li {
     position: absolute;
     top: 26px;
     line-height: 25px;
-    left: 10px;
+    left: 5px;
     color: #008100;
     visibility: hidden;
     font-weight: 600;
-    font-size: 15px;
-    max-width: 175px;
+    font-size: small;
+    max-width: 233px;
     word-break: normal;
 }
 
@@ -277,12 +304,23 @@ li {
 
 /****** RESTAURANT FILTER ******/
 
-.custom-control.custom-checkbox {
+.custom-control.custom-checkbox, .custom-radio{
     margin-top: 10px;
 }
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
     background-color: #008100 !important;
+}
+
+.custom-radio .custom-control-input:checked~.custom-control-label::before {
+    background-color: #008100 !important;
+}
+
+#loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
 }
 
 /****** DASHBOARD SIDEBAR ******/
@@ -655,7 +693,8 @@ li {
     -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.2);
     box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.2);
     background-color: #ffffff;
-    min-height: 220px;
+    min-height: 265px;
+    height: fit-content;
 }
 
 .order-content-left {
@@ -992,7 +1031,6 @@ svg circle:nth-child(2){
     margin-right:25px;
 }
 .tag-badge{
-    margin-right: 10px;
     margin-left:15px;
 }
 .delete-tag{
@@ -1005,12 +1043,12 @@ svg circle:nth-child(2){
     display: flex;
     justify-content: center;
   }
-  
+
   .pagination li {
     display: block;
    }
 
-.page-item.active .page-link 
+.page-item.active .page-link
 {
     background-color:#008100 !important;
     color: #ffffff !important;
@@ -1021,4 +1059,45 @@ svg circle:nth-child(2){
 .paypal-button{
     display: inline;
     margin: 12%;
+}
+
+.rating-titles{
+    color: #008100;
+    float: left;
+}
+.load-more-btn{
+    align-self: center;
+    width: 100%;
+}
+.search-results-box{
+    position: absolute;
+    border: 0.5px solid rgba(0,0,0,0.5);
+    border-radius: 4px;
+    width: 32.7%;
+    height: auto;
+    max-height: 400px;
+    overflow-y: scroll;
+    background-color: white;
+}
+.search-match-box{
+    width: 100%;
+    height: fit-content;
+
+}
+.restaurant-search-img{
+    float: left;
+    margin-right: 15px;
+}
+.match-restaurant-name{
+    text-align: start;
+    padding: 10px;
+    text-transform: capitalize;
+}
+.matched-restaurant-score{
+    float: left;
+    color: #008100;
+}
+.no-search-result{
+    padding: 15px;
+    text-align: center;
 }

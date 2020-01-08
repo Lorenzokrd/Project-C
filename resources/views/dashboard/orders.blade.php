@@ -34,17 +34,24 @@
             </div>
             <div class="order-content-right">
                 <div class="order-item">
-                    <span class="order-address">Plaats</span>
-                    <span class="order-address float-right">Rotterdam</span>
+                    <span class="order-address bold">Plaats</span>
+                    <span class="order-address float-right">{{$order['city']}}</span>
                 </div>
                 <div class="order-item">
-                    <span class="order-address">Straat</span>
-                    <span class="order-address float-right">G.J. de Jonghweg 4</span>
+                    <span class="order-address bold">Straat</span>
+                    <span class="order-address float-right">{{$order['street']}}</span>
                 </div>
                 <div class="order-item">
-                    <span class="order-address">Postcode</span>
-                    <span class="order-address float-right">3015 GG</span>
+                    <span class="order-address bold">Postcode</span>
+                    <span class="order-address float-right">{{$order['zipcode']}}</span>
                 </div>
+                <div class="order-item">
+                    <span class="order-address bold">Notitie</span><br>
+                    <div>
+                    <p class="order-address">{{$order['note']}}</p>
+                  </div>
+                </div>
+
                 <div class="filter-btn dropdown order-delivered-btn">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                       {{$order['status']}}

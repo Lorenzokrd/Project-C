@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use Illuminate\Support\Facad;
+use Illuminate\Support\Facade;
 use Illuminate\Support\Facades\Storage;
 use App\Order;
 use App\Orders;
@@ -12,6 +12,7 @@ use App\Restaurant;
 use App\Product;
 use Auth;
 use App\Cart;
+use Illuminate\Support\Facades\DB;
 
 class Users extends Controller
 {
@@ -20,6 +21,10 @@ class Users extends Controller
       $user = User::where('id', \Auth::user()->id)->first();
       $user->name=$req->name;
       $user->email=$req->email;
+      $user->surname=$req->surname;
+      $user->city=$req->city;
+      $user->street=$req->street;
+      $user->zipcode=$req->zipcode;
       $user->save();
       return redirect('user');
     }
@@ -29,31 +34,22 @@ class Users extends Controller
         $restaurantorders = array();
         $orders = array();
         $orderedProducts = array();
+        $user =\Auth::user();
         $userId =\Auth::user()->id;
-        $order = Order::where('user_id',$userId)->get();
-        foreach($order as $item3){
-            $orders[]=Orders::where('order_id',$item3->id)->get();
+        $order = Order::where('user_id',$userId)->orderBy("id","desc")->get();
+        $ratedRestaurants = DB::table("restaurant_rating")->where("user_id",$userId)->select("restaurant_id")->get();
+        $ratedRestaurantIds = array();
+        foreach($ratedRestaurants as $ratedRestaurant){
+            array_push($ratedRestaurantIds,$ratedRestaurant->restaurant_id);
         }
-
-        foreach($orders as $item2){
-            for($i = 0; $i<count($item2);$i++){
-                $item2[$i]["productName"] = Product::find($item2[$i]["product_id"])->name;
-                $item2[$i]["price"] = Product::find($item2[$i]["product_id"])->price*$item2[$i]["quantity"];
-                unset($item2[$i]['id']);
-                unset($item2[$i]['product_id']);
-            }
+        $newOrders = DB::table("order")->select("id as order_id","restaurant_id","status","created_at")->orderBy("id","desc")->get();
+        foreach($newOrders as $newOrder){
+            $newOrder->products = DB::table("product")
+            ->join("orders","product.id","=","orders.product_id")
+            ->where("orders.order_id",$newOrder->order_id)->select("product.name","orders.quantity","product.price")->get();
+            $newOrder->restaurantName = Restaurant::find($newOrder->restaurant_id)->name;
+            $newOrder->ratedRestaurantsByUser = $ratedRestaurantIds;
         }
-
-        foreach($order as $item){
-            foreach($orders as $product){
-                for($i = 0; $i<count($product);$i++){
-                    if($product[$i]["order_id"] == $item->id){
-                        $restaurantorders += [$item->id=>['products'=>$product,'userId'=>$item->user_id,'status'=>$item->status,'created-at'=>$item->created_at,'restaurantname'=>Restaurant::find($item->restaurant_id)->name]];
-                    }
-                }
-            }
-        }
-
-        return view('/user',['orders'=>array_reverse($restaurantorders,true)]);
+        return view('/user',['orders'=>$newOrders,'user'=>$user]);
     }
 }

@@ -12,8 +12,11 @@
 <script src="{{ asset('js/cart.js') }}" async></script>
 <script src="{{ asset('js/js.js') }}" async></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 
 <nav class="navbar navbar-expand-md fixed-top">
     <div class="w-100 order-1 order-md-0">
@@ -24,29 +27,26 @@
                 </button>
     </div>
     <div class="mx-auto order-0 md-form mt-0 w-100">
-        <input class="form-control" type="text" placeholder="Vind restaurant" aria-label="Search">
-    </div>
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <input id="searchBar" class="form-control" type="text" placeholder="Vind restaurant" aria-label="Search">
+        <div id="search-results" class="list-group search-results-box">
 
-    
+        </div>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2 mr-2">
         <ul class="navbar-nav ml-auto">
             @guest
-            <li class="nav-item dropdown">
-                <a id="navbarDropdown" style="font-weight:600;color:#FAF6D5 !important" class="fas fa-bars nav-icon-right"  href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item"  href="{{ route('login') }}">{{ __('Login') }}</a>
-                    @if (Route::has('register'))
-                    <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
-                    </div>
+            <li class="nav-item">
+                <a class="nav-link login-link" style="font-weight:600;color:#FAF6D5 !important" href="{{ route('login') }}">{{ __('Login') }}</a>
+            </li>
+            @if (Route::has('register'))
+            <li class="nav-item">
+                <a class="nav-link register-link" style="font-weight:600;color:#FAF6D5 !important" href="{{ route('register') }}">{{ __('Register') }}</a>
             </li>
             @endif
             @else
             <li class="nav-item dropdown">
-                <a id="navbarDropdown" style="font-weight:600;color:#FAF6D5 !important" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    {{ Auth::user()->name }} <span class="caret"></span>
-                    <span>     </span>
-                    <i class="fas fa-bars nav-icon-right"></i>
+                <a id="navbarDropdown" style="font-weight:600;color:#FAF6D5 !important;font-size:17px;" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    {{ Auth::user()->name }} <i class="far fa-user-circle"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     @if (Auth::user()->role < 3)
@@ -68,6 +68,8 @@
             @endguest
         </ul>
     </div>
+
 </nav>
+
 </head>
 <body class="body-padding-top">

@@ -18,6 +18,12 @@ class OrdersController extends Controller
             $Order = new Order;
             $Order->user_id = \Auth::user()->id;
             $Order->restaurant_id = Restaurant::where('name',$restaurantName)->first()->id;
+            $Order->email = $req->email;
+            $Order->city = $req->city;
+            $Order->street = $req->street;
+            $Order->zipcode = $req->zipcode;
+            $Order->phonenumber = $req->phonenumber;
+            $Order->note = $req->note;
             $Order->save();
             foreach(Session::get($restaurantName)->products as $item){
                 $orderedItems = new Orders;
@@ -32,6 +38,7 @@ class OrdersController extends Controller
             return redirect('/login');
         }
 
+        return view('order-status',['order'=>$Order]);
     }
 
     function read(){
@@ -59,7 +66,7 @@ class OrdersController extends Controller
             foreach($orders as $product){
                 for($i = 0; $i<count($product);$i++){
                     if($product[$i]["order_id"] == $item->id){
-                        $restaurantorders += [$item->id=>['products'=>$product,'userId'=>$item->user_id,'status'=>$item->status,'created-at'=>$item->created_at]];
+                        $restaurantorders += [$item->id=>['products'=>$product,'userId'=>$item->user_id,'status'=>$item->status,'email'=>$item->email,'city'=>$item->city,'street'=>$item->street,'zipcode'=>$item->zipcode,'phonenumber'=>$item->phonenumber,'note'=>$item->note,'created-at'=>$item->created_at]];
                     }
                 }
             }
@@ -67,6 +74,7 @@ class OrdersController extends Controller
 
         return view('/dashboard/orders',['orders'=>$restaurantorders]);
     }
+    
     function updateStatus($status,$orderId){
         $order= Order::find($orderId);
         $order->status = $status;

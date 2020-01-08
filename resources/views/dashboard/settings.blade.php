@@ -78,7 +78,7 @@
 
             <div class="form-group">
                 <label for="tuesday" class=" col-form-label">Dinsdag</label>
-                <input id="tuesday" type="text" class="form-control" name="tuesday" value="{{$deliveryTimes->thursday}}" required>
+                <input id="tuesday" type="text" class="form-control" name="tuesday" value="{{$deliveryTimes->tuesday}}" required>
             </div>
 
             <div class="form-group">

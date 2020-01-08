@@ -3,18 +3,16 @@
 <div class="category-table">
     <h1>Tags</h1>
     <span class="delivery-times-hint">Maximaal vier tags selecteren</span>
-    <div class="row">
-        <div class="col-lg-4">
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#tags-overview" aria-expanded="true" aria-controls="collapseExample">
-            Tags overzicht
-        </button>
-        </div>
-    </div>
     <br>
     <div id ="chosenTagsBadges" class="badgesDiv row">
+        @foreach($tagsCurrentRestaurant as $tagCurrentRestaurant)
+            <h4 class="badgeHead{{$tagCurrentRestaurant->id}}">
+                <span class="tag-badge badge badge-pill badge-success">{{$tagCurrentRestaurant->name}}<i id={{$tagCurrentRestaurant->id}} class="delete-tag fas fa-times fa-xs" aria-hidden="true"></i></span>
+            </h4>
+        @endforeach
     </div>
     <hr>
-    <div class="collapse row" id="tags-overview" style="margin-left: 0px;">
+    <div class="collapse row show" id="tags-overview" style="margin-left: 0px;">
             <table class="table table-striped">
                 <thead class="thead-black">
                 <tr>
@@ -29,7 +27,7 @@
                         <td class={{$tag->id}}><i class="plus-icon fas fa-plus" aria-hidden="true"></i></td>
                     </tr>
                     @endforeach
-                </tbody>  
+                </tbody>
             </table>
     </div>
 </div>
@@ -37,23 +35,24 @@
 <script>
     $(document).ready(function(){
         //defining all needed global variables
-        var chosenTags = [];
+        var chosenTags = new Array();
         var currentRestaurantTagsAmount = '<?php echo count($tagsCurrentRestaurant)?>';
         var currentRestaurantTags = <?php echo json_encode($tagsCurrentRestaurant)?>;
         var allTags = <?php echo json_encode($tags)?>;
         var tagsTable = document.getElementById("tagsTableBody");
         var numberOfAttachedTags = 0;
         toastr.options.timeOut = 1000;
-        //adding the badges for the chosen tags
-        for(var i =0;i<currentRestaurantTags.length;i++){
-            addSingleBadge(currentRestaurantTags[i]["id"],currentRestaurantTags[i]["name"]);
-        }
         //get the number of chosen tags
         $.get("tags/chosenTags",function(data, textStatus, jqXHR){
             numberOfAttachedTags = data["tagsCurrentRestaurant"].length;
         });
+        $.each(currentRestaurantTags,function(key,value){
+            chosenTags.push(value["name"])
+        })
+        console.log(chosenTags)
         //functionality to deattach a tag
-        $(".delete-tag").on('click',function(){
+        $(document).on('click',".delete-tag",function(){
+            var deletedTagName = $(this).parent().text();
             $.ajax({
                 type:"post",
                 url: "/dashboard/tags/RemoveTag",
@@ -63,6 +62,8 @@
                     toastr.success(data["status"]);
                     currentRestaurantTags = data["tags"];
                     numberOfAttachedTags--;
+                    removeTag(deletedTagName,chosenTags);
+                    
                 },
                 error: function (data, textStatus, errorThrown) {
                     toastr.error(data["status"]);
@@ -71,32 +72,33 @@
         })
         //functionality to add a tag
         $("td").click(function(){
-            if(isChosen($(this).attr("class")) ){
+            if($.inArray($(this).text(),chosenTags) != -1){
                 toastr.error("Tag is al door u geselecteerd");
-            }
-            else if(tagIsChosen(currentRestaurantTags,$(this).attr("class"))){
-                toastr["error"]("Tag is al door u geselecteerd!");
+                console.log("first if");
+
             }
             else{
                 if(numberOfAttachedTags>=4){
                     toastr["warning"]("Het maximale aantal tags is bereikt");
                 }
                 else{
+                    var chosenTagName = $(this).text();
                     $.ajax({
                         type: "post",
                         url: '/dashboard/tags/addTagToRestaurant',
                         data: { tagId: $(this).attr("class"), _token: '{{csrf_token()}}' },
                         success: function (data) {
-                            chosenTags.push($(this).attr("class"));
+                            // chosenTags.push($(this).attr("class"));
+                            chosenTags.push(chosenTagName);
                             toastr.success(data["status"]).delay(1000);
-                            addSingleBadge(data["addedTagId"],data["addedTagName"]);
+                            $("#chosenTagsBadges").append(data["tagBadge"]);
                             numberOfAttachedTags++;
-                            location.reload();
                         },
                         error: function (data, textStatus, errorThrown) {
+                            console.log(data);
                             toastr.error(data["status"]);
                         },
-                    }); 
+                    });
                 }
             }
         });
@@ -116,22 +118,11 @@
                 }
             }
         };
-        //adds single tag badge
-        function addSingleBadge(chosenTagId,chosenTagName){
-            var chosenTagsBadgesDiv = document.getElementById("chosenTagsBadges")
-            var badgeHead = document.createElement("h4");
-            var badgeSpan = document.createElement("span");
-            var deleteIcon = document.createElement("i");
-            badgeSpan.className = "tag-badge badge badge-pill badge-success";
-            badgeSpan.innerText = chosenTagName;
-            deleteIcon.id = chosenTagId;
-            deleteIcon.className = "delete-tag fas fa-times fa-xs";
-            badgeHead.className = "badgeHead"+chosenTagId;
-            badgeSpan.appendChild(deleteIcon);
-            badgeHead.appendChild(badgeSpan);
-            $("#chosenTagsBadges").append(badgeHead)
+        //delete chosen tag from tags array
+        function removeTag(tagName,TagsArray){
+            TagsArray.splice(TagsArray.indexOf(tagName),1);
         }
-        })
+         })
 </script>
 </body>
 
