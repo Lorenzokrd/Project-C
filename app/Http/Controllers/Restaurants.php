@@ -272,6 +272,7 @@ class Restaurants extends Controller
                 else{
                     $restaurant->recommended = 0;
                 }
+                $deliveryTimes = $this->getDeliveryTimes();
                 $restaurant->tags = "";
                 $restaurantTags = DB::table('tags')
                 ->join('restaurant_tags','tags.id','=','restaurant_tags.tag_id')
@@ -283,10 +284,9 @@ class Restaurants extends Controller
                     else{
                         $restaurant->tags .= $restaurantTag->name;
                     }
-
                 }
             }
-            $filteredRest = (string)View::make('/filtered-restaurants',["restaurants"=>$restaurants]);
+            $filteredRest = (string)View::make('/filtered-restaurants',["restaurants"=>$restaurants,"deliveryTimes"=>$deliveryTimes]);
             return ["sentRestaurantsAmount"=>count($restaurants),"totalRestaurantsNum"=>$restaurantsCount,"restaurants"=>$restaurants,"filteredRestaurantsPage"=>$filteredRest];
         }
         else{

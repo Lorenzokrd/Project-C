@@ -33,6 +33,14 @@
 </div>
 
 <script>
+    $(document)
+    .ajaxStart(function () {
+        $("tr").css("pointer-events","none");
+    })
+    .ajaxStop(function () {
+        $("tr").css("pointer-events","auto");
+    });
+    
     $(document).ready(function(){
         //defining all needed global variables
         var chosenTags = new Array();
@@ -78,7 +86,7 @@
 
             }
             else{
-                if(numberOfAttachedTags>=4){
+                if(numberOfAttachedTags >= 4){
                     toastr["warning"]("Het maximale aantal tags is bereikt");
                 }
                 else{
