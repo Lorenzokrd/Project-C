@@ -18,6 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('firstname');
             $table->string('surname');
+            $table->string('city');
+            $table->string('street');
+            $table->string('zipcode');
             $table->string('email')->unique();
             $table->tinyinteger('role')->default('3');
             $table->timestamp('email_verified_at')->nullable();
@@ -25,6 +28,8 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        DB::table('users')->insert([["name"=>"admin","firstname"=>"admin","surname"=>"admin","city"=>"city","street"=>"street","zipcode"=>"zipcode","email"=>"admin@admin.com","role"=>1,"password"=>"admin123456"]]);
     }
 
     /**

@@ -1,5 +1,12 @@
 @include('include.navbar')
 
+<?php
+if(Auth::user() == null){
+header("Location: /login");
+die();
+}
+?>
+
 <div id="restaurant-banner" class="restaurant-banner" style="background-image: url('{{URL('/images/restaurant-banner.png')}}');">
 
 </div>
@@ -9,39 +16,39 @@
         <h1>Bestelling gegevens</h1>
         <div class="row">
             <div class="col-6">
-                <form method="POST" action="updateDeliveryTimes" enctype="multipart/form-data">
+                <form method="GET" action="order/success" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="monday" class=" col-form-label">Email</label>
-                        <input id="monday" type="text" class="form-control" name="monday" value="" required>
+                        <label for="email" class=" col-form-label">Email</label>
+                        <input id="email" type="text" class="form-control" name="email" value="{{$user->email}}" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="monday" class=" col-form-label">Plaats</label>
-                        <input id="monday" type="text" class="form-control" name="monday" value="" required>
+                        <label for="city" class=" col-form-label">Plaats</label>
+                        <input id="city" type="text" class="form-control" name="city" value="{{$user->city}}" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="tuesday" class=" col-form-label">Straat</label>
-                        <input id="tuesday" type="text" class="form-control" name="tuesday" value="" required>
+                        <label for="street" class=" col-form-label">Straat</label>
+                        <input id="street" type="text" class="form-control" name="street" value="{{$user->street}}" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="wednesday" class=" col-form-label">*Postcode</label>
-                        <input id="wednesday" type="text" class="form-control" name="wednesday" value="" required>
+                        <label for="zipcode" class=" col-form-label">Postcode</label>
+                        <input id="zipcode" type="text" class="form-control" name="zipcode" value="{{$user->zipcode}}" required>
                     </div>
 
             </div>
             <div class="col-6">
 
                 <div class="form-group">
-                    <label for="tuesday" class=" col-form-label">Telefoonnummer</label>
-                    <input id="tuesday" type="text" class="form-control" name="tuesday" value="" required>
+                    <label for="phonenumber" class=" col-form-label">Telefoonnummer</label>
+                    <input id="phonenumber" type="text" class="form-control" name="phonenumber" value="" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="wednesday" class=" col-form-label">Notitie (optioneel)</label>
-                    <textarea class="form-control" rows="5" id="comment"></textarea>
+                    <label for="note" class=" col-form-label">Notitie (optioneel)</label>
+                    <textarea class="form-control" rows="5" name="note" id="note"></textarea>
                 </div>
             </div>
         </div>
@@ -86,7 +93,7 @@
             @foreach($deliveryTime as $time)
             @if($time->restaurant_id == $restaurant->id)
             @if(strtotime(substr($time->day, 0, 5)) < strtotime(date("H:i")) && strtotime(substr($time->day, 6, 5)) > strtotime(date("H:i")))
-                <button class="btn btn-primary cart-order-btn" onclick="document.location='/{{$info["restaurant"]->name}}/order/success';" <?php if(Session::get($info["restaurant"]->name)->totalPrice - $info["restaurant"]->delivery_price < $info["restaurant"]->min_order_price ) { echo "disabled"; } ?>>Betalen</button>
+                <button type="submit" class="btn btn-primary cart-order-btn" <?php if(Session::get($info["restaurant"]->name)->totalPrice - $info["restaurant"]->delivery_price < $info["restaurant"]->min_order_price ) { echo "disabled"; } ?>>Betalen</button>
             @else
                 <span class="min-order-warning">Dit restaurant is momenteel gesloten</span>
                 <button class="btn btn-primary cart-order-btn" disabled>Bestellen</button>

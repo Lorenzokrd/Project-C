@@ -8,6 +8,7 @@ use App\Restaurant;
 use App\Categories;
 use App\DeliveryTimes;
 use App\Category;
+use App\Auth;
 use Illuminate\Support\Facades\Storage;
 use Session;
 use App\Cart;
@@ -125,6 +126,7 @@ class Products extends Controller
     }
 
     function getProductsCart($restaurantName){
+        $user = \Auth::user();
         $restaurant =Restaurant::where('name',$restaurantName)->first();
         $restaurantrating = RestaurantRating::select(DB::raw('avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))->where('restaurant_id',1)->get();
         $restaurant['rating'] = $restaurantrating[0]->rating;
@@ -132,7 +134,7 @@ class Products extends Controller
         $products = Product::where('restaurant_id', $restaurant->id)->get();
         $deliveryTimes = DeliveryTimes::where('restaurant_id', $restaurant->id)->first();
         $info = array("restaurant" => $restaurant, "products" => $products);
-        return view('order',['deliveryTimes'=>$deliveryTimes, 'info'=>$info, 'categories'=>$categories,"deliveryTime"=>$this->getDeliveryTimes(),"restaurant"=>$restaurant]);
+        return view('order',['user'=>$user,'deliveryTimes'=>$deliveryTimes, 'info'=>$info, 'categories'=>$categories,"deliveryTime"=>$this->getDeliveryTimes(),"restaurant"=>$restaurant]);
     }
 
     function addToCart($restaurantName,$productId){

@@ -26,6 +26,8 @@
         <div class="carousel-item active">
             <img class="d-block w-100" src="{{URL('/images/pizza.png')}}" alt="First slide">
             <div class="carousel-caption d-none d-md-block">
+              <!-- <h1>Registreer je restaurant</h1>
+              <button type="button" class="btn btn-primary">Registreren</button> -->
             </div>
         </div>
         <div class="carousel-item">

@@ -27,6 +27,10 @@ li {
     cursor: pointer;
 }
 
+.bold {
+  font-weight: 600;
+}
+
 /****** BOOTSTRAP ******/
 
 @media (min-width: 1200px) {
@@ -89,6 +93,12 @@ li {
     margin-bottom: 0.4rem !important;
 }
 
+.carousel-caption.d-none.d-md-block {
+    top: 10%;
+    left: 60%;
+    width: 32%;
+}
+
 /****** NAVBAR ******/
 
 
@@ -125,7 +135,7 @@ li {
 /****** CAROUSEL ******/
 
 .carousel-item{
-    height: 500px;
+    height: 360px;
 }
 
 .carousel-item img{

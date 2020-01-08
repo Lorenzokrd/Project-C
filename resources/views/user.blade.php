@@ -34,10 +34,34 @@
                                       <input id="username" name="name" placeholder="name" value="{{ Auth::user()->name }}" class="form-control here" required="required" type="text">
                                     </div>
                                   </div>
-                                  <div class="form-group row">
+																	<div class="form-group row">
+                                    <label for="surname" class="col-4 col-form-label">Achternaam</label>
+                                    <div class="col-8">
+                                      <input id="surname" name="surname" placeholder="Achternaam" value="{{ Auth::user()->surname }}" class="form-control here" required="required" type="text">
+                                    </div>
+                                  </div>
+																	<div class="form-group row">
                                     <label for="email" class="col-4 col-form-label">Email</label>
                                     <div class="col-8">
-                                      <input id="email" name="email" placeholder="email" value="{{ Auth::user()->email }}" class="form-control here" required="required" type="text">
+                                      <input id="email" name="email" placeholder="Email" value="{{ Auth::user()->email }}" class="form-control here" required="required" type="text">
+                                    </div>
+                                  </div>
+																	<div class="form-group row">
+                                    <label for="city" class="col-4 col-form-label">Plaats</label>
+                                    <div class="col-8">
+                                      <input id="city" name="city" placeholder="Plaats" value="{{ Auth::user()->city }}" class="form-control here" required="required" type="text">
+                                    </div>
+                                  </div>
+																	<div class="form-group row">
+                                    <label for="street" class="col-4 col-form-label">Straat</label>
+                                    <div class="col-8">
+                                      <input id="street" name="street" placeholder="Straat" value="{{ Auth::user()->street }}" class="form-control here" required="required" type="text">
+                                    </div>
+                                  </div>
+																	<div class="form-group row">
+                                    <label for="zipcode" class="col-4 col-form-label">Postcode</label>
+                                    <div class="col-8">
+                                      <input id="zipcode" name="zipcode" placeholder="Postcode" value="{{ Auth::user()->zipcode }}" class="form-control here" required="required" type="text">
                                     </div>
                                   </div>
                                   <div class="form-group row">
@@ -90,15 +114,15 @@
 				            <div class="order-content-right">
 				                <div class="order-item">
 				                    <span class="order-address">Plaats</span>
-				                    <span class="order-address float-right">Rotterdam</span>
+				                    <span class="order-address float-right">{{$user->city}}</span>
 				                </div>
 				                <div class="order-item">
 				                    <span class="order-address">Straat</span>
-				                    <span class="order-address float-right">G.J. de Jonghweg 4</span>
+				                    <span class="order-address float-right">{{$user->street}}</span>
 				                </div>
 				                <div class="order-item">
 				                    <span class="order-address">Postcode</span>
-				                    <span class="order-address float-right">3015 GG</span>
+				                    <span class="order-address float-right">{{$user->zipcode}}</span>
 								</div>
 								<br>
 								<div class=review-button-user>
