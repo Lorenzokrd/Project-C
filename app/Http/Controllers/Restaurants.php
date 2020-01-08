@@ -8,6 +8,7 @@ use App\DeliveryTimes;
 use App\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 use App\Order;
 use App\RestaurantRating;
 use App\Tag;
@@ -198,6 +199,16 @@ class Restaurants extends Controller
         }
         return view('/index',['restaurants'=>$restaurants,'restaurantsLinks'=>[]]);
     }
+
+    function search(){
+        $Search = Input::get('Search');
+        if ($Search != ''){
+            $restaurants = Restaurant::where('name', 'LIKE', $Search)->get();
+        if (count($restaurants) > 0)
+            return view('welcome')->withDetails($restaurants)->withQuery($Search);
+        }
+        return view('welcome')->withMessage("No Restaurants found!");
+       }
 
     function orderByPriceAsc(){
         $recommendedRestaurants = $this->recommendedRestaurants();

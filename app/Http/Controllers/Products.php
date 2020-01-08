@@ -13,6 +13,8 @@ use Session;
 use App\Cart;
 use Illuminate\Support\Facades\DB;
 use App\RestaurantRating;
+use App\ProductAllergy;
+use App\Allergy;
 
 class Products extends Controller
 {
@@ -86,7 +88,7 @@ class Products extends Controller
 
     }
     function find(Request $req){
-        $product=Product::find($req->productId);
+        $product=Product::find($req->productId)->leftJoin("product_type","product_type.product_id","=", "product.id")->leftJoin("type","type.id","=", "product_type.type_id")->leftJoin("product_allergies","product_allergies.product_id","=", "product.id")->rightJoin("allergy","allergy.id","=", "product_allergies.allergy_id")->select("product.*",DB::raw("allergy.name as allergy_name, allergy.id as allergyId,type.name as productType , type.description as typeDescription"))->get();;
 
         if(isset(\Auth::user()->id)) {
             $userId = \Auth::user()->id;
@@ -95,12 +97,13 @@ class Products extends Controller
         }
         $restaurantId= Restaurant::where('user_id',$userId)->first()->id;
         $categories = Categories::where('restaurant_id',$restaurantId)->get();
+        $products = Product::where('restaurant_id',$restaurantId)->leftJoin("product_type","product_type.product_id","=", "product.id")->leftJoin("type","type.id","=", "product_type.type_id")->leftJoin("product_allergies","product_allergies.product_id","=", "product.id")->leftJoin("allergy","allergy.id","=", "product_allergies.allergy_id")->select("product.*",DB::raw("allergy.name as allergy_name, allergy.id as allergyId,type.name as productType , type.description as typeDescription"))->get();
+        $allergy = Allergy::all();
         foreach($categories as $category){
             $category['name'] = Category::find($category['category_id'])->name;
             $category['id'] = Category::find($category['category_id'])->id;
-        }
-
-        return view('dashboard/edit-product',['product'=>$product,'categories'=>$categories]);
+        }return $product;
+    return view('dashboard/edit-product',['product'=>$product,'categories'=>$categories]);
     }
 
     function getCategories($restaurantName){
@@ -118,7 +121,7 @@ class Products extends Controller
         $restaurantrating = RestaurantRating::select(DB::raw('avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))->where('restaurant_id',1)->get();
         $restaurant['rating'] = $restaurantrating[0]->rating;
         $categories = $this->getCategories($restaurantName);
-        $products = Product::where('restaurant_id', $restaurant->id)->leftJoin("product_allergies","product_allergies.product_id","=", "product.id")->leftjoin("allergy","allergy.id","=", "product_allergies.allergy_id")->select("allergy.name","allergy.description","product.*")->get();
+        $products = Product::where('restaurant_id', $restaurant->id)->leftJoin("product_type","product_type.product_id","=", "product.id")->leftJoin("type","type.id","=", "product_type.type_id")->leftJoin("product_allergies","product_allergies.product_id","=", "product.id")->leftJoin("allergy","allergy.id","=", "product_allergies.allergy_id")->select("product.*",DB::raw("allergy.name as allergy_name, allergy.id as allergyId,type.name as productType , type.description as typeDescription"))->get();
         $deliveryTimes = DeliveryTimes::where('restaurant_id', $restaurant->id)->first();
         $info = array("restaurant" => $restaurant, "products" => $products);
         return view('restaurant',['deliveryTimes'=>$deliveryTimes, 'info'=>$info, 'categories'=>$categories]);

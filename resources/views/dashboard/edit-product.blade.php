@@ -48,8 +48,17 @@
                 <label for="productDesc">Product Beschrijving</label>
                 <input type="input" class="form-control" name="productDesc" placeholder="Beschrijving" value="{{$product->description}}">
             </div>
-            <label for="productAllergy">Allergiën</label>
-           
+            <label for="productCategorys">Allergy</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+              </div>
+              <select class="custom-select" name="productCategorys" id="productCategorys">
+                @foreach($product as $product)
+                <option value="{{$product['id']}}" selected>{{$allergy['name']}}</option>
+                <option value="{{$product['id']}}">{{$allergy['name']}}</option>
+                @endforeach
+              </select>
+            </div>
         </div>
     </form>
 </div>

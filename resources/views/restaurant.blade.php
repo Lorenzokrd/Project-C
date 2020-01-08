@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="product-buttons">
-                    <i class="far fa-question-circle" onclick="$('#product{{$product->id}}').modal('show'); event.stopPropagation();"></i>
+                    <i class="far fa-question-circle" onclick="$('#product{{$product->id}}').modal('show') event.stopPropagation();"></i>
                     <i class="fas fa-plus-square"></i>
                 </div>
                 
