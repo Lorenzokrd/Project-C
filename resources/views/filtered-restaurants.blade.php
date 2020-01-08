@@ -21,7 +21,6 @@
                         <div class="restaurant-name">
                             <p><i class="far fa-star" aria-hidden="true"></i> {{$restaurant->name}}</p>
                         </div>
-
                         @foreach($deliveryTimes as $time)
                         @if($time->restaurant_id == $restaurant->id)
                         @if(strtotime(substr($time->day, 0, 5)) < strtotime(date("H:i")) && strtotime(substr($time->day, 6, 5)) > strtotime(date("H:i")))
@@ -32,7 +31,6 @@
                         @endif
                         @endif
                         @endforeach
-
                         @if($restaurant->recommended == 1)
                         <div class="status restaurant-status-recommended">
                                 <p>Aanbevolen voor jou</p>
@@ -52,4 +50,3 @@
                 </div>
             @endif
             @endforeach
-            {{-- <p type="text" id="lastRestaurantIdValue" value="{{$lastRestaurantId}}"></p> --}}

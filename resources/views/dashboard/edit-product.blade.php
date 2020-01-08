@@ -28,11 +28,6 @@
                 @endforeach
               </select>
             </div>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" name="productRating" <?php if($product->toggle_rating == 1){ echo "checked"; } ?>
-                <label class="form-check-label" for="productRating">Product beoordeling</label>
-
-            </div>
             <input type="hidden" name="restaurantId" value="1">
             <input type="hidden" name="productId" value="{{$product->id}}">
             <input type="hidden" name="productImage" value="{{$product->image}}">
@@ -47,6 +42,16 @@
                 <label for="productDesc">Product Beschrijving</label>
                 <input type="input" class="form-control" name="productDesc" placeholder="Beschrijving" value="{{$product->description}}">
             </div>
+            <label for="productAllergy">Allergie</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+              </div>
+              <select class="custom-select" name="productAllergy" id="productAllergy">
+                @foreach($allergies as $allergy)
+                <option value="{{$allergy->id}}">{{$allergy->name}}</option>
+                @endforeach
+              </select>
+        </div>
         </div>
     </form>
 </div>

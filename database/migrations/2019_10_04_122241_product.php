@@ -22,7 +22,6 @@ class Product extends Migration
             $table->string('category');
             $table->string('image')->nullable();
             $table->decimal('price',5,2);
-            $table->boolean('toggle_rating');
         });
     }
 

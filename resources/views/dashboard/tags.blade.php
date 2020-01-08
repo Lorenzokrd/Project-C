@@ -22,7 +22,7 @@
                 </thead>
                 <tbody id = "tagsTableBody">
                     @foreach($tags as $tag)
-                    <tr>
+                    <tr class= {{$tag->id}} id ={{$tag->name}}>
                         <td class={{$tag->id}}><a href="#">{{$tag->name}}</a></td>
                         <td class={{$tag->id}}><i class="plus-icon fas fa-plus" aria-hidden="true"></i></td>
                     </tr>
@@ -33,6 +33,14 @@
 </div>
 
 <script>
+    $(document)
+    .ajaxStart(function () {
+        $("tr").css("pointer-events","none");
+    })
+    .ajaxStop(function () {
+        $("tr").css("pointer-events","auto");
+    });
+    
     $(document).ready(function(){
         //defining all needed global variables
         var chosenTags = new Array();
@@ -71,18 +79,18 @@
             });
         })
         //functionality to add a tag
-        $("td").click(function(){
-            if($.inArray($(this).text(),chosenTags) != -1){
+        $("tr").click(function(){
+            if($.inArray($(this).attr("id"),chosenTags) != -1){
                 toastr.error("Tag is al door u geselecteerd");
                 console.log("first if");
 
             }
             else{
-                if(numberOfAttachedTags>=4){
+                if(numberOfAttachedTags >= 4){
                     toastr["warning"]("Het maximale aantal tags is bereikt");
                 }
                 else{
-                    var chosenTagName = $(this).text();
+                    var chosenTagName = $(this).attr("id");
                     $.ajax({
                         type: "post",
                         url: '/dashboard/tags/addTagToRestaurant',

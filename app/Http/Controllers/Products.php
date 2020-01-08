@@ -14,12 +14,14 @@ use Session;
 use App\Cart;
 use Illuminate\Support\Facades\DB;
 use App\RestaurantRating;
+use App\Allergy;
+use App\ProductAllergy;
 
 class Products extends Controller
 {
     function save(Request $req){
         $product = new Product;
-
+        $productAllergy = new ProductAllergy;
         $data = $req->except('productImage');
 
         foreach ($data as $key => $value) {
@@ -38,8 +40,11 @@ class Products extends Controller
             }
             $product->category = $req->productCategory;
             $product->price = str_replace(',', '.', $req->productPrice);
-            $product->toggle_rating = ($req->productRating == null) ? 0 : 1;
+
             $product->save();
+            $productAllergy->product_id = $product->id;
+            $productAllergy->allergy_id = $req->productAllergy;
+            $productAllergy->save();
             return redirect('dashboard/products')->with('success', 'Nieuw product is succesvol aangemaakt!');
         } catch(Exception $e){
             return redirect('dashboard/products')->with('exception', 'Product is unsuccesvol aangemaakt!');
@@ -78,7 +83,6 @@ class Products extends Controller
             }
             $product->category = $req->productCategory;
             $product->price = str_replace(',', '.', $req->productPrice);
-            $product->toggle_rating = ($req->productRating == null) ? 0 : 1;
             $product->save();
             return redirect('dashboard/products')->with('success', 'Product is succesvol bijgewerkt!');
         } catch(\Exception $e){
@@ -96,12 +100,13 @@ class Products extends Controller
         }
         $restaurantId= Restaurant::where('user_id',$userId)->first()->id;
         $categories = Categories::where('restaurant_id',$restaurantId)->get();
+        $allergies = DB::table('allergy')->where('restaurant_id','=',$restaurantId)->get();
         foreach($categories as $category){
             $category['name'] = Category::find($category['category_id'])->name;
             $category['id'] = Category::find($category['category_id'])->id;
         }
 
-        return view('dashboard/edit-product',['product'=>$product,'categories'=>$categories]);
+        return view('dashboard/edit-product',['product'=>$product,'categories'=>$categories,"allergies"=>$allergies]);
     }
 
     function getCategories($restaurantName){
@@ -121,8 +126,9 @@ class Products extends Controller
         $categories = $this->getCategories($restaurantName);
         $products = Product::where('restaurant_id', $restaurant->id)->get();
         $deliveryTimes = DeliveryTimes::where('restaurant_id', $restaurant->id)->first();
+        $allergies = DB::table('allergy')->leftJoin('product_allergies','product_allergies.allergy_id','=','allergy.id')->select('product_allergies.product_id','allergy.name')->get();
         $info = array("restaurant" => $restaurant, "products" => $products);
-        return view('restaurant',['deliveryTimes'=>$deliveryTimes, 'info'=>$info, 'categories'=>$categories,"deliveryTime"=>$this->getDeliveryTimes(),"restaurant"=>$restaurant]);
+        return view('restaurant',['deliveryTimes'=>$deliveryTimes, 'info'=>$info, 'categories'=>$categories,"deliveryTime"=>$this->getDeliveryTimes(),"restaurant"=>$restaurant,'allergies'=>$allergies]);
       } else {
         return redirect('');
       }
@@ -159,10 +165,13 @@ class Products extends Controller
     }
 
     function createAllergy(Request $req){
+        $userId = \Auth::user()->id;
+        $restaurantId = DB::table('restaurant')->where('user_id','=',$userId)->first()->id;
         $allergy = new Allergy;
         $allergy->name = $req->allergyName;
-        $allergy->description = $req->allergyDesc;
+        $allergy->restaurant_id = $restaurantId;
         $allergy->save();
+        return redirect('/dashboard/allergies')->with('success','Allergie is succesvol toegevoegd');
     }
 
     function addAllergyToProduct(Request $req){
@@ -170,6 +179,34 @@ class Products extends Controller
         $productAllergy->product_id = $req->productId;
         $productAllergy->allergy_id = $req->allergyId;
         $productAllergy->save();
+    }
+    function getAllergies(){
+        if(isset(\Auth::user()->id)) {
+            $userId = \Auth::user()->id;
+        } else{
+            return redirect('/');
+        }
+        $restaurantId = DB::table('restaurant')->where('user_id','=',$userId)->first()->id;
+        $allergies = DB::table('allergy')->where('restaurant_id','=',$restaurantId)->get();
+        return view('dashboard.allergies',["allergies"=>$allergies]);
+    }
+    function deleteAllergy(Request $req){
+        if(isset(\Auth::user()->id)) {
+            $userId = \Auth::user()->id;
+        } else{
+            return redirect('/');
+        }
+
+        $restaurantId = Restaurant::where('user_id', $userId)->first()->id;
+        $category = ProductAllergy::where('allergy_id', $req->allergyId)->get();
+        if(count($category) > 0){
+            return redirect('dashboard/categories')->with('exception', 'Allergie kan niet worden verwijderd, omdat het nog producten bevat!');
+        }
+
+        $category=Allergy::where('id',$req->allergyId)->first();
+        $category->delete();
+
+        return redirect('dashboard/categories')->with('success', 'Allergie is succesvol verwijderd!');
     }
 
     function rateProduct(Request $req){
