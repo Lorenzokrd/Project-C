@@ -7,6 +7,7 @@ use App\Tag;
 use App\RestaurantTag;
 use App\Restaurant;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 
 class TagsController extends Controller
 {
@@ -63,11 +64,12 @@ class TagsController extends Controller
                 $tagsCurrentRestaurant = DB::table('tags')
                 ->join('restaurant_tags','tags.id','=','restaurant_tags.tag_id')
                 ->where('restaurant_tags.restaurant_id',$restaurantId)->get();
-                $response = ["status"=>"Het geselecteerde tag is succesvol aan uw restaurant gekoppeld!","tags"=>$tagsCurrentRestaurant,"addedTagId"=>$restaurantTag->id,"addedTagName"=>$addedTag->name];
+                $tagBadge = (string)View::make('dashboard.tag-badge',["addedTagId"=>$restaurantTag->id,"addedTagName"=>$addedTag->name]);
+                $response = ["status"=>"De geselecteerde tag is succesvol aan uw restaurant gekoppeld!","tags"=>$tagsCurrentRestaurant,"addedTagId"=>$restaurantTag->id,"tagBadge"=>$tagBadge];
                 return Response()->json($response);
             }
             catch(Exception $e){
-                $response = ["status"=>"Het koppelen van het geselecteerde tag is mislukt!"];
+                $response = ["status"=>"Het koppelen van De geselecteerde tag is mislukt!"];
                 return Response()->json($response);
             }  
         }
@@ -87,11 +89,11 @@ class TagsController extends Controller
                 $tagsCurrentRestaurant = DB::table('tags')
                 ->join('restaurant_tags','tags.id','=','restaurant_tags.tag_id')
                 ->where('restaurant_tags.restaurant_id',$restaurantId)->get();
-                $response = ["status"=>"Het gekozen tag is succesvol verwijderd!","tags"=>$tagsCurrentRestaurant,"tagId"=>$deletedTagid,"deletedTagId"=>$receivedData["id"]];
+                $response = ["status"=>"De gekozen tag is succesvol verwijderd!","tags"=>$tagsCurrentRestaurant,"tagId"=>$deletedTagid,"deletedTagId"=>$receivedData["id"]];
                 return Response()->json($response);
             }
             catch(Exception $e){
-                $response = ["status"=> "Het verwijderen van het geselecteerde tag is mislukt"];
+                $response = ["status"=> "Het verwijderen van De geselecteerde tag is mislukt"];
                 return Response()->json_encode($response);
             }
         }

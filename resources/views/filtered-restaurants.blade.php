@@ -34,7 +34,7 @@
                             @else
                             <p class="time"><i class="far fa-clock"></i> 30 min</p>
                             @endif
-                            <p class="tags">Burgers, salades, patat</p>
+                            <p class="tags">{{$restaurant->tags}}</p>
                         </div>
                     </div>
                 </div>

@@ -27,7 +27,10 @@
                 </button>
     </div>
     <div class="mx-auto order-0 md-form mt-0 w-100">
-        <input class="form-control" type="text" placeholder="Vind restaurant" aria-label="Search">
+        <input id="searchBar" class="form-control" type="text" placeholder="Vind restaurant" aria-label="Search">
+        <div id="search-results" class="list-group search-results-box">
+
+        </div>
     </div>
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2 mr-2">
         <ul class="navbar-nav ml-auto">
@@ -65,6 +68,8 @@
             @endguest
         </ul>
     </div>
+
 </nav>
+
 </head>
 <body class="body-padding-top">
