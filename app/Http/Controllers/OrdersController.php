@@ -74,6 +74,7 @@ class OrdersController extends Controller
 
         return view('/dashboard/orders',['orders'=>$restaurantorders]);
     }
+    
     function updateStatus($status,$orderId){
         $order= Order::find($orderId);
         $order->status = $status;

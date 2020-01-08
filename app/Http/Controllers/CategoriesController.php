@@ -67,7 +67,7 @@ class CategoriesController extends Controller
         } else{
             return redirect('/');
         }
-
+        
         $restaurantId = Restaurant::where('user_id', $userId)->first()->id;
         $category = Product::where('category', $req->categoryId)->get();
         if(count($category) > 0){
