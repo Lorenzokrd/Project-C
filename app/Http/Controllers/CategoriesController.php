@@ -67,7 +67,7 @@ class CategoriesController extends Controller
         } else{
             return redirect('/');
         }
-
+        
         $restaurantId = Restaurant::where('user_id', $userId)->first()->id;
         if(Product::where('category', $req->categoryId)->get()){
             return redirect('dashboard/categories')->with('exception', 'Categorie kan niet worden verwijderd, omdat het nog producten bevat!');
