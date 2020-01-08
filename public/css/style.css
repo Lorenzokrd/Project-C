@@ -232,12 +232,12 @@ li {
     position: absolute;
     top: 26px;
     line-height: 25px;
-    left: 10px;
+    left: 5px;
     color: #008100;
     visibility: hidden;
     font-weight: 600;
-    font-size: 15px;
-    max-width: 175px;
+    font-size: small;
+    max-width: 233px;
     word-break: normal;
 }
 
@@ -1030,6 +1030,8 @@ svg circle:nth-child(2){
     border-radius: 4px;
     width: 32.7%;
     height: auto;
+    max-height: 400px;
+    overflow-y: scroll;
     background-color: white;
 }
 .search-match-box{

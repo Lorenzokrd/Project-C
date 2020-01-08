@@ -125,7 +125,7 @@
                                 @else
                                 <p class="time"><i class="far fa-clock"></i> 30 min</p>
                                 @endif
-                                <p class="tags">Burgers, salades, patat</p>
+                                <p class="tags">{{$restaurant->tags}}</p>
                             </div>
                         </div>
                     </div>
@@ -184,20 +184,6 @@ $(document).ready(function(){
     $(".priceInput").click(function(){
         lastChosenMinPrice = $(this).attr("value");
         createGetRequest(selectedTags,selectedTags.length,lastOrderBy,lastOrderChoice,lastChosenMinPrice);
-        // $.ajax({
-        //         type:"get",
-        //         url: "",
-        //         data: {chosenTags: selectedTags, chosenTagsLength: selectedTags.length,ascOrDesc: lastOrderBy,orderBy:lastOrderChoice ,minPrice: lastChosenMinPrice ,last_id: lastId,_token: '{{csrf_token()}}' },
-        //         success: function(response){
-        //             console.log("succeeded");
-        //             console.log(response["restaurants"])
-        //             $("#restaurants-overview").html(response["filteredRestaurantsPage"]);
-        //         },
-        //         error: function(data){
-        //             console.log(data);
-        //             console.log("error");
-        //         }
-        //     });
     });
 
     $("#orderByPriceDes").click(function(){
@@ -205,20 +191,6 @@ $(document).ready(function(){
         lastOrderChoice = "restaurant.min_order_price";
         lastOrderBy = "desc";
         createGetRequest(selectedTags,selectedTags.length,lastOrderBy,lastOrderChoice,lastChosenMinPrice);
-        // $.ajax({
-        //         type:"get",
-        //         url: "",
-        //         data: {chosenTags: selectedTags, chosenTagsLength: selectedTags.length,ascOrDesc: lastOrderBy,orderBy:lastOrderChoice ,minPrice: lastChosenMinPrice,_token: '{{csrf_token()}}' },
-        //         success: function(response){
-        //             console.log("succeeded");
-        //             console.log(response["restaurants"])
-        //             $("#restaurants-overview").html(response["filteredRestaurantsPage"]);
-        //         },
-        //         error: function(data){
-        //             console.log(data);
-        //             console.log("error");
-        //         }
-        //     });
 
     });
 
@@ -291,19 +263,24 @@ $(document).ready(function(){
         }
     })
     $("#searchBar").on('input',function(){
-        console.log($("#searchBar").val())
-        $.ajax({
-                type:"get",
-                url: "/search/restaurant",
-                data: {searchInput: $("#searchBar").val() ,_token: '{{csrf_token()}}' },
-                success: function(response){
-                    $("#search-results").html(response)
-                },
-                error: function(data){
-                    console.log(data)
-                    console.log("error");
-                }
-        });
+        console.log($("#searchBar").val());
+        if($("#searchBar").val()){
+                $.ajax({
+                    type:"get",
+                    url: "/search/restaurant",
+                    data: {searchInput: $("#searchBar").val() ,_token: '{{csrf_token()}}' },
+                    success: function(response){
+                        $("#search-results").html(response)
+                    },
+                    error: function(data){
+                        console.log(data)
+                        console.log("error");
+                    }
+            });
+        }
+        else{
+            $(".search-results-box").empty();
+        }
     })
 
     function isChosen(item,array){

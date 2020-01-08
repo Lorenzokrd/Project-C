@@ -170,11 +170,25 @@ class Restaurants extends Controller
                 else{
                     $restaurant->recommended = 0;
                 }
+                $restaurant->tags = "";
+                $restaurantTags = DB::table('tags')
+                ->join('restaurant_tags','tags.id','=','restaurant_tags.tag_id')
+                ->where('restaurant_tags.restaurant_id',$restaurant->id)->get();
+                foreach($restaurantTags as $restaurantTag){
+                    if($restaurantTag->name != collect($restaurantTags)->last()->name){
+                        $restaurant->tags .= $restaurantTag->name.=",";
+                    }
+                    else{
+                        $restaurant->tags .= $restaurantTag->name;
+                    }
+                    
+                }
             }
             $filteredRest = (string)View::make('/filtered-restaurants',["restaurants"=>$restaurants]);
             return ["sentRestaurantsAmount"=>count($restaurants),"totalRestaurantsNum"=>$restaurantsCount,"restaurants"=>$restaurants,"filteredRestaurantsPage"=>$filteredRest];
         }
         else{
+
             foreach($restaurants as $restaurant){
                 if(in_array($restaurant->id,$recommendedRestaurantsIds)){
                     $restaurant->recommended = 1;
@@ -182,6 +196,21 @@ class Restaurants extends Controller
                 else{
                     $restaurant->recommended = 0;
                 }
+                $restaurant->tags = "";
+                $restaurantTags = DB::table('tags')
+                ->join('restaurant_tags','tags.id','=','restaurant_tags.tag_id')
+                ->where('restaurant_tags.restaurant_id',$restaurant->id)->get();
+                foreach($restaurantTags as $restaurantTag){
+                    if($restaurantTag->name != collect($restaurantTags)->last()->name){
+                        $restaurant->tags .= $restaurantTag->name.=",";
+                    }
+                    else{
+                        $restaurant->tags .= $restaurantTag->name;
+                    }
+                    
+                }
+                
+
             }
             return view('index',["sentRestaurantsAmount"=>count($restaurants),"totalRestaurantsNum"=>$restaurantsCount,"restaurants"=>$restaurants,"tags"=>$this->getTags()]);
         }
@@ -245,10 +274,22 @@ class Restaurants extends Controller
                 else{
                     $restaurant->recommended = 0;
                 }
+                $restaurant->tags = "";
+                $restaurantTags = DB::table('tags')
+                ->join('restaurant_tags','tags.id','=','restaurant_tags.tag_id')
+                ->where('restaurant_tags.restaurant_id',$restaurant->id)->get();
+                foreach($restaurantTags as $restaurantTag){
+                    if($restaurantTag->name != collect($restaurantTags)->last()->name){
+                        $restaurant->tags .= $restaurantTag->name.=",";
+                    }
+                    else{
+                        $restaurant->tags .= $restaurantTag->name;
+                    }
+                    
+                }
             }
             $filteredRest = (string)View::make('/filtered-restaurants',["restaurants"=>$restaurants]);
             return ["sentRestaurantsAmount"=>count($restaurants),"totalRestaurantsNum"=>$restaurantsCount,"restaurants"=>$restaurants,"filteredRestaurantsPage"=>$filteredRest];
-            // return view('filtered-restaurants',["totalRestaurantsNum"=>$restaurantsCount,"restaurants"=>$restaurants,"lastRestaurantId"=>$last_id,"ableToLoadMore"=>$moreRestaurantsAvailable]);
         }
         else{
             return ["restaurants"=>$restaurants];
@@ -260,16 +301,16 @@ class Restaurants extends Controller
         $restaurantsMatch = DB::table("restaurant")
         ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
         ->select('restaurant.*',DB::raw('restaurant_rating.restaurant_id,avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))
-        ->where("name","like","%".$receivedData["searchInput"]."%")
-        ->orWhere("city","like","%".$receivedData["searchInput"]."%")
-        ->orWhere("zip_code","like","%".$receivedData["searchInput"]."%")
-        ->orWhere("street","like","%".$receivedData["searchInput"]."%")
-        ->groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
+        ->where(function($query) use ($receivedData){
+            $query->orWhere("name","like","%".$receivedData["searchInput"]."%")
+            ->orWhere("zip_code","like","%".$receivedData["searchInput"]."%")
+            ->orWhere("street","like","%".$receivedData["searchInput"]."%");
+        })->groupBy('restaurant_rating.restaurant_id','restaurant.name','restaurant.id',
         'restaurant.user_id','restaurant.email','restaurant.min_order_price',
         'restaurant.delivery_price','restaurant.avg_delivery_time',
         'restaurant.website','restaurant.city','restaurant.street',
-        'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')->limit(4)->get();
-        
+        'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')->get();
+
         $restaurantsMatchCount = DB::table("restaurant")
         ->leftJoin('restaurant_rating','restaurant.id','=','restaurant_rating.restaurant_id')
         ->where("name","like","%".$receivedData["searchInput"]."%")

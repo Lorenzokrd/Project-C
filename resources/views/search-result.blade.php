@@ -21,9 +21,7 @@
     <img class="restaurant-search-img" src="{{ asset('storage/'.str_replace('public/', '', $restaurant->image)) }}" width="75" height="75">
     <div class="match-restaurant-name">
         <strong><p>{{$restaurant->name}}</p></strong>
-        <div class="matched-restaurant-score"><?php Makestars($restaurant->rating) ?></div>
-        {{-- <p>{{$restaurant->street}},{{$restaurant->city}},{{$restaurant->zip_code}}</p> --}}
-        
+        <div class="matched-restaurant-score"><?php Makestars($restaurant->rating) ?></div>   
     </div>
     
 </div>
