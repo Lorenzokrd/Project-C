@@ -3,18 +3,11 @@
 <div class="category-table">
     <h1>Tags</h1>
     <span class="delivery-times-hint">Maximaal vier tags selecteren</span>
-    <div class="row">
-        <div class="col-lg-4">
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#tags-overview" aria-expanded="true" aria-controls="collapseExample">
-            Tags overzicht
-        </button>
-        </div>
-    </div>
     <br>
     <div id ="chosenTagsBadges" class="badgesDiv row">
     </div>
     <hr>
-    <div class="collapse row" id="tags-overview" style="margin-left: 0px;">
+    <div class="collapse row show" id="tags-overview" style="margin-left: 0px;">
             <table class="table table-striped">
                 <thead class="thead-black">
                 <tr>
@@ -29,7 +22,7 @@
                         <td class={{$tag->id}}><i class="plus-icon fas fa-plus" aria-hidden="true"></i></td>
                     </tr>
                     @endforeach
-                </tbody>  
+                </tbody>
             </table>
     </div>
 </div>
@@ -96,7 +89,7 @@
                         error: function (data, textStatus, errorThrown) {
                             toastr.error(data["status"]);
                         },
-                    }); 
+                    });
                 }
             }
         });
