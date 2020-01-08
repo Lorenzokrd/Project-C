@@ -92,7 +92,7 @@ class Products extends Controller
         if(isset(\Auth::user()->id)) {
             $userId = \Auth::user()->id;
         } else{
-            return redirect('/');
+            return redirect('/login');
         }
         $restaurantId= Restaurant::where('user_id',$userId)->first()->id;
         $categories = Categories::where('restaurant_id',$restaurantId)->get();
@@ -115,7 +115,7 @@ class Products extends Controller
     }
 
     function getProducts($restaurantName){
-        $restaurant =Restaurant::where('name',$restaurantName)->first();
+        if($restaurant =Restaurant::where('name',$restaurantName)->first()){
         $restaurantrating = RestaurantRating::select(DB::raw('avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))->where('restaurant_id',1)->get();
         $restaurant['rating'] = $restaurantrating[0]->rating;
         $categories = $this->getCategories($restaurantName);
@@ -123,6 +123,9 @@ class Products extends Controller
         $deliveryTimes = DeliveryTimes::where('restaurant_id', $restaurant->id)->first();
         $info = array("restaurant" => $restaurant, "products" => $products);
         return view('restaurant',['deliveryTimes'=>$deliveryTimes, 'info'=>$info, 'categories'=>$categories,"deliveryTime"=>$this->getDeliveryTimes(),"restaurant"=>$restaurant]);
+      } else {
+        return redirect('');
+      }
     }
 
     function getProductsCart($restaurantName){

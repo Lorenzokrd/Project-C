@@ -20,7 +20,7 @@ class Restaurant extends Migration
             $table->string('email')->unique;
             $table->decimal('min_order_price',5,2);
             $table->decimal('delivery_price',5,2);
-            $table->integer('avg_delivery_time')->nullable();
+            $table->integer('avg_delivery_time')->default(30);
             $table->string('website');
             $table->string('city');
             $table->string('street');
