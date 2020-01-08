@@ -8,6 +8,7 @@ use App\Restaurant;
 use App\Categories;
 use App\DeliveryTimes;
 use App\Category;
+use App\Auth;
 use Illuminate\Support\Facades\Storage;
 use Session;
 use App\Cart;
@@ -121,7 +122,19 @@ class Products extends Controller
         $products = Product::where('restaurant_id', $restaurant->id)->get();
         $deliveryTimes = DeliveryTimes::where('restaurant_id', $restaurant->id)->first();
         $info = array("restaurant" => $restaurant, "products" => $products);
-        return view('restaurant',['deliveryTimes'=>$deliveryTimes, 'info'=>$info, 'categories'=>$categories]);
+        return view('restaurant',['deliveryTimes'=>$deliveryTimes, 'info'=>$info, 'categories'=>$categories,"deliveryTime"=>$this->getDeliveryTimes(),"restaurant"=>$restaurant]);
+    }
+
+    function getProductsCart($restaurantName){
+        $user = \Auth::user();
+        $restaurant =Restaurant::where('name',$restaurantName)->first();
+        $restaurantrating = RestaurantRating::select(DB::raw('avg(restaurant_rating.food_score+restaurant_rating.delivery_score)/2 as rating'))->where('restaurant_id',1)->get();
+        $restaurant['rating'] = $restaurantrating[0]->rating;
+        $categories = $this->getCategories($restaurantName);
+        $products = Product::where('restaurant_id', $restaurant->id)->get();
+        $deliveryTimes = DeliveryTimes::where('restaurant_id', $restaurant->id)->first();
+        $info = array("restaurant" => $restaurant, "products" => $products);
+        return view('order',['user'=>$user,'deliveryTimes'=>$deliveryTimes, 'info'=>$info, 'categories'=>$categories,"deliveryTime"=>$this->getDeliveryTimes(),"restaurant"=>$restaurant]);
     }
 
     function addToCart($restaurantName,$productId){
@@ -181,6 +194,14 @@ class Products extends Controller
         else{
             return redirect('/login');
         }
-        
+
+    }
+
+    function getDeliveryTimes(){
+        $currentDay = date("l");
+
+        $deliveryTimes = DB::table('delivery_times')->select('restaurant_id', $currentDay . " as day")->get();
+
+        return $deliveryTimes;
     }
 }

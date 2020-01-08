@@ -21,6 +21,10 @@ class Users extends Controller
       $user = User::where('id', \Auth::user()->id)->first();
       $user->name=$req->name;
       $user->email=$req->email;
+      $user->surname=$req->surname;
+      $user->city=$req->city;
+      $user->street=$req->street;
+      $user->zipcode=$req->zipcode;
       $user->save();
       return redirect('user');
     }
@@ -30,6 +34,7 @@ class Users extends Controller
         $restaurantorders = array();
         $orders = array();
         $orderedProducts = array();
+        $user =\Auth::user();
         $userId =\Auth::user()->id;
         $order = Order::where('user_id',$userId)->orderBy("id","desc")->get();
         $ratedRestaurants = DB::table("restaurant_rating")->where("user_id",$userId)->select("restaurant_id")->get();
@@ -45,6 +50,6 @@ class Users extends Controller
             $newOrder->restaurantName = Restaurant::find($newOrder->restaurant_id)->name;
             $newOrder->ratedRestaurantsByUser = $ratedRestaurantIds;
         }
-        return view('/user',['orders'=>$newOrders]);
+        return view('/user',['orders'=>$newOrders,'user'=>$user]);
     }
 }

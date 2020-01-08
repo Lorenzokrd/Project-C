@@ -27,6 +27,10 @@ li {
     cursor: pointer;
 }
 
+.bold {
+  font-weight: 600;
+}
+
 /****** BOOTSTRAP ******/
 
 @media (min-width: 1200px) {
@@ -72,6 +76,29 @@ li {
     background-color: #008100 !important;
 }
 
+.zoid-outlet {
+    left: 37px;
+}
+
+.dropdown-menu {
+    border-radius: 0 !important;
+    min-width: 166px !important;
+}
+
+.form-control {
+    border-radius: 0 !important;
+}
+
+.form-group {
+    margin-bottom: 0.4rem !important;
+}
+
+.carousel-caption.d-none.d-md-block {
+    top: 10%;
+    left: 60%;
+    width: 32%;
+}
+
 /****** NAVBAR ******/
 
 
@@ -108,7 +135,7 @@ li {
 /****** CAROUSEL ******/
 
 .carousel-item{
-    height: 500px;
+    height: 360px;
 }
 
 .carousel-item img{
@@ -269,12 +296,23 @@ li {
 
 /****** RESTAURANT FILTER ******/
 
-.custom-control.custom-checkbox {
+.custom-control.custom-checkbox, .custom-radio{
     margin-top: 10px;
 }
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
     background-color: #008100 !important;
+}
+
+.custom-radio .custom-control-input:checked~.custom-control-label::before {
+    background-color: #008100 !important;
+}
+
+#loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
 }
 
 /****** DASHBOARD SIDEBAR ******/
@@ -985,7 +1023,6 @@ svg circle:nth-child(2){
     margin-right:25px;
 }
 .tag-badge{
-    margin-right: 10px;
     margin-left:15px;
 }
 .delete-tag{
@@ -998,12 +1035,12 @@ svg circle:nth-child(2){
     display: flex;
     justify-content: center;
   }
-  
+
   .pagination li {
     display: block;
    }
 
-.page-item.active .page-link 
+.page-item.active .page-link
 {
     background-color:#008100 !important;
     color: #ffffff !important;

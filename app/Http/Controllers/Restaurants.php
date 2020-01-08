@@ -212,7 +212,7 @@ class Restaurants extends Controller
                 
 
             }
-            return view('index',["sentRestaurantsAmount"=>count($restaurants),"totalRestaurantsNum"=>$restaurantsCount,"restaurants"=>$restaurants,"tags"=>$this->getTags()]);
+            return view('index',["sentRestaurantsAmount"=>count($restaurants),"totalRestaurantsNum"=>$restaurantsCount,"restaurants"=>$restaurants,"tags"=>$this->getTags(),"deliveryTimes"=>$this->getDeliveryTimes()]);
         }
     }
 
@@ -241,7 +241,6 @@ class Restaurants extends Controller
                 'restaurant.website','restaurant.city','restaurant.street',
                 'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')
                 ->orderBy($receivedData["orderBy"],$receivedData["ascOrDesc"])->offset($receivedData["offset"])->limit(9)->get();
-
                 $restaurantsCount = DB::table('restaurant')
                 ->leftJoin('restaurant_tags','restaurant_tags.restaurant_id','=','restaurant.id')
                 ->where("restaurant.min_order_price",">=",$receivedData["minPrice"])
@@ -260,7 +259,6 @@ class Restaurants extends Controller
                 'restaurant.website','restaurant.city','restaurant.street',
                 'restaurant.zip_code','restaurant.image','restaurant.approved','restaurant.recommended')
                 ->orderBy($receivedData["orderBy"],$receivedData["ascOrDesc"])->offset($receivedData["offset"])->limit(9)->get();
-
                 $restaurantsCount = DB::table('restaurant')
                 ->where("min_order_price",">=",$receivedData["minPrice"])
                 ->get()->count();
@@ -348,6 +346,30 @@ class Restaurants extends Controller
             } else {
                 $deliveryTimes = new DeliveryTimes;
             }
+
+            return date("H:i");
+
+            foreach ($req->all() as $key => $day) {
+                if($key == "_token" || $key == "restaurantId"){
+                    continue;
+                }
+
+                if (preg_match('(^[0-9]{2}:[0-9]{2}-[0-9]{2}:[0-9]{2}$)', $day) || $day == "Gesloten") {}
+                else {
+                    return redirect('dashboard/settings')->with('exception', 'Onjuist format voor openingstijd!');
+                }
+
+                if(strtotime(substr($day, 0, 5)) && strtotime(substr($day, 6, 5)) || $day == "Gesloten"){}
+                else {
+                    return redirect('dashboard/settings')->with('exception', 'Ingevulde tijd bestaat niet!');
+                }
+
+                if(strtotime(substr($day, 0, 5)) > strtotime(substr($day, 6, 5))){
+                    return redirect('dashboard/settings')->with('exception', 'Openingstijd kan niet later zijn dan sluitingstijd!');
+                }
+
+            }
+
             $deliveryTimes->restaurant_id = $req->restaurantId;
             $deliveryTimes->monday = $req->monday;
             $deliveryTimes->tuesday = $req->tuesday;
@@ -405,6 +427,12 @@ class Restaurants extends Controller
         $tags = DB::table('tags')->
         leftJoin('restaurant_tags','restaurant_tags.tag_id','=','tags.id')->select('tags.*',DB::raw('count(restaurant_tags.tag_id) as tagNumber'))->groupBy('tags.name','tags.id')->get();
         return $tags;
+    }
+
+    function getDeliveryTimes(){
+        $currentDay = date("l");
+        $deliveryTimes = DB::table('delivery_times')->select('restaurant_id', $currentDay . " as day")->get();
+        return $deliveryTimes;
     }
 
     function showFilteredRestaurants($data){

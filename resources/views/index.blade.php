@@ -26,6 +26,8 @@
         <div class="carousel-item active">
             <img class="d-block w-100" src="{{URL('/images/pizza.png')}}" alt="First slide">
             <div class="carousel-caption d-none d-md-block">
+              <!-- <h1>Registreer je restaurant</h1>
+              <button type="button" class="btn btn-primary">Registreren</button> -->
             </div>
         </div>
         <div class="carousel-item">
@@ -45,17 +47,12 @@
     </a>
 </div>
 
-<div class="container restaurant-grid" style="padding-bottom:100px">
+<div class="container restaurant-grid" style="padding-bottom:100px;position:relative;">
     <div class="row">
         <div class="col-lg-2">
             <p style="font-weight:700">Categorieën</p>
             @foreach($tags as $tag)
-            @if($tag->tagNumber == 0)
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id={{$tag->id}} disabled>
-                <label class="tag-check custom-control-label" for={{$tag->id}}>{{$tag->name}} ({{$tag->tagNumber}})</label>
-            </div>
-            @else
+            @if(!$tag->tagNumber == 0)
             <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id={{$tag->id}}>
                 <label class="tag-input custom-control-label" for={{$tag->id}}>{{$tag->name}} ({{$tag->tagNumber}})</label>
@@ -112,6 +109,18 @@
                             <div class="restaurant-name">
                                 <p><i class="far fa-star" aria-hidden="true"></i> {{$restaurant->name}}</p>
                             </div>
+
+                            @foreach($deliveryTimes as $time)
+                            @if($time->restaurant_id == $restaurant->id)
+                            @if(strtotime(substr($time->day, 0, 5)) < strtotime(date("H:i")) && strtotime(substr($time->day, 6, 5)) > strtotime(date("H:i")))
+                            @else
+                            <div class="status restaurant-status-closed">
+                                    <p>Gesloten</p>
+                            </div>
+                            @endif
+                            @endif
+                            @endforeach
+
                             @if($restaurant->recommended == 1)
                             <div class="status restaurant-status-recommended">
                                     <p>Aanbevolen voor jou</p>
@@ -130,17 +139,29 @@
                         </div>
                     </div>
                 @endif
-                @endforeach  
+                @endforeach
             </div>
             @if($totalRestaurantsNum > 9)
             <button class="load-more-btn btn btn-primary">Meer restaurants laden</button>
             @else
             @endif
         </div>
-    
+
     </div>
 </div>
 <script>
+
+var $loading = $('#loading').hide();
+$(document)
+  .ajaxStart(function () {
+    //$('#restaurants').hide();
+    $loading.show();
+  })
+  .ajaxStop(function () {
+    //$('#restaurants').show();
+    $loading.hide();
+  });
+
 $(document).ready(function(){
     var selectedTags = [];
     var lastChosenMinPrice = 0;

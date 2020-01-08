@@ -12,8 +12,8 @@
 <script src="{{ asset('js/cart.js') }}" async></script>
 <script src="{{ asset('js/js.js') }}" async></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
@@ -32,7 +32,7 @@
 
         </div>
     </div>
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2 mr-2">
         <ul class="navbar-nav ml-auto">
             @guest
             <li class="nav-item">
@@ -45,8 +45,8 @@
             @endif
             @else
             <li class="nav-item dropdown">
-                <a id="navbarDropdown" style="font-weight:600;color:#FAF6D5 !important" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    {{ Auth::user()->name }} <span class="caret"></span>
+                <a id="navbarDropdown" style="font-weight:600;color:#FAF6D5 !important;font-size:17px;" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    {{ Auth::user()->name }} <i class="far fa-user-circle"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     @if (Auth::user()->role < 3)
@@ -66,9 +66,6 @@
                 </div>
             </li>
             @endguest
-            <li class="nav-item mt-1" style="margin-left:10px;">
-                <i class="fas fa-bars nav-icon-right"></i>
-            </li>
         </ul>
     </div>
 

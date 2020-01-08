@@ -69,10 +69,10 @@ class CategoriesController extends Controller
         }
         
         $restaurantId = Restaurant::where('user_id', $userId)->first()->id;
-        if(Product::where('category', $req->categoryId)->get()){
+        $category = Product::where('category', $req->categoryId)->get();
+        if(count($category) > 0){
             return redirect('dashboard/categories')->with('exception', 'Categorie kan niet worden verwijderd, omdat het nog producten bevat!');
         }
-
 
         $category=Category::where('id',$req->categoryId)->first();
         $categories=Categories::where('category_id',$req->categoryId)->first();
