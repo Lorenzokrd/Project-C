@@ -16,7 +16,8 @@ class Allergy extends Migration
         Schema::create('allergy', function (Blueprint $table) {
             $table->Increments('id');
             $table->string('name');
-            $table->text('description');
+            $table->integer('restaurant_id')->unsigned();
+            $table->foreign('restaurant_id')->references('id')->on('restaurant')->onDelete('cascade');
         });
     }
 

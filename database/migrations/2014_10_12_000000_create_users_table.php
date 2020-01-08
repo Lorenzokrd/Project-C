@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        DB::table('users')->insert([["name"=>"admin","firstname"=>"admin","surname"=>"admin","city"=>"city","street"=>"street","zipcode"=>"zipcode","email"=>"admin@admin.com","role"=>1,"password"=>"admin123456"]]);
+        
     }
 
     /**

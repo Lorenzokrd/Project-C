@@ -91,10 +91,12 @@
                   <div class="modal-body">
                     <span class="modal-pdesc">Product beschrijving</span>
                     <p>{{$product->description}}</p>
-                    <span class="modal-ptypes">Product types</span>
-                    <p>Test</p>
-                    <span class="modal-pallergies">Product allergieen</span>
-                    <p>Test</p>
+                    @foreach($allergies as $allergy)
+                    @if($allergy->product_id = $product->id)
+                    <span class="modal-pallergies">Product allergieën</span>
+                    <p>{{$allergy->name}}</p>
+                    @endif
+                    @endforeach
                   </div>
                 </div>
               </div>

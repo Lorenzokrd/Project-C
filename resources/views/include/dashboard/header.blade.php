@@ -52,6 +52,7 @@ jQuery(function($) {
           <li class="list-group-item" id="orders" onclick="window.location='http://localhost:8000/dashboard/orders';"><i class="fas fa-clipboard-list mr-2"></i>Bestellingen</li>
           <li class="list-group-item" id="products" onclick="window.location='http://localhost:8000/dashboard/products';"><i class="fas fa-utensils mr-2"></i>Producten</li>
           <li class="list-group-item" id="categories" onclick="window.location='http://localhost:8000/dashboard/categories';"><i class="fas fa-list mr-1"></i>Categorieën</li>
+          <li class="list-group-item" id="allergies" onclick="window.location='http://localhost:8000/dashboard/allergies';"><i class="fas fa-list mr-1"></i>Allergieën</li>
           <li class="list-group-item" id="tags" onclick="window.location='http://localhost:8000/dashboard/tags';"><i class="fas fa-tags mr-1"></i>Tags</li>
           <li class="list-group-item" id="settings" onclick="window.location='http://localhost:8000/dashboard/settings';"><i class="fas fa-cog mr-1"></i>Instellingen</li>
           @endif

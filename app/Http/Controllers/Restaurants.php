@@ -347,8 +347,6 @@ class Restaurants extends Controller
                 $deliveryTimes = new DeliveryTimes;
             }
 
-            return date("H:i");
-
             foreach ($req->all() as $key => $day) {
                 if($key == "_token" || $key == "restaurantId"){
                     continue;

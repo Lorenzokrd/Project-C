@@ -8,6 +8,9 @@ use App\Category;
 use App\Categories;
 use App\Product;
 use Auth;
+use App\Allergy;
+use App\ProductAllergy;
+use Illuminate\Support\Facades\DB;
 
 class CategoriesController extends Controller
 {
@@ -58,7 +61,10 @@ class CategoriesController extends Controller
 
     function readProductCreate(){
         $categories = $this->read();
-        return view('dashboard/add-product', ['categories'=>$categories]);
+        $userId = \Auth::user()->id;
+        $restaurantId = Restaurant::where('user_id',$userId)->first()->id;
+        $allergies = DB::table('allergy')->where('restaurant_id','=',$restaurantId)->get();
+        return view('dashboard/add-product', ['categories'=>$categories,"allergies"=>$allergies]);
     }
 
     function delete(Request $req){
@@ -67,7 +73,7 @@ class CategoriesController extends Controller
         } else{
             return redirect('/');
         }
-        
+
         $restaurantId = Restaurant::where('user_id', $userId)->first()->id;
         $category = Product::where('category', $req->categoryId)->get();
         if(count($category) > 0){

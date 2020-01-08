@@ -81,7 +81,7 @@ Route::group(['middleware' => 'web'], function () {
 
 
     Route::get('updateStatus/{status}/{orderId}','OrdersController@updateStatus');
-    Route::post('createAllergy','Products@createAllergy');
+    Route::post('dashboard/createAllergy','Products@createAllergy');
     Route::post('addAllergyToProduct', 'Products@addAllergyToProduct');
 
     Route::get('/order/price/desc','Restaurants@orderByPriceDesc');
@@ -108,4 +108,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/review/rate-product','Products@rateProduct');
     Route::get('/load/more/restaurants','Restaurants@loadMoreRestaurants');
     Route::get('/search/restaurant','Restaurants@searchRestaurant');
+    Route::get('/dashboard/allergies','Products@getAllergies');
+    Route::post('/dashboard/deleteAllergy','products@deleteAllergy');
 });
