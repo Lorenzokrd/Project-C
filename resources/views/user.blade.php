@@ -20,7 +20,7 @@
     		        <div class="card-body">
     		            <div class="row">
     		                <div class="col-md-12">
-    		                    <h4>Gebruikersgegevens</h4>
+    		                    <h4>Mijn gegevens</h4>
     		                    <hr>
     		                </div>
     		            </div>
