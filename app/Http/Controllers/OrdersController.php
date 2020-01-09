@@ -15,6 +15,7 @@ class OrdersController extends Controller
 {
     function createOrder(Request $req,$restaurantName){
         if(\Auth::user() != null){
+            $restaurant = Restaurant::where('name',$restaurantName)->first();
             $Order = new Order;
             $Order->user_id = \Auth::user()->id;
             $Order->restaurant_id = Restaurant::where('name',$restaurantName)->first()->id;
@@ -38,7 +39,7 @@ class OrdersController extends Controller
             return redirect('/login');
         }
 
-        return view('order-status',['order'=>$Order]);
+        return view('order-status',['order'=>$Order,'restaurant'=>$restaurant]);
     }
 
     function read(){
@@ -74,7 +75,7 @@ class OrdersController extends Controller
 
         return view('/dashboard/orders',['orders'=>$restaurantorders]);
     }
-    
+
     function updateStatus($status,$orderId){
         $order= Order::find($orderId);
         $order->status = $status;
